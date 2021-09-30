@@ -1,11 +1,11 @@
-/* OYE-001 */
+/* NO-1 */
 
 #define BOARD_PID		"NO-1"
 #define BOARD_NAME		"NO-1"
 #define BOARD_DESC		"NO-1 Wireless Router"
-#define BOARD_VENDOR_NAME	"NO-1"
-#define BOARD_VENDOR_URL	"http://www.oyewifi.com"
-#define BOARD_MODEL_URL		"http://www.oyewifi.com"
+#define BOARD_VENDOR_NAME	"NetCore"
+#define BOARD_VENDOR_URL	"http://www.netcoretec.com"
+#define BOARD_MODEL_URL		"http://www.netcoretec.com"
 #define BOARD_BOOT_TIME		20
 #define BOARD_FLASH_TIME	120
 #undef BOARD_GPIO_BTN_RESET
