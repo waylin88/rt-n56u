@@ -346,7 +346,11 @@ struct sk_buff *build_skb(void *data, unsigned int frag_size)
 	memset(shinfo, 0, offsetof(struct skb_shared_info, dataref));
 	atomic_set(&shinfo->dataref, 1);
 	kmemcheck_annotate_variable(shinfo->destructor_arg);
-
+#if IS_ENABLED(CONFIG_RA_HW_NAT)
+#if defined(HNAT_USE_HEADROOM)
+	DO_FAST_CLEAR_FOE(skb); // fast clear FoE info header (headroom)
+#endif
+#endif
 	return skb;
 }
 EXPORT_SYMBOL(build_skb);
