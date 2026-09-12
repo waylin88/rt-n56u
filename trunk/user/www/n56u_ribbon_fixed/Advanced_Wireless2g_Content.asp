@@ -60,9 +60,6 @@ function initial(){
 	}
 
 	load_body();
-
-	automode_hint();
-	enableExtChRows(document.form.rt_gmode);
 }
 
 function applyRule(){
@@ -86,6 +83,8 @@ function applyRule(){
 }
 
 function validForm(){
+	var auth_mode = document.form.rt_auth_mode.value;
+
 	if(!validate_string_ssid(document.form.rt_ssid))
 		return false;
 
@@ -139,10 +138,15 @@ function done_validating(action){
     <input type="hidden" name="rt_wpa_mode" value="<% nvram_get_x("","rt_wpa_mode"); %>">
     <input type="hidden" name="rt_wpa_psk_org" value="<% nvram_char_to_ascii("", "rt_wpa_psk"); %>">
     <input type="hidden" name="rt_wpa_gtk_rekey" value="<% nvram_get_x("", "rt_wpa_gtk_rekey"); %>">
+    <input type="hidden" name="rt_wep_x" value="0">
+    <input type="hidden" name="rt_key" value="2">
+    <input type="hidden" name="rt_key_type" value='<% nvram_get_x("","rt_key_type"); %>'>
     <input type="hidden" name="rt_mode_x" value="<% nvram_get_x("","rt_mode_x"); %>">
     <input type="hidden" name="rt_nmode" value="<% nvram_get_x("","rt_nmode"); %>">
-    <input type="hidden" name="rt_key_type" value='<% nvram_get_x("","rt_key_type"); %>'>
+    <input type="hidden" name="rt_country_code" value="<% nvram_get_x("","rt_country_code"); %>">
     <input type="hidden" name="rt_channel_orig" value='<% nvram_get_x("","rt_channel"); %>'>
+    <input type="hidden" name="rt_HT_EXTCHA_old" value="<% nvram_get_x("","rt_HT_EXTCHA"); %>">
+    <input type="hidden" name="rt_gmode_protection" value="<% nvram_get_x("", "rt_gmode_protection"); %>">
 
     <div class="container-fluid">
         <div class="row-fluid">
@@ -213,7 +217,6 @@ function done_validating(action){
                                                     <option value="4" <% nvram_match_x("","rt_gmode", "4","selected"); %>>g Only</option>
                                                     <option value="0" <% nvram_match_x("","rt_gmode", "0","selected"); %>>b Only</option>
                                                 </select>
-                                                <span id="rt_gmode_hint" style="display:none;color:#F75"><#WLANConfig11n_automode_limition_hint#></span>
                                             </td>
                                         </tr>
                                         <tr id="row_HT_BW">
