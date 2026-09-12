@@ -21,6 +21,8 @@
 <script>
 var $j = jQuery.noConflict();
 
+var wds_aplist = [["", "", ""]];
+
 function initial(){
 	show_banner(1);
 	show_menu(5,2,3);
@@ -41,6 +43,8 @@ function initial(){
 	document.form.wl_channel.value = document.form.wl_channel_org.value;
 	document.form.wl_sta_ssid.value = decodeURIComponent(document.form.wl_sta_ssid_org.value);
 	document.form.wl_sta_wpa_psk.value = decodeURIComponent(document.form.wl_sta_wpa_psk_org.value);
+
+	wds_scan();
 }
 
 function applyRule(){
@@ -78,6 +82,19 @@ function done_validating(action){
 	refreshpage();
 }
 
+function wds_scan(){
+	$j.ajax({
+		url: '/wds_aplist.asp',
+		dataType: 'script',
+		error: function(xhr){
+			setTimeout("wds_scan();", 1000);
+		},
+		success: function(response){
+			showLANIPList();
+		}
+	});
+}
+
 function change_wireless_bridge(){
 	var m = document.form.wl_mode_x.value;
 	var is_apc = (m == "3" || m == "4") ? 1 : 0;
@@ -93,7 +110,7 @@ function change_wireless_bridge(){
 	showhide_div("inf_apc", is_apc);
 
 	showhide_div("row_apc_wisp", is_apc_wisp);
-	showhide_div("row_apc_0", is_apc);
+	showhide_div("row_apc_ssid", is_apc);
 	showhide_div("row_apc_1", is_apc);
 	showhide_div("row_apc_2", is_apc && document.form.wl_sta_auth_mode.value == "psk");
 	showhide_div("row_apc_3", is_apc && document.form.wl_sta_auth_mode.value == "psk");
@@ -126,6 +143,71 @@ function change_sta_auth_mode(mflag){
 		showhide_div("row_apc_2", 0);
 		showhide_div("row_apc_3", 0);
 	}
+}
+
+function setClientIP(num){
+	var mode = document.form.wl_mode_x.value;
+	if (mode == "3" || mode == "4")
+		document.form.wl_sta_ssid.value = wds_aplist[num][0];
+	hideClients_Block();
+}
+
+function rescan(){
+	wds_aplist = "";
+	showLANIPList();
+	wds_scan();
+}
+
+function showLANIPList(){
+	var code = "";
+	var show_name = "";
+
+	if(wds_aplist != ""){
+		for(var i = 0; i < wds_aplist.length ; i++){
+			try {
+				wds_aplist[i][0] = decodeURIComponent(wds_aplist[i][0]);
+			} catch (e) {
+				console.log("malformed utf-8 ssid:"+wds_aplist[i][0]);
+			}
+			if(wds_aplist[i][0] && wds_aplist[i][0].length > 16)
+				show_name = wds_aplist[i][0].substring(0, 14) + "..";
+			else
+				show_name = wds_aplist[i][0];
+
+			if(wds_aplist[i][1] && wds_aplist[i][1].length > 0){
+				code += '<a href="javascript:void(0)"><div onclick="setClientIP('+i+');"><strong>'+show_name+'</strong>';
+				code += ' ['+wds_aplist[i][1]+']';
+				code += ', '+wds_aplist[i][3]+'%';
+				code += ' </div></a>';
+			}
+		}
+		code += '<div style="font-weight:bold;cursor:pointer;" onclick="rescan();"><#AP_survey#>&nbsp;</div>';
+	}
+	else{
+		code += '<div style="width: 207px"><center><img style="padding-top: 4px; display: block;" src="/bootstrap/img/ajax-loader.gif"></center></div>';
+	}
+
+	code +='<!--[if lte IE 6.5]><iframe class="hackiframe_wdssurvey"></iframe><![endif]-->';
+	document.getElementById("WDSAPList").innerHTML = code;
+}
+
+var isMenuopen = 0;
+
+function pullLANIPList(obj){
+	if(isMenuopen == 0){
+		$j(obj).children('i').removeClass('icon-chevron-down').addClass('icon-chevron-up');
+		document.getElementById("WDSAPList").style.display = 'block';
+		document.form.wl_sta_ssid.focus();
+		isMenuopen = 1;
+	}
+	else
+		hideClients_Block();
+}
+
+function hideClients_Block(){
+	$j("#ctl_wds_2").children('i').removeClass('icon-chevron-up').addClass('icon-chevron-down');
+	document.getElementById('WDSAPList').style.display='none';
+	isMenuopen = 0;
 }
 </script>
 </head>
@@ -218,10 +300,14 @@ function change_sta_auth_mode(mflag){
                                     </table>
 
                                     <table width="100%" align="center" cellpadding="4" cellspacing="0" class="table">
-                                        <tr id="row_apc_0" style="display:none;">
-                                            <th><a class="help_tooltip" href="javascript:void(0);" onmouseover="openTooltip(this, 1, 2);"><#WLANConfig11b_SSID_itemname#></a></th>
+                                        <tr id="row_apc_ssid" style="display:none;">
+                                            <th width="50%"><a id="ctl_apc_1" class="help_tooltip" href="javascript:void(0);" onmouseover="openTooltip(this, 0, 1);"><#APSTA_SSID#></a></th>
                                             <td>
-                                                <input type="text" maxlength="32" class="input" size="32" name="wl_sta_ssid" value="" onkeypress="return is_string(this,event);">
+                                                <div id="WDSAPList" class="alert alert-info ddown-list"></div>
+                                                <div class="input-append" style="float: left;">
+                                                    <input type="text" id="ctl_apc_2" name="wl_sta_ssid" value="" maxlength="32" class="input" size="20" onKeyPress="return is_string(this,event);" style="float:left; width: 175px;"/>
+                                                    <button class="btn btn-chevron" id="ctl_wds_2" type="button" onclick="pullLANIPList(this);" title="Select the Access Point"><i class="icon icon-chevron-down"></i></button>
+                                                </div>
                                             </td>
                                         </tr>
                                         <tr id="row_apc_1" style="display:none;">
