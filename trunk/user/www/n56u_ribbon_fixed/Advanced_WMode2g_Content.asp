@@ -129,7 +129,9 @@ function change_wireless_bridge(){
 function change_sta_auth_mode(mflag){
 	var mode = document.form.rt_sta_auth_mode.value;
 	var opts = document.form.rt_sta_auth_mode.options;
-	if(mode == "psk"){
+	var m = document.form.rt_mode_x.value;
+	var is_apc = (m == "3" || m == "4") ? 1 : 0;
+	if(mode == "psk" && is_apc){
 		inputCtrl(document.form.rt_sta_crypto, 1);
 		inputCtrl(document.form.rt_sta_wpa_psk, 1);
 		showhide_div("row_apc_2", 1);

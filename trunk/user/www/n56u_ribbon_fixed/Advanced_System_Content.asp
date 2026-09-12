@@ -42,47 +42,22 @@ function initial(){
 	else
 		document.form.computer_name.value = "";
 
-	document.form.http_passwd2.value = "";
-
-	if (login_safe()){
-		showhide_div('row_user', 1);
-		showhide_div('row_pass1', 1);
-		showhide_div('row_pass2', 1);
-	}
-
 	load_body();
 }
 
 function applyRule(){
 	if(validForm()){
 		showLoading();
-		
-		if(document.form.http_passwd2.value.length > 0)
-			document.form.http_passwd.value = document.form.http_passwd2.value;
+
 		document.form.action_mode.value = " Apply ";
 		document.form.current_page.value = "/Advanced_System_Content.asp";
 		document.form.next_page.value = "";
-		
+
 		document.form.submit();
 	}
 }
 
 function validForm(){
-	if(!validate_string(document.form.http_username))
-		return false;
-
-	if(!validate_string(document.form.http_passwd2) || !validate_string(document.form.v_password2))
-		return false;
-
-	if(document.form.http_passwd2.value != document.form.v_password2.value){
-		showtext($("alert_msg"),"*<#File_Pop_content_alert_desc7#>");
-		
-		document.form.http_passwd2.focus();
-		document.form.http_passwd2.select();
-		
-		return false;
-	}
-
 	if(!blanktest(document.form.computer_name, "computer_name")){
 		document.form.computer_name.focus();
 		document.form.computer_name.select();
@@ -99,15 +74,6 @@ function validForm(){
 
 	if(!validate_string(document.form.ntp_server0))
 		return false;
-
-	if(!validate_ipaddr_final(document.form.log_ipaddr, 'log_ipaddr'))
-		return false;
-
-	if(!validate_range(document.form.log_port, 1, 65535))
-		return false;
-
-	if(document.form.http_passwd2.value.length > 0)
-		alert("<#File_Pop_content_alert_desc10#>");
 
 	return true;
 }
@@ -172,7 +138,6 @@ function openLink(s) {
     <input type="hidden" name="action_script" value="">
 
     <input type="hidden" name="preferred_lang" id="preferred_lang" value="<% nvram_get_x("", "preferred_lang"); %>">
-    <input type="hidden" name="http_passwd" value="">
     <input type="hidden" name="computer_name2" value="<% nvram_get_x("", "computer_name"); %>">
 
     <div class="container-fluid">
@@ -211,24 +176,6 @@ function openLink(s) {
                                             </th>
                                             <td>
                                                 <input type="text" name="computer_name" id="computer_name" class="input" maxlength="15" size="32" value=""/>
-                                            </td>
-                                        </tr>
-                                        <tr id="row_user" style="display:none">
-                                            <th><#Adm_System_admin#></th>
-                                            <td>
-                                                <input type="text" name="http_username" class="input" autocomplete="off" maxlength="32" size="25" value="<% nvram_get_x("","http_username"); %>" onKeyPress="return is_string(this,event);" />
-                                            </td>
-                                        </tr>
-                                        <tr id="row_pass1" style="display:none">
-                                            <th><a class="help_tooltip"  href="javascript:void(0);" onmouseover="openTooltip(this,11,4)"><#PASS_new#></a></th>
-                                            <td>
-                                                <input type="password" name="http_passwd2" class="input" autocomplete="off" maxlength="32" size="25" onKeyPress="return is_string(this,event);"/>
-                                            </td>
-                                        </tr>
-                                        <tr id="row_pass2" style="display:none">
-                                            <th><a class="help_tooltip"  href="javascript:void(0);" onmouseover="openTooltip(this,11,4)"><#PASS_retype#></a></th>
-                                            <td>
-                                                <input type="password" name="v_password2" class="input" autocomplete="off" maxlength="32" size="25" onKeyPress="return is_string(this,event);"/><br/><span id="alert_msg"></span>
                                             </td>
                                         </tr>
                                     </table>
@@ -369,13 +316,6 @@ function openLink(s) {
                                     <table width="100%" cellpadding="4" cellspacing="0" class="table">
                                         <tr>
                                             <th colspan="2" style="background-color: #E3E3E3;"><#t2Misc#></th>
-                                        </tr>
-                                        <tr>
-                                            <th width="50%"><a class="help_tooltip" href="javascript:void(0);" onmouseover="openTooltip(this,11,1)"><#LANHostConfig_x_ServerLogEnable_itemname#></a></th>
-                                            <td>
-                                                <input type="text" maxlength="15" class="input" size="15" name="log_ipaddr" style="width: 145px" value="<% nvram_get_x("", "log_ipaddr"); %>" onKeyPress="return is_ipaddr(this,event);" />&nbsp;:
-                                                <input type="text" maxlength="5" class="input" size="10" name="log_port" style="width: 44px;"  value="<% nvram_get_x("","log_port"); %>" onkeypress="return is_number(this,event);"/>
-                                            </td>
                                         </tr>
                                         <tr>
                                             <th><#Adm_System_logf#></th>
