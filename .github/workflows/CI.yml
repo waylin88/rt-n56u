@@ -1,74 +1,111 @@
 name: CI
 
-# Controls when the action will run. 
-on: 
+# Controls when the action will run.
+on:
   push:
   pull_request:
   workflow_dispatch:
     inputs:
-      debug_enabled:
-        description: 'Run the build with tmate debugging enabled (https://github.com/marketplace/actions/debugging-with-tmate)'     
-        required: false
-        default: 'no'
+      target:
+        description: '选择要编译的机型（仅编译一个）'
+        required: true
+        default: 'PSG1218'
+        type: choice
+        options:
+          - PSG1208
+          - PSG1218
+          - PSG1218_nano
+          - NEWIFI-MINI
+          - NEWIFI3
+          - MI-MINI
+          - MI-NANO
+          - MI-3
+          - MI-3C
+          - MI-R3P
+          - MI-R3P-breed
+          - MI-R3G
+          - MI-R4A
+          - MI-4
+          - OYE-001
+          - 5K-W20
+          - HC5861B
+          - HC5761A
+          - HC5661A
+          - MZ-R13
+          - MZ-R13P
+          - 360P2
+          - K2P
+          - K2P_nano
+          - K2P-USB
+          - DIR-878
+          - DIR-882
+          - RM2100
+          - CR660x
+          - R2100
+          - XY-C1
+          - JCG-836PRO
+          - JCG-AC860M
+          - JCG-Y2
+          - JCG-Q20
+          - A3004NS
+          - MSG1500
+          - WR1200JS
+          - B70
+          - WDR7300
+          - MR2600
+          - E8820V2
+          - ZTE_E8820S
+          - NETGEAR-BZV
+          - NETGEAR-CHJ
+          - RT-AC1200GU
+          - R6220
   release:
     types: [published]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build:
-    name: build
-    runs-on: ubuntu-20.04
+    name: build ${{ inputs.target || 'PSG1218' }}
+    runs-on: ubuntu-22.04
     if: ${{ !(github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')) }}
     env:
-      build_variant: ${{ matrix.build_variant }}
-      targets: ${{ matrix.targets }}
+      target: ${{ inputs.target || 'PSG1218' }}
       images_dir: /opt/images
-    strategy:
-      matrix:
-        include:
-          - build_variant: "mt7620"
-            targets: "PSG1208 PSG1218 NEWIFI-MINI MI-MINI MI-3 OYE-001 5K-W20"
-          - build_variant: "mt7628"
-            targets: "HC5861B MI-NANO MZ-R13 MZ-R13P 360P2 HC5761A HC5661A"
-          - build_variant: "mt7621"
-            targets: "K2P_nano K2P DIR-878 RM2100 CR660x"
-          - build_variant: "mt7621-usb"
-            targets: "XY-C1 JCG-836PRO JCG-AC860M JCG-Y2 DIR-882 A3004NS MSG1500 WR1200JS MI-R3G NEWIFI3 B70"
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Prepare environment
         run: |
           sudo apt update
-          sudo apt install libtool-bin gperf python3-docutils autopoint gettext
+          sudo apt install libtool-bin gperf python3-docutils autopoint gettext p7zip-full fakeroot
       - name: Run shellcheck
         run: sh ./trunk/tools/shellcheck.sh
       - name: Prepare toolchain
         run: |
           cd toolchain-mipsel
           sh dl_toolchain.sh
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.debug_enabled == 'yes' }}
-        with:
-          limit-access-to-actor: true
       - name: Start build
         run: |
           cd trunk
           mkdir -p ${images_dir}
-          for m in $targets; do fakeroot ./build_firmware_ci $m; \
-          if [ $? = 0 ]; then cp -f images/*.trx ${images_dir}/$m.trx; else exit 1; fi; \
-          ./clear_tree_simple >/dev/null 2>&1; done
+          echo "Building target: ${target}"
+          fakeroot ./build_firmware_ci ${target}
+          if [ $? -ne 0 ]; then
+            echo "Build failed for ${target}"
+            exit 1
+          fi
+          cp -f images/*.trx ${images_dir}/
+          ./clear_tree_simple >/dev/null 2>&1
       - name: Create archive
         if: ${{ github.event_name != 'release' && success() }}
         run: |
           ls -lh ${images_dir}
           GIT_VERSION=`git rev-parse --short=7 HEAD 2>/dev/null` && [ -n "$GIT_VERSION" ] && \
-          image_name=images_${build_variant}_${GIT_VERSION} || image_name=images_${build_variant}
+          image_name=images_${target}_${GIT_VERSION} || image_name=images_${target}
           cd ${images_dir}; md5sum *.trx |tee md5sum.txt; 7z a -mx=9 ${image_name}.7z ./*
           echo "image_name=${image_name}" >> $GITHUB_ENV
       - name: Upload images to Artifact
         if: ${{ github.event_name != 'release' && success() }}
-        uses: actions/upload-artifact@v2.2.1
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.image_name }}
           path: ${{ env.images_dir }}/*.7z
