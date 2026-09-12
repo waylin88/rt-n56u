@@ -24,14 +24,7 @@
 var $j = jQuery.noConflict();
 
 $j(document).ready(function() {
-	init_itoggle('telnetd');
-	init_itoggle('wins_enable', change_wins_enabled);
-	init_itoggle('lltd_enable');
-	init_itoggle('adsc_enable');
 	init_itoggle('crond_enable', change_crond_enabled);
-	init_itoggle('ttyd_enable', change_ttyd_enabled);
-	init_itoggle('vlmcsd_enable');
-	init_itoggle('napt66_enable');
 	init_itoggle('watchdog_cpu');
 });
 
@@ -50,17 +43,6 @@ function initial(){
 	show_menu(5,7,2);
 	show_footer();
 	load_body();
-
-	if(!found_app_sshd()){
-		showhide_div('row_sshd', 0);
-		textarea_sshd_enabled(0);
-	}else
-		sshd_auth_change();
-
-	if(found_app_nmbd()){
-		showhide_div('tbl_wins', 1);
-		change_wins_enabled();
-	}
 
 	if(!support_http_ssl()) {
 		document.form.http_proto.value = "0";
@@ -81,19 +63,6 @@ function initial(){
 		http_proto_change();
 	}
 	change_crond_enabled();
-	
-	if(found_app_ttyd()){	
-		$("tbl_ttyd").style.display = "";
-		change_ttyd_enabled();
-	}
-	
-	if(!found_app_vlmcsd()){
-		showhide_div('div_vlmcsd', 0);
-	}
-	
-	if(!found_app_napt66()){
-		showhide_div('div_napt66', 0);
-	}
 }
 
 function applyRule(){
@@ -147,10 +116,6 @@ function textarea_https_enabled(v){
 	inputCtrl(document.form['httpssl.dh1024.pem'], v);
 	inputCtrl(document.form['httpssl.server.crt'], v);
 	inputCtrl(document.form['httpssl.server.key'], v);
-}
-
-function textarea_sshd_enabled(v){
-	inputCtrl(document.form['scripts.authorized_keys'], v);
 }
 
 function textarea_crond_enabled(v){
@@ -228,41 +193,12 @@ function create_server_cert() {
 	});
 }
 
-function sshd_auth_change(){
-	var auth = document.form.sshd_enable.value;
-	var v = (auth != "0") ? 1 : 0;
-	showhide_div('row_ssh_keys', v);
-	if (!login_safe())
-		v = 0;
-	textarea_sshd_enabled(v);
-}
-
-function change_wins_enabled(){
-	var v = document.form.wins_enable[0].checked;
-	showhide_div('row_smb_wgrp', v);
-	showhide_div('row_smb_lmb', v);
-}
-
 function change_crond_enabled(){
 	var v = document.form.crond_enable[0].checked;
 	showhide_div('row_crontabs', v);
 	if (!login_safe())
 		v = 0;
 	textarea_crond_enabled(v);
-}
-
-function change_ttyd_enabled(){
-	var v = document.form.ttyd_enable[0].checked;
-	showhide_div('ttyd_webui', v);
-	showhide_div('ttyd_port', v);
-}
-
-function on_ttyd_link(){
-	var ttyd_url="http";
-	var http_url=lan_ipaddr;
-	ttyd_url+="://"+http_url+":"+"<% nvram_get_x("","ttyd_port"); %>";
-	window_ttyd = window.open(ttyd_url, "ttyd");
-	window_ttyd.focus();
 }
 </script>
 <style>
@@ -432,174 +368,7 @@ function on_ttyd_link(){
 
                                     <table width="100%" cellpadding="4" cellspacing="0" class="table">
                                         <tr>
-                                            <th colspan="2" style="background-color: #E3E3E3;"><#Adm_System_term#></th>
-                                        </tr>
-                                        <tr>
-                                            <th width="50%"><#Adm_System_telnetd#></th>
-                                            <td>
-                                                <div class="main_itoggle">
-                                                    <div id="telnetd_on_of">
-                                                        <input type="checkbox" id="telnetd_fake" <% nvram_match_x("", "telnetd", "1", "value=1 checked"); %><% nvram_match_x("", "telnetd", "0", "value=0"); %>>
-                                                    </div>
-                                                </div>
-                                                <div style="position: absolute; margin-left: -10000px;">
-                                                    <input type="radio" name="telnetd" id="telnetd_1" class="input" value="1" <% nvram_match_x("", "telnetd", "1", "checked"); %>/><#checkbox_Yes#>
-                                                    <input type="radio" name="telnetd" id="telnetd_0" class="input" value="0" <% nvram_match_x("", "telnetd", "0", "checked"); %>/><#checkbox_No#>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr id="row_sshd">
-                                            <th><#Adm_System_sshd#></th>
-                                            <td>
-                                                <select name="sshd_enable" class="input" onchange="sshd_auth_change();">
-                                                    <option value="0" <% nvram_match_x("", "sshd_enable", "0","selected"); %>><#checkbox_No#> (*)</option>
-                                                    <option value="1" <% nvram_match_x("", "sshd_enable", "1","selected"); %>><#checkbox_Yes#></option>
-                                                    <option value="2" <% nvram_match_x("", "sshd_enable", "2","selected"); %>><#checkbox_Yes#> (authorized_keys only)</option>
-                                                </select>
-                                            </td>
-                                        </tr>
-                                        <tr id="row_ssh_keys" style="display:none">
-                                            <td colspan="2" style="padding-bottom: 0px;">
-                                                <a href="javascript:spoiler_toggle('authorized_keys')"><span><#Adm_System_sshd_keys#> (authorized_keys)</span></a>
-                                                <div id="authorized_keys" style="display:none;">
-                                                    <textarea rows="8" wrap="off" spellcheck="false" maxlength="8192" class="span12" name="scripts.authorized_keys" style="font-family:'Courier New'; font-size:12px;"><% nvram_dump("scripts.authorized_keys",""); %></textarea>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </table>
-
-                                    <table width="100%" cellpadding="4" cellspacing="0" class="table" id="tbl_wins" style="display:none">
-                                        <tr>
-                                            <th colspan="2" style="background-color: #E3E3E3;">Windows Internet Name Service (WINS)</th>
-                                        </tr>
-                                        <tr>
-                                            <th width="50%"><#Adm_Svc_wins#></th>
-                                            <td>
-                                                <div class="main_itoggle">
-                                                    <div id="wins_enable_on_of">
-                                                        <input type="checkbox" id="wins_enable_fake" <% nvram_match_x("", "wins_enable", "1", "value=1 checked"); %><% nvram_match_x("", "wins_enable", "0", "value=0"); %>>
-                                                    </div>
-                                                </div>
-                                                <div style="position: absolute; margin-left: -10000px;">
-                                                    <input type="radio" name="wins_enable" id="wins_enable_1" class="input" value="1" onclick="change_wins_enabled();" <% nvram_match_x("", "wins_enable", "1", "checked"); %>/><#checkbox_Yes#>
-                                                    <input type="radio" name="wins_enable" id="wins_enable_0" class="input" value="0" onclick="change_wins_enabled();" <% nvram_match_x("", "wins_enable", "0", "checked"); %>/><#checkbox_No#>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr id="row_smb_wgrp" style="display:none;">
-                                            <th>
-                                                <a class="help_tooltip" href="javascript:void(0);" onmouseover="openTooltip(this,17, 3);"><#ShareNode_WorkGroup_itemname#></a>
-                                            </th>
-                                            <td>
-                                                <input type="text" name="st_samba_workgroup" class="input" maxlength="32" size="32" value="<% nvram_get_x("", "st_samba_workgroup"); %>"/>
-                                            </td>
-                                        </tr>
-                                        <tr id="row_smb_lmb" style="display:none;">
-                                            <th>
-                                                <#StorageLMB#>
-                                            </th>
-                                            <td>
-                                                <select name="st_samba_lmb" class="input">
-                                                    <option value="0" <% nvram_match_x("", "st_samba_lmb", "0", "selected"); %>><#checkbox_No#></option>
-                                                    <option value="1" <% nvram_match_x("", "st_samba_lmb", "1", "selected"); %>>Local Master Browser (*)</option>
-                                                    <option value="2" <% nvram_match_x("", "st_samba_lmb", "2", "selected"); %>>Local & Domain Master Browser</option>
-                                                </select>
-                                            </td>
-                                        </tr>
-                                    </table>
-
-                                    <table width="100%" id="tbl_ttyd" cellpadding="4" cellspacing="0" class="table" style="display:none;">
-                                        <tr>
-                                            <th colspan="2" style="background-color: #E3E3E3;"><#Adm_Svc_ttyd_setup#></th>
-                                        </tr>
-                                        <tr id="div_ttyd">
-                                            <th width="50%"><#Adm_Svc_ttyd_enable#></th>
-                                            <td colspan="2">
-                                                <div class="main_itoggle">
-                                                    <div id="ttyd_enable_on_of">
-                                                        <input type="checkbox" id="ttyd_enable_fake" <% nvram_match_x("", "ttyd_enable", "1", "value=1 checked"); %><% nvram_match_x("", "ttyd_enable", "0", "value=0"); %>>
-                                                    </div>
-                                                </div>
-                                                <div style="position: absolute; margin-left: -10000px;">
-                                                    <input type="radio" name="ttyd_enable" id="ttyd_enable_1" class="input" value="1" onclick="change_ttyd_enabled();" <% nvram_match_x("", "ttyd_enable", "1", "checked"); %>/><#checkbox_Yes#>
-                                                    <input type="radio" name="ttyd_enable" id="ttyd_enable_0" class="input" value="0" onclick="change_ttyd_enabled();" <% nvram_match_x("", "ttyd_enable", "0", "checked"); %>/><#checkbox_No#>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr id="ttyd_port"> <th width="50%"><#Adm_Svc_ttyd_port#></th>
-                                            <td>
-                                                <input type="text" maxlength="6" class="input" size="15" name="ttyd_port" style="width: 145px" value="<% nvram_get_x("","ttyd_port"); %>" />
-                                            </td>
-                                        </tr>
-                                        <tr id="ttyd_webui">
-                                            <td>
-                                                <a href="javascript:on_ttyd_link();" id="web_ttyd_link">ttyd Web Shell</a>
-                                            </td>
-                                        </tr>
-                                    </table>
-
-                                    <table width="100%" cellpadding="4" cellspacing="0" class="table">
-                                        <tr>
                                             <th colspan="2" style="background-color: #E3E3E3;"><#Adm_System_misc#></th>
-                                        </tr>
-										
-                                        <tr id="div_vlmcsd">
-                                            <th><#Adm_Svc_vlmcsd#></th>
-                                            <td>
-                                                <div class="main_itoggle">
-                                                    <div id="vlmcsd_enable_on_of">
-                                                        <input type="checkbox" id="vlmcsd_enable_fake" <% nvram_match_x("", "vlmcsd_enable", "1", "value=1 checked"); %><% nvram_match_x("", "vlmcsd_enable", "0", "value=0"); %>>
-                                                    </div>
-                                                </div>
-                                                <div style="position: absolute; margin-left: -10000px;">
-                                                    <input type="radio" name="vlmcsd_enable" id="vlmcsd_enable_1" class="input" value="1" <% nvram_match_x("", "vlmcsd_enable", "1", "checked"); %>/><#checkbox_Yes#>
-                                                    <input type="radio" name="vlmcsd_enable" id="vlmcsd_enable_0" class="input" value="0" <% nvram_match_x("", "vlmcsd_enable", "0", "checked"); %>/><#checkbox_No#>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        <tr id="div_napt66">
-                                            <th><#Adm_Svc_napt66#></th>
-                                            <td>
-                                                <div class="main_itoggle">
-                                                    <div id="napt66_enable_on_of">
-                                                        <input type="checkbox" id="napt66_enable_fake" <% nvram_match_x("", "napt66_enable", "1", "value=1 checked"); %><% nvram_match_x("", "napt66_enable", "0", "value=0"); %>>
-                                                    </div>
-                                                </div>
-                                                <div style="position: absolute; margin-left: -10000px;">
-                                                    <input type="radio" name="napt66_enable" id="napt66_enable_1" class="input" value="1" <% nvram_match_x("", "napt66_enable", "1", "checked"); %>/><#checkbox_Yes#>
-                                                    <input type="radio" name="napt66_enable" id="napt66_enable_0" class="input" value="0" <% nvram_match_x("", "napt66_enable", "0", "checked"); %>/><#checkbox_No#>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <th><#Adm_Svc_lltd#></th>
-                                            <td>
-                                                <div class="main_itoggle">
-                                                    <div id="lltd_enable_on_of">
-                                                        <input type="checkbox" id="lltd_enable_fake" <% nvram_match_x("", "lltd_enable", "1", "value=1 checked"); %><% nvram_match_x("", "lltd_enable", "0", "value=0"); %>>
-                                                    </div>
-                                                </div>
-                                                <div style="position: absolute; margin-left: -10000px;">
-                                                    <input type="radio" name="lltd_enable" id="lltd_enable_1" class="input" value="1" <% nvram_match_x("", "lltd_enable", "1", "checked"); %>/><#checkbox_Yes#>
-                                                    <input type="radio" name="lltd_enable" id="lltd_enable_0" class="input" value="0" <% nvram_match_x("", "lltd_enable", "0", "checked"); %>/><#checkbox_No#>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th><#Adm_Svc_adsc#></th>
-                                            <td>
-                                                <div class="main_itoggle">
-                                                    <div id="adsc_enable_on_of">
-                                                        <input type="checkbox" id="adsc_enable_fake" <% nvram_match_x("", "adsc_enable", "1", "value=1 checked"); %><% nvram_match_x("", "adsc_enable", "0", "value=0"); %>>
-                                                    </div>
-                                                </div>
-                                                <div style="position: absolute; margin-left: -10000px;">
-                                                    <input type="radio" name="adsc_enable" id="adsc_enable_1" class="input" value="1" <% nvram_match_x("", "adsc_enable", "1", "checked"); %>/><#checkbox_Yes#>
-                                                    <input type="radio" name="adsc_enable" id="adsc_enable_0" class="input" value="0" <% nvram_match_x("", "adsc_enable", "0", "checked"); %>/><#checkbox_No#>
-                                                </div>
-                                            </td>
                                         </tr>
                                         <tr>
                                             <th><#Adm_Svc_crond#></th>

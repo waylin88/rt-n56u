@@ -1046,7 +1046,7 @@ AiDisk_Step2_helptitle=设置 DDNS 服务
 AiDisk_Step3_helptitle=设置共享磁盘
 AiDisk_Step1_help=ZVMODELVZ 提供了三种类型的权限：<p>1. 匿名访问：无需账号和密码，任何人都可以访问 FTP 服务器。</p><p>2. 账号访问：ZVMODELVZ 默认创建 [admin/Family] 账号，用户需使用授权账号访问 FTP 服务器。</p><p>3. 管理员访问：ZVMODELVZ 系统默认创建 [admin] 账号，该账号具有全部的访问权限。</p><p>注：修改权限类型会清除已有的帐号设置数据。</p>
 AiDisk_Step1_help2=注:账号管理功能无法在 NTFS 格式的硬盘中使用。
-AiDisk_Step2_help=使用华硕 DDNS 服务可以快速创建一个使用动态 IP 地址的域名。<p>若需使用其它服务商的 DDNS 服务，请打开<a href='/Advanced_DDNS_Content.asp' target='_top'>动态域名解析</a>进行设置</p>
+AiDisk_Step2_help=使用华硕 DDNS 服务可以快速创建一个使用动态 IP 地址的域名。
 AiDisk_Step3_help=<a href='../Advanced_AiDisk_samba.asp' target='_top'>网上邻居</a>: 更多专业的网上邻居设置。<br/><a href='../Advanced_AiDisk_ftp.asp' target='_top'>FTP 共享</a>: 更多专业的 FTP 服务器设置。
 Step2_method=FTP 服务器共享设置：
 Step2_method1=匿名访问
