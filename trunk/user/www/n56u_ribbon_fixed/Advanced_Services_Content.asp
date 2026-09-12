@@ -32,11 +32,6 @@ $j(document).ready(function() {
 <script>
 
 <% login_state_hook(); %>
-<% openssl_util_hook(); %>
-var lan_ipaddr = '<% nvram_get_x("", "lan_ipaddr_t"); %>';
-var http_proto = '<% nvram_get_x("", "http_proto"); %>';
-var http_port = '<% nvram_get_x("", "http_lanport"); %>';
-var https_port = '<% nvram_get_x("", "https_lport"); %>';
 
 function initial(){
 	show_banner(1);
@@ -44,35 +39,17 @@ function initial(){
 	show_footer();
 	load_body();
 
-	if(!support_http_ssl()) {
-		document.form.http_proto.value = "0";
-		showhide_div('row_http_proto', 0);
-		showhide_div('row_https_lport', 0);
-		showhide_div('row_https_clist', 0);
-		textarea_https_enabled(0);
-	}else{
-		if (openssl_util_found() && login_safe()) {
-			if(!support_openssl_ec()) {
-				var o = document.form.https_gen_rb;
-				o.remove(3);
-				o.remove(3);
-				o.remove(3);
-			}
-			showhide_div('row_https_gen', 1);
-		}
-		http_proto_change();
-	}
 	change_crond_enabled();
 }
 
 function applyRule(){
 	if(validForm()){
 		showLoading();
-		
+
 		document.form.action_mode.value = " Apply ";
 		document.form.current_page.value = "/Advanced_Services_Content.asp";
 		document.form.next_page.value = "";
-		
+
 		document.form.submit();
 	}
 }
@@ -81,29 +58,6 @@ function validForm(){
 	if(!validate_range(document.form.http_lanport, 80, 65535))
 		return false;
 
-	if (support_http_ssl()){
-		var mode = document.form.http_proto.value;
-		if (mode == "0" || mode == "2"){
-			if(!validate_range(document.form.http_lanport, 80, 65535))
-				return false;
-		}
-		if (mode == "1" || mode == "2"){
-			if(!validate_range(document.form.https_lport, 81, 65535))
-				return false;
-		}
-		if (mode == "2"){
-			if (document.form.http_lanport.value == document.form.https_lport.value){
-				alert("HTTP and HTTPS ports is equal!");
-				document.form.https_lport.focus();
-				document.form.https_lport.select();
-				return false;
-			}
-		}
-	}else{
-		if(!validate_range(document.form.http_lanport, 80, 65535))
-			return false;
-	}
-
 	return true;
 }
 
@@ -111,86 +65,8 @@ function done_validating(action){
 	refreshpage();
 }
 
-function textarea_https_enabled(v){
-	inputCtrl(document.form['httpssl.ca.crt'], v);
-	inputCtrl(document.form['httpssl.dh1024.pem'], v);
-	inputCtrl(document.form['httpssl.server.crt'], v);
-	inputCtrl(document.form['httpssl.server.key'], v);
-}
-
 function textarea_crond_enabled(v){
 	inputCtrl(document.form['crontab.login'], v);
-}
-
-function http_proto_change(){
-	var proto = document.form.http_proto.value;
-	var v1 = (proto == "0" || proto == "2") ? 1 : 0;
-	var v2 = (proto == "1" || proto == "2") ? 1 : 0;
-
-	showhide_div('row_http_lport', v1);
-	showhide_div('row_https_lport', v2);
-
-	if (!login_safe())
-		v2 = 0;
-
-	showhide_div('row_https_clist', v2);
-	showhide_div('tbl_https_certs', v2);
-	textarea_https_enabled(v2);
-}
-
-var id_timeout_btn_gen;
-function flashing_btn_gen(is_shown){
-	var $btn=$j('#https_gen_bn');
-	if (is_shown)
-		$btn.val('Please wait...');
-	else
-		$btn.val('');
-	id_timeout_btn_gen = setTimeout("flashing_btn_gen("+!is_shown+")", 250);
-}
-
-function reset_btn_gen(is_refresh){
-	var $btn=$j('#https_gen_bn');
-	$btn.removeClass('alert-error').removeClass('alert-success');
-	$btn.val('<#VPNS_GenNew#>');
-	if (is_refresh)
-		location.href = location.href;
-}
-
-function create_server_cert() {
-	if(!confirm('<#Adm_System_https_query#>'))
-		return false;
-	var $btn=$j('#https_gen_bn');
-	flashing_btn_gen(1);
-	$btn.addClass('alert-error');
-	$j.ajax({
-		type: "post",
-		url: "/apply.cgi",
-		data: {
-			action_mode: " CreateCertHTTPS ",
-			common_name: $('https_gen_cn').value,
-			rsa_bits: $('https_gen_rb').value,
-			days_valid: $('https_gen_dv').value
-		},
-		dataType: "json",
-		error: function(xhr) {
-			clearTimeout(id_timeout_btn_gen);
-			$btn.val('Failed!');
-			setTimeout("reset_btn_gen(0)", 1500);
-		},
-		success: function(response) {
-			var sys_result = (response != null && typeof response === 'object' && "sys_result" in response)
-				? response.sys_result : -1;
-			clearTimeout(id_timeout_btn_gen);
-			if(sys_result == 0){
-				$btn.removeClass('alert-error').addClass('alert-success');
-				$btn.val('Success!');
-				setTimeout("reset_btn_gen(1)", 1000);
-			}else{
-				$btn.val('Failed!');
-				setTimeout("reset_btn_gen(0)", 1500);
-			}
-		}
-	});
 }
 
 function change_crond_enabled(){
@@ -262,34 +138,11 @@ function change_crond_enabled(){
                                         <tr>
                                             <th colspan="2" style="background-color: #E3E3E3;"><#Adm_System_webs#></th>
                                         </tr>
-                                        <tr id="row_http_proto">
-                                            <th><#Adm_System_http_proto#></th>
-                                            <td>
-                                                <select name="http_proto" class="input" onchange="http_proto_change();">
-                                                    <option value="0" <% nvram_match_x("", "http_proto", "0","selected"); %>>HTTP</option>
-                                                    <option value="1" <% nvram_match_x("", "http_proto", "1","selected"); %>>HTTPS</option>
-                                                    <option value="2" <% nvram_match_x("", "http_proto", "2","selected"); %>>HTTP & HTTPS</option>
-                                                </select>
-                                            </td>
-                                        </tr>
                                         <tr id="row_http_lport">
                                             <th><#Adm_System_http_lport#></th>
                                             <td>
                                                 <input type="text" maxlength="5" size="15" name="http_lanport" class="input" value="<% nvram_get_x("", "http_lanport"); %>" onkeypress="return is_number(this,event);"/>
                                                 &nbsp;<span style="color:#888;">[80..65535]</span>
-                                            </td>
-                                        </tr>
-                                        <tr id="row_https_lport" style="display:none">
-                                            <th><#Adm_System_https_lport#></th>
-                                            <td>
-                                                <input type="text" maxlength="5" size="15" name="https_lport" class="input" value="<% nvram_get_x("", "https_lport"); %>" onkeypress="return is_number(this,event);"/>
-                                                &nbsp;<span style="color:#888;">[81..65535]</span>
-                                            </td>
-                                        </tr>
-                                        <tr id="row_https_clist" style="display:none">
-                                            <th><#Adm_System_https_clist#></th>
-                                            <td>
-                                                <input type="text" maxlength="256" size="15" name="https_clist" class="input" style="width: 286px;" value="<% nvram_get_x("", "https_clist"); %>" onkeypress="return is_string(this,event);"/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -300,68 +153,6 @@ function change_crond_enabled(){
                                                     <option value="1" <% nvram_match_x("", "http_access", "1","selected"); %>>Wired clients only</option>
                                                     <option value="2" <% nvram_match_x("", "http_access", "2","selected"); %>>Wired and MainAP clients</option>
                                                 </select>
-                                            </td>
-                                        </tr>
-                                    </table>
-
-                                    <table width="100%" cellpadding="4" cellspacing="0" class="table" id="tbl_https_certs" style="display:none">
-                                        <tr>
-                                            <th colspan="4" style="background-color: #E3E3E3;"><#Adm_System_https_certs#></th>
-                                        </tr>
-                                        <tr id="row_https_gen" style="display:none">
-                                            <td align="right" style="text-align:right;">
-                                                <span class="caption-bold">Server CN:</span>
-                                                <input id="https_gen_cn" type="text" maxlength="32" size="10" style="width: 105px;" placeholder="my.domain" onKeyPress="return is_string(this,event);"/>
-                                            </td>
-                                            <td align="left">
-                                                <span class="caption-bold">Bits:</span>
-                                                <select id="https_gen_rb" class="input" style="width: 108px;">
-                                                    <option value="1024">RSA 1024 (*)</option>
-                                                    <option value="2048">RSA 2048</option>
-                                                    <option value="4096">RSA 4096</option>
-                                                    <option value="prime256v1">EC P-256</option>
-                                                    <option value="secp384r1">EC P-384</option>
-                                                    <option value="secp521r1">EC P-521</option>
-                                                </select>
-                                            </td>
-                                            <td align="left">
-                                                <span class="caption-bold">Days valid:</span>
-                                                <input id="https_gen_dv" type="text" maxlength="5" size="10" style="width: 35px;" value="365" onKeyPress="return is_number(this,event);"/>
-                                            </td>
-                                            <td align="left">
-                                                <input id="https_gen_bn" type="button" class="btn" style="width: 145px; outline:0" onclick="create_server_cert();" value="<#VPNS_GenNew#>"/>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="4" style="padding-bottom: 0px;">
-                                                <a href="javascript:spoiler_toggle('ca.crt')"><span>Root CA Certificate (optional)</span></a>
-                                                <div id="ca.crt" style="display:none;">
-                                                    <textarea rows="8" wrap="off" spellcheck="false" maxlength="8192" class="span12" name="httpssl.ca.crt" style="font-family:'Courier New'; font-size:12px;"><% nvram_dump("httpssl.ca.crt",""); %></textarea>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="4" style="padding-bottom: 0px; border-top: 0 none;">
-                                                <a href="javascript:spoiler_toggle('dh1024.pem')"><span>Diffie-Hellman PEM (optional)</span></a>
-                                                <div id="dh1024.pem" style="display:none;">
-                                                    <textarea rows="8" wrap="off" spellcheck="false" maxlength="8192" class="span12" name="httpssl.dh1024.pem" style="font-family:'Courier New'; font-size:12px;"><% nvram_dump("httpssl.dh1024.pem",""); %></textarea>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="4" style="padding-bottom: 0px; border-top: 0 none;">
-                                                <a href="javascript:spoiler_toggle('server.crt')"><span>Server Certificate (required)</span></a>
-                                                <div id="server.crt" style="display:none;">
-                                                    <textarea rows="8" wrap="off" spellcheck="false" maxlength="8192" class="span12" name="httpssl.server.crt" style="font-family:'Courier New'; font-size:12px;"><% nvram_dump("httpssl.server.crt",""); %></textarea>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="4" style="padding-bottom: 0px; border-top: 0 none;">
-                                                <a href="javascript:spoiler_toggle('server.key')"><span>Server Private Key (required)</span></a>
-                                                <div id="server.key" style="display:none;">
-                                                    <textarea rows="8" wrap="off" spellcheck="false" maxlength="8192" class="span12" name="httpssl.server.key" style="font-family:'Courier New'; font-size:12px;"><% nvram_dump("httpssl.server.key",""); %></textarea>
-                                                </div>
                                             </td>
                                         </tr>
                                     </table>

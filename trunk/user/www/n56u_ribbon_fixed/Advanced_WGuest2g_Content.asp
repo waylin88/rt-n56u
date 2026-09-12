@@ -41,22 +41,6 @@ function initial(){
 	show_menu(5,1,2);
 	show_footer();
 
-	document.form.rt_guest_date_x_Sun.checked = getDateCheck(document.form.rt_guest_date_x.value, 0);
-	document.form.rt_guest_date_x_Mon.checked = getDateCheck(document.form.rt_guest_date_x.value, 1);
-	document.form.rt_guest_date_x_Tue.checked = getDateCheck(document.form.rt_guest_date_x.value, 2);
-	document.form.rt_guest_date_x_Wed.checked = getDateCheck(document.form.rt_guest_date_x.value, 3);
-	document.form.rt_guest_date_x_Thu.checked = getDateCheck(document.form.rt_guest_date_x.value, 4);
-	document.form.rt_guest_date_x_Fri.checked = getDateCheck(document.form.rt_guest_date_x.value, 5);
-	document.form.rt_guest_date_x_Sat.checked = getDateCheck(document.form.rt_guest_date_x.value, 6);
-	document.form.rt_guest_time_x_starthour.value = getTimeRange(document.form.rt_guest_time_x.value, 0);
-	document.form.rt_guest_time_x_startmin.value = getTimeRange(document.form.rt_guest_time_x.value, 1);
-	document.form.rt_guest_time_x_endhour.value = getTimeRange(document.form.rt_guest_time_x.value, 2);
-	document.form.rt_guest_time_x_endmin.value = getTimeRange(document.form.rt_guest_time_x.value, 3);
-	document.form.rt_guest_time2_x_starthour.value = getTimeRange(document.form.rt_guest_time2_x.value, 0);
-	document.form.rt_guest_time2_x_startmin.value = getTimeRange(document.form.rt_guest_time2_x.value, 1);
-	document.form.rt_guest_time2_x_endhour.value = getTimeRange(document.form.rt_guest_time2_x.value, 2);
-	document.form.rt_guest_time2_x_endmin.value = getTimeRange(document.form.rt_guest_time2_x.value, 3);
-
 	document.form.rt_guest_ssid.value = decodeURIComponent(document.form.rt_guest_ssid_org.value);
 	document.form.rt_guest_wpa_psk.value = decodeURIComponent(document.form.rt_guest_wpa_psk_org.value);
 
@@ -76,27 +60,8 @@ function initial(){
 
 function applyRule(){
 	if(validForm()){
-		document.form.rt_guest_date_x.value = setDateCheck(
-		    document.form.rt_guest_date_x_Sun,
-		    document.form.rt_guest_date_x_Mon,
-		    document.form.rt_guest_date_x_Tue,
-		    document.form.rt_guest_date_x_Wed,
-		    document.form.rt_guest_date_x_Thu,
-		    document.form.rt_guest_date_x_Fri,
-		    document.form.rt_guest_date_x_Sat);
-		document.form.rt_guest_time_x.value = setTimeRange(
-		    document.form.rt_guest_time_x_starthour,
-		    document.form.rt_guest_time_x_startmin,
-		    document.form.rt_guest_time_x_endhour,
-		    document.form.rt_guest_time_x_endmin);
-		document.form.rt_guest_time2_x.value = setTimeRange(
-		    document.form.rt_guest_time2_x_starthour,
-		    document.form.rt_guest_time2_x_startmin,
-		    document.form.rt_guest_time2_x_endhour,
-		    document.form.rt_guest_time2_x_endmin);
-		
 		showLoading();
-		
+
 		document.form.action_mode.value = " Apply ";
 		document.form.current_page.value = "/Advanced_WGuest2g_Content.asp";
 		document.form.next_page.value = "";
@@ -112,38 +77,6 @@ function validForm(){
 
 	if(!validate_string_ssid(document.form.rt_guest_ssid))
 		return false;
-
-	if(!validate_timerange(document.form.rt_guest_time_x_starthour, 0)
-			|| !validate_timerange(document.form.rt_guest_time_x_startmin, 1)
-			|| !validate_timerange(document.form.rt_guest_time_x_endhour, 2)
-			|| !validate_timerange(document.form.rt_guest_time_x_endmin, 3)
-			)
-		return false;
-
-	var starttime = eval(document.form.rt_guest_time_x_starthour.value + document.form.rt_guest_time_x_startmin.value);
-	var endtime = eval(document.form.rt_guest_time_x_endhour.value + document.form.rt_guest_time_x_endmin.value);
-	if(starttime == endtime){
-		alert("<#FirewallConfig_URLActiveTime_itemhint2#>");
-			document.form.rt_guest_time_x_starthour.focus();
-			document.form.rt_guest_time_x_starthour.select;
-		return false;
-	}
-
-	if(!validate_timerange(document.form.rt_guest_time2_x_starthour, 0)
-			|| !validate_timerange(document.form.rt_guest_time2_x_startmin, 1)
-			|| !validate_timerange(document.form.rt_guest_time2_x_endhour, 2)
-			|| !validate_timerange(document.form.rt_guest_time2_x_endmin, 3)
-			)
-		return false;
-
-	var starttime2 = eval(document.form.rt_guest_time2_x_starthour.value + document.form.rt_guest_time2_x_startmin.value);
-	var endtime2 = eval(document.form.rt_guest_time2_x_endhour.value + document.form.rt_guest_time2_x_endmin.value);
-	if(starttime2 == endtime2){
-		alert("<#FirewallConfig_URLActiveTime_itemhint2#>");
-			document.form.rt_guest_time2_x_starthour.focus();
-			document.form.rt_guest_time2_x_starthour.select;
-		return false;
-	}
 
 	if(document.form.rt_guest_ssid.value == "") {
 		document.form.rt_guest_ssid.focus();
@@ -164,22 +97,18 @@ function done_validating(action){
 
 function change_guest_enabled(mflag) {
 	var v = document.form.rt_guest_enable[0].checked;
-	showhide_div('row_guest_1', v);
-	showhide_div('row_guest_2', v);
-	showhide_div('row_guest_3', v);
-	showhide_div('row_guest_4', v);
 	showhide_div('row_guest_5', v);
 	showhide_div('row_guest_6', v);
 	if (support_lan_ap_isolate()) {
 		showhide_div('row_guest_7', v);
 	}
 	showhide_div('row_guest_8', v);
-	showhide_div('row_guest_9', v);
 	showhide_div('row_guest_10', v);
-	showhide_div('row_guest_11', v);
-	showhide_div('row_guest_12', v);
 	showhide_div('row_guest_13', v);
+	if (v)
+		change_guest_auth_mode(0);
 }
+
 
 function change_guest_auth_mode(mflag) {
 	var mode = document.form.rt_guest_auth_mode.value;
@@ -189,7 +118,9 @@ function change_guest_auth_mode(mflag) {
 	{
 		inputCtrl(document.form.rt_guest_crypto, 1);
 		inputCtrl(document.form.rt_guest_wpa_psk, 1);
-		
+		showhide_div('row_guest_11', 1);
+		showhide_div('row_guest_12', 1);
+
 		if(opts[opts.selectedIndex].text == "WPA2-Personal")
 		{
 			if (mflag == 1) {
@@ -222,6 +153,8 @@ function change_guest_auth_mode(mflag) {
 	{
 		inputCtrl(document.form.rt_guest_crypto, 0);
 		inputCtrl(document.form.rt_guest_wpa_psk, 0);
+		showhide_div('row_guest_11', 0);
+		showhide_div('row_guest_12', 0);
 	}
 }
 
@@ -302,45 +235,6 @@ function change_guest_auth_mode(mflag) {
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr id="row_guest_1" style="display:none;">
-                                            <th><#WIFIGuestDate#></th>
-                                            <td>
-                                                <div class="controls">
-                                                    <label class="checkbox inline"><input type="checkbox" class="input" name="rt_guest_date_x_Mon" onChange="return changeDate();"/><#DAY_Mon#></label>
-                                                    <label class="checkbox inline"><input type="checkbox" class="input" name="rt_guest_date_x_Tue" onChange="return changeDate();"/><#DAY_Tue#></label>
-                                                    <label class="checkbox inline"><input type="checkbox" class="input" name="rt_guest_date_x_Wed" onChange="return changeDate();"/><#DAY_Wed#></label>
-                                                    <label class="checkbox inline"><input type="checkbox" class="input" name="rt_guest_date_x_Thu" onChange="return changeDate();"/><#DAY_Thu#></label>
-                                                    <label class="checkbox inline"><input type="checkbox" class="input" name="rt_guest_date_x_Fri" onChange="return changeDate();"/><#DAY_Fri#></label>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr id="row_guest_2" style="display:none;">
-                                            <th style="border-top: 0 none;"><#WIFIGuestTime#></th>
-                                            <td style="border-top: 0 none;">
-                                                <input type="text" maxlength="2" style="width: 20px;" size="2" name="rt_guest_time_x_starthour" onKeyPress="return is_number(this,event);">:
-                                                <input type="text" maxlength="2" style="width: 20px;" size="2" name="rt_guest_time_x_startmin" onKeyPress="return is_number(this,event);">&nbsp;-&nbsp;
-                                                <input type="text" maxlength="2" style="width: 20px;" size="2" name="rt_guest_time_x_endhour" onKeyPress="return is_number(this,event);">:
-                                                <input type="text" maxlength="2" style="width: 20px;" size="2" name="rt_guest_time_x_endmin" onKeyPress="return is_number(this,event);">
-                                            </td>
-                                        </tr>
-                                        <tr id="row_guest_3" style="display:none;">
-                                            <th><#WIFIGuestDate2#></th>
-                                            <td>
-                                                <div class="controls">
-                                                    <label class="checkbox inline"><input type="checkbox" class="input" name="rt_guest_date_x_Sat" onChange="return changeDate();"/><#DAY_Sat#></label>
-                                                    <label class="checkbox inline"><input type="checkbox" class="input" name="rt_guest_date_x_Sun" onChange="return changeDate();"/><#DAY_Sun#></label>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr id="row_guest_4" style="display:none;">
-                                            <th style="border-top: 0 none;"><#WIFIGuestTime2#></th>
-                                            <td style="border-top: 0 none;">
-                                                <input type="text" maxlength="2" style="width: 20px;" size="2" name="rt_guest_time2_x_starthour" onKeyPress="return is_number(this,event);">:
-                                                <input type="text" maxlength="2" style="width: 20px;" size="2" name="rt_guest_time2_x_startmin" onKeyPress="return is_number(this,event);">&nbsp;-&nbsp;
-                                                <input type="text" maxlength="2" style="width: 20px;" size="2" name="rt_guest_time2_x_endhour" onKeyPress="return is_number(this,event);">:
-                                                <input type="text" maxlength="2" style="width: 20px;" size="2" name="rt_guest_time2_x_endmin" onKeyPress="return is_number(this,event);">
-                                            </td>
-                                        </tr>
                                         <tr id="row_guest_5" style="display:none;">
                                             <th><a class="help_tooltip" href="javascript:void(0);" onmouseover="openTooltip(this, 0, 1);"><#WIFIGuestSSID#></a></th>
                                             <td><input type="text" maxlength="32" class="input" size="32" name="rt_guest_ssid" value="" onkeypress="return is_string(this,event);"/></td>
@@ -388,23 +282,6 @@ function change_guest_auth_mode(mflag) {
                                                     <input type="radio" value="1" id="rt_guest_ap_isolate_1" name="rt_guest_ap_isolate" class="input" <% nvram_match_x("","rt_guest_ap_isolate", "1", "checked"); %>/><#checkbox_Yes#>
                                                     <input type="radio" value="0" id="rt_guest_ap_isolate_0" name="rt_guest_ap_isolate" class="input" <% nvram_match_x("","rt_guest_ap_isolate", "0", "checked"); %>/><#checkbox_No#>
                                                 </div>
-                                            </td>
-                                        </tr>
-                                        <tr id="row_guest_9" style="display:none;">
-                                            <th><#WIFIGuestMCS#></th>
-                                            <td>
-                                                <select name="rt_guest_mcs_mode" class="input">
-                                                    <option value="0" <% nvram_match_x("", "rt_guest_mcs_mode", "0", "selected"); %>><#checkbox_No#> (*)</option>
-                                                    <option value="1" <% nvram_match_x("", "rt_guest_mcs_mode", "1", "selected"); %>>HTMIX (1S) 45 Mbps</option>
-                                                    <option value="2" <% nvram_match_x("", "rt_guest_mcs_mode", "2", "selected"); %>>HTMIX (1S) 30 Mbps</option>
-                                                    <option value="3" <% nvram_match_x("", "rt_guest_mcs_mode", "3", "selected"); %>>HTMIX (1S) 15 Mbps</option>
-                                                    <option value="4" <% nvram_match_x("", "rt_guest_mcs_mode", "4", "selected"); %>>OFDM 12 Mbps</option>
-                                                    <option value="5" <% nvram_match_x("", "rt_guest_mcs_mode", "5", "selected"); %>>OFDM 9 Mbps</option>
-                                                    <option value="6" <% nvram_match_x("", "rt_guest_mcs_mode", "6", "selected"); %>>OFDM 6 Mbps</option>
-                                                    <option value="7" <% nvram_match_x("", "rt_guest_mcs_mode", "7", "selected"); %>>CCK 5.5 Mbps</option>
-                                                    <option value="8" <% nvram_match_x("", "rt_guest_mcs_mode", "8", "selected"); %>>CCK 2 Mbps</option>
-                                                    <option value="9" <% nvram_match_x("", "rt_guest_mcs_mode", "9", "selected"); %>>CCK 1 Mbps</option>
-                                                </select>
                                             </td>
                                         </tr>
                                         <tr id="row_guest_10" style="display:none;">
