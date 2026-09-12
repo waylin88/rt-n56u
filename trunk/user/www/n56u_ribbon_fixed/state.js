@@ -280,11 +280,11 @@ function show_banner(L3){
 	bc += '    <td style="border: 0 none; min-width: 115px;"><div id="la_info"> -- -- -- </div></td>\n';
 	bc += '  </tr>\n';
 	bc += '  <tr>\n';
-	bc += '    <td style="height: 20px;"><a class="adv_info" href="javascript:void(0)" onclick="click_info_cpu();"><#SI_LoadCPU#></a></td>\n';
+	bc += '    <td style="height: 20px;"><#SI_LoadCPU#></td>\n';
 	bc += '    <td><span id="cpu_info"> -- % </span></td>\n';
 	bc += '  </tr>\n';
 	bc += '  <tr>\n';
-	bc += '    <td><a class="adv_info" href="javascript:void(0)" onclick="click_info_mem();"><#SI_FreeMem#></a></td>\n';
+	bc += '    <td><#SI_FreeMem#></td>\n';
 	bc += '    <td><span id="mem_info"> -- MB / -- MB </span></td>\n';
 	bc += '  </tr>\n';
 	bc += '  <tr>\n';
@@ -379,8 +379,8 @@ function show_banner(L3){
 
 var tabtitle = new Array(15);
 var tablink = new Array(15);
-tabtitle[0] = new Array("", "<#menu5_1_1#>", "<#menu5_1_3#>", "<#menu5_1_6#>");
-tabtitle[1] = new Array("", "<#menu5_1_1#>", "<#menu5_1_3#>", "<#menu5_1_6#>");
+tabtitle[0] = new Array("", "<#menu5_1_1#>", "", "<#menu5_1_3#>", "", "", "<#menu5_1_6#>");
+tabtitle[1] = new Array("", "<#menu5_1_1#>", "", "<#menu5_1_3#>", "", "", "<#menu5_1_6#>");
 tabtitle[2] = new Array("", "<#menu5_2_1#>", "<#menu5_2_2#>", "<#menu5_2_3#>", "<#menu5_2_4#>", "<#menu5_2_5#>", "<#menu5_2_6#>");
 tabtitle[3] = new Array("", "<#menu5_3_1#>", "<#menu5_3_3#>", "<#menu5_3_4#>", "<#menu5_3_5#>", "<#menu5_3_6#>");
 tabtitle[4] = new Array("", "<#menu5_5_1#>", "<#menu5_5_5#>", "<#menu5_5_2#>", "<#menu5_5_3#>", "<#menu5_5_4#>");
@@ -404,8 +404,8 @@ if (found_app_mentohust()){
 
 //Level 3 Tab title
 
-tablink[0] = new Array("", "Advanced_Wireless2g_Content.asp", "Advanced_WMode2g_Content.asp", "Advanced_WAdvanced2g_Content.asp");
-tablink[1] = new Array("", "Advanced_Wireless_Content.asp", "Advanced_WMode_Content.asp", "Advanced_WAdvanced_Content.asp");
+tablink[0] = new Array("", "Advanced_Wireless2g_Content.asp", "", "Advanced_WMode2g_Content.asp", "", "", "Advanced_WAdvanced2g_Content.asp");
+tablink[1] = new Array("", "Advanced_Wireless_Content.asp", "", "Advanced_WMode_Content.asp", "", "", "Advanced_WAdvanced_Content.asp");
 tablink[2] = new Array("", "Advanced_LAN_Content.asp", "Advanced_DHCP_Content.asp", "Advanced_GWStaticRoute_Content.asp", "Advanced_IPTV_Content.asp", "Advanced_Switch_Content.asp", "Advanced_WOL_Content.asp");
 tablink[3] = new Array("", "Advanced_WAN_Content.asp", "Advanced_IPv6_Content.asp", "Advanced_VirtualServer_Content.asp", "Advanced_Exposed_Content.asp", "Advanced_DDNS_Content.asp");
 tablink[4] = new Array("", "Advanced_BasicFirewall_Content.asp", "Advanced_Netfilter_Content.asp", "Advanced_URLFilter_Content.asp", "Advanced_MACFilter_Content.asp", "Advanced_Firewall_Content.asp");
@@ -469,9 +469,9 @@ if (found_app_mentohust()){
 } else menuL2_link.push("");
 
 //Level 1 Menu in Gateway, Router mode
-menuL1_title = new Array("", "<#menu1#>", "", "", "", "<#menu4#>", "<#menu5_8#>", "<#menu5#>");
-menuL1_link = new Array("", "index.asp", "", "", "", "Main_TrafficMonitor_realtime.asp", "Advanced_System_Info.asp", "as.asp");
-menuL1_icon = new Array("", "icon-home", "icon-hdd", "icon-retweet", "icon-globe", "icon-tasks", "icon-random", "icon-wrench");
+menuL1_title = new Array("", "<#menu1#>", "", "", "", "<#menu4#>", "", "<#menu5#>");
+menuL1_link = new Array("", "index.asp", "", "", "", "Main_TrafficMonitor_realtime.asp", "", "as.asp");
+menuL1_icon = new Array("", "icon-home", "icon-hdd", "icon-retweet", "icon-globe", "icon-tasks", "", "icon-wrench");
 
 function show_menu(L1, L2, L3){
 	var i;
@@ -733,14 +733,6 @@ function shutdown(){
 		'action_mode': ' Shutdown ',
 		'current_page': 'Main_LogStatus_Content.asp'
 	});
-}
-
-function click_info_cpu(){
-	location.href="/Advanced_System_Info.asp#CPU";
-}
-
-function click_info_mem(){
-	location.href="/Advanced_System_Info.asp#MEM";
 }
 
 function hide_adv_info(){
