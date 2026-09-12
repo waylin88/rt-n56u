@@ -42,6 +42,13 @@ function initial(){
 	else
 		document.form.computer_name.value = "";
 
+	document.form.http_passwd2.value = "";
+
+	if (login_safe()){
+		showhide_div('row_pass1', 1);
+		showhide_div('row_pass2', 1);
+	}
+
 	load_body();
 }
 
@@ -49,6 +56,8 @@ function applyRule(){
 	if(validForm()){
 		showLoading();
 
+		if(document.form.http_passwd2.value.length > 0)
+			document.form.http_passwd.value = document.form.http_passwd2.value;
 		document.form.action_mode.value = " Apply ";
 		document.form.current_page.value = "/Advanced_System_Content.asp";
 		document.form.next_page.value = "";
@@ -58,6 +67,18 @@ function applyRule(){
 }
 
 function validForm(){
+	if(!validate_string(document.form.http_passwd2) || !validate_string(document.form.v_password2))
+		return false;
+
+	if(document.form.http_passwd2.value != document.form.v_password2.value){
+		showtext($("alert_msg"),"*<#File_Pop_content_alert_desc7#>");
+
+		document.form.http_passwd2.focus();
+		document.form.http_passwd2.select();
+
+		return false;
+	}
+
 	if(!blanktest(document.form.computer_name, "computer_name")){
 		document.form.computer_name.focus();
 		document.form.computer_name.select();
@@ -138,6 +159,7 @@ function openLink(s) {
     <input type="hidden" name="action_script" value="">
 
     <input type="hidden" name="preferred_lang" id="preferred_lang" value="<% nvram_get_x("", "preferred_lang"); %>">
+    <input type="hidden" name="http_passwd" value="">
     <input type="hidden" name="computer_name2" value="<% nvram_get_x("", "computer_name"); %>">
 
     <div class="container-fluid">
@@ -176,6 +198,18 @@ function openLink(s) {
                                             </th>
                                             <td>
                                                 <input type="text" name="computer_name" id="computer_name" class="input" maxlength="15" size="32" value=""/>
+                                            </td>
+                                        </tr>
+                                        <tr id="row_pass1" style="display:none">
+                                            <th><a class="help_tooltip"  href="javascript:void(0);" onmouseover="openTooltip(this,11,4)"><#PASS_new#></a></th>
+                                            <td>
+                                                <input type="password" name="http_passwd2" class="input" autocomplete="off" maxlength="32" size="25" onKeyPress="return is_string(this,event);"/>
+                                            </td>
+                                        </tr>
+                                        <tr id="row_pass2" style="display:none">
+                                            <th><a class="help_tooltip"  href="javascript:void(0);" onmouseover="openTooltip(this,11,4)"><#PASS_retype#></a></th>
+                                            <td>
+                                                <input type="password" name="v_password2" class="input" autocomplete="off" maxlength="32" size="25" onKeyPress="return is_string(this,event);"/><br/><span id="alert_msg"></span>
                                             </td>
                                         </tr>
                                     </table>
