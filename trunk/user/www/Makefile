@@ -201,6 +201,7 @@ ifneq ($(CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS),y)
         rm -f $(INSTALLDIR)/www/Shadowsocks_log.asp
 endif
 ifneq ($(CONFIG_FIRMWARE_INCLUDE_OPENVPN_WEBUI),y)
+        rm -f $(INSTALLDIR)/www/vpn_clients.asp
         rm -f $(INSTALLDIR)/www/vpnsrv.asp
         rm -f $(INSTALLDIR)/www/vpncli.asp
 endif
