@@ -59,9 +59,6 @@ function initial(){
 	if(get_ap_mode()){
 		showhide_div('row_dhcpd_rt', 0);
 		showhide_div('row_dhcpd_ap', 1);
-		showhide_div('row_domain', 0);
-		showhide_div('row_dservers', 0);
-		showhide_div('row_hosts', 0);
 	}
 
 	if((inet_network(document.form.lan_ipaddr.value)>=inet_network(document.form.dhcp_start.value))&&
@@ -72,11 +69,6 @@ function initial(){
 	showLANIPList();
 
 	change_dhcp_static_enabled();
-
-	if (!support_ipv6()){
-		document.form.dhcp_verbose.remove(2);
-		document.form.dhcp_verbose.remove(2);
-	}
 
 	load_body();
 }
@@ -94,15 +86,6 @@ function applyRule(){
 }
 
 function validForm(){
-	var re = new RegExp('^(?=[a-z0-9])[a-z0-9\-\.]*[a-z0-9]$','gi');
-	var o_dom = document.form.lan_domain;
-	if((o_dom.value != "") && (!re.test(o_dom.value))){
-		alert("<#JS_validchar#>");
-		o_dom.focus();
-		o_dom.select();
-		return false;
-	}
-
 	var o_min = document.form.dhcp_start;
 	var o_max = document.form.dhcp_end;
 
@@ -110,9 +93,7 @@ function validForm(){
 			!validate_ipaddr_final(o_max, 'dhcp_end') ||
 			!validate_ipaddr_final(document.form.dhcp_gateway_x, 'dhcp_gateway_x') ||
 			!validate_ipaddr_final(document.form.dhcp_dns1_x, 'dhcp_dns_x') ||
-			!validate_ipaddr_final(document.form.dhcp_dns2_x, 'dhcp_dns_x') ||
-			!validate_ipaddr_final(document.form.dhcp_dns3_x, 'dhcp_dns_x') ||
-			!validate_ipaddr_final(document.form.dhcp_wins_x, 'dhcp_wins_x'))
+			!validate_ipaddr_final(document.form.dhcp_dns2_x, 'dhcp_dns_x'))
 		return false;
 
 	if(!validate_range(document.form.dhcp_lease, 120, 604800))
@@ -426,12 +407,6 @@ function changeBgColor(obj, num){
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr id="row_domain">
-                                            <th><a class="help_tooltip" href="javascript:void(0);" onmouseover="openTooltip(this,5,2);"><#LANHostConfig_DomainName_itemname#></a></th>
-                                            <td>
-                                                <input type="text" maxlength="32" class="input" size="32" name="lan_domain" value="<% nvram_get_x("", "lan_domain"); %>">
-                                            </td>
-                                        </tr>
                                         <tr>
                                             <th width="50%"><a class="help_tooltip" href="javascript:void(0);" onmouseover="openTooltip(this,5,3);"><#LANHostConfig_MinAddress_itemname#></a></th>
                                             <td>
@@ -476,62 +451,9 @@ function changeBgColor(obj, num){
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th><a class="help_tooltip" href="javascript:void(0);" onmouseover="openTooltip(this,5,9);"><#LANHostConfig_x_LDNSServer1_itemname#> 3:</a></th>
-                                            <td>
-                                                <input type="text" maxlength="15" class="input" size="15" name="dhcp_dns3_x" value="<% nvram_get_x("", "dhcp_dns3_x"); %>" onKeyPress="return is_ipaddr(this,event);" />
-                                            </td>
-                                        </tr>
-                                        <tr>
                                             <th><a class="help_tooltip" href="javascript:void(0);" onmouseover="openTooltip(this,5,12);"><#LANHostConfig_x_LDNSServer6_itemname#> :</th>
                                             <td>
                                                 <input type="text" maxlength="40" class="input" size="15" name="dhcp_dnsv6_x" value="<% nvram_get_x("", "dhcp_dnsv6_x"); %>" onKeyPress="return is_string(this,event);" />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th style="padding-bottom: 0px;"><a class="help_tooltip" href="javascript:void(0);" onmouseover="openTooltip(this,5,10);"><#LANHostConfig_x_WINSServer_itemname#></a></th>
-                                            <td style="padding-bottom: 0px;">
-                                                <input type="text" maxlength="15" class="input" size="15" name="dhcp_wins_x" value="<% nvram_get_x("", "dhcp_wins_x"); %>" onkeypress="return is_ipaddr(this,event);" />
-                                            </td>
-                                        </tr>
-                                    </table>
-
-                                    <table width="100%" align="center" cellpadding="4" cellspacing="0" class="table">
-                                        <tr>
-                                            <th colspan="2" style="background-color: #E3E3E3;"><#t2Advanced#></th>
-                                        </tr>
-                                        <tr>
-                                            <th width="50%"><#DHCP_Verbose#></th>
-                                            <td>
-                                                <select name="dhcp_verbose" class="input">
-                                                    <option value="0" <% nvram_match_x("", "dhcp_verbose", "0","selected"); %>><#CTL_Disabled#></option>
-                                                    <option value="1" <% nvram_match_x("", "dhcp_verbose", "1","selected"); %>>DHCPv4</option>
-                                                    <option value="2" <% nvram_match_x("", "dhcp_verbose", "2","selected"); %>>DHCPv6</option>
-                                                    <option value="3" <% nvram_match_x("", "dhcp_verbose", "3","selected"); %>>DHCPv4 + DHCPv6</option>
-                                                </select>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">
-                                                <a href="javascript:spoiler_toggle('spoiler_conf')"><span><#CustomConf#> "dnsmasq.conf"</span></a>
-                                                <div id="spoiler_conf" style="display:none;">
-                                                    <textarea rows="16" wrap="off" spellcheck="false" maxlength="4096" class="span12" name="dnsmasq.dnsmasq.conf" style="font-family:'Courier New'; font-size:12px;"><% nvram_dump("dnsmasq.dnsmasq.conf",""); %></textarea>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr id="row_dservers">
-                                            <td colspan="2">
-                                                <a href="javascript:spoiler_toggle('spoiler_dservers')"><span><#CustomConf#> "dhcp.conf"</span></a>
-                                                <div id="spoiler_dservers" style="display:none;">
-                                                    <textarea rows="16" wrap="off" spellcheck="false" maxlength="16384" class="span12" name="dnsmasq.dhcp.conf" style="font-family:'Courier New'; font-size:12px;"><% nvram_dump("dnsmasq.dhcp.conf",""); %></textarea>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr id="row_hosts">
-                                            <td colspan="2" style="padding-bottom: 0px;">
-                                                <a href="javascript:spoiler_toggle('spoiler_hosts')"><span><#CustomConf#> "hosts"</span></a>
-                                                <div id="spoiler_hosts" style="display:none;">
-                                                    <textarea rows="16" wrap="off" spellcheck="false" maxlength="8192" class="span12" name="dnsmasq.hosts" style="font-family:'Courier New'; font-size:12px;"><% nvram_dump("dnsmasq.hosts",""); %></textarea>
-                                                </div>
                                             </td>
                                         </tr>
                                     </table>
