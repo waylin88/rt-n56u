@@ -15,28 +15,13 @@ function automode_hint() {
 function nmode_limitation() {
     var gmode = document.form.wl_gmode.value;
     if (gmode == "1" || gmode == "3") {
-        if (document.form.wl_auth_mode.selectedIndex == 0 && (document.form.wl_wep_x.selectedIndex == "1" || document.form.wl_wep_x.selectedIndex == "2")) {
-            alert("<#WLANConfig11n_nmode_limition_hint#>");
-            document.form.wl_auth_mode.selectedIndex = 0;
-            document.form.wl_wep_x.selectedIndex = 0;
-        }
-        else if (document.form.wl_auth_mode.selectedIndex == 1) {
-            alert("<#WLANConfig11n_nmode_limition_hint#>");
+        if (document.form.wl_auth_mode.selectedIndex == 1) {
             document.form.wl_auth_mode.selectedIndex = 3;
             document.form.wl_wpa_mode.value = 2;
         }
         else if (document.form.wl_auth_mode.selectedIndex == 2) {
-            alert("<#WLANConfig11n_nmode_limition_hint#>");
             document.form.wl_auth_mode.selectedIndex = 3;
             document.form.wl_wpa_mode.value = 2;
-        }
-        else if (document.form.wl_auth_mode.selectedIndex == 5) {
-            alert("<#WLANConfig11n_nmode_limition_hint#>");
-            document.form.wl_auth_mode.selectedIndex = 6;
-        }
-        else if (document.form.wl_auth_mode.selectedIndex == 7 && (document.form.wl_crypto.selectedIndex == 0 || document.form.wl_crypto.selectedIndex == 2)) {
-            alert("<#WLANConfig11n_nmode_limition_hint#>");
-            document.form.wl_crypto.selectedIndex = 1;
         }
         wl_auth_mode_change(0);
     }

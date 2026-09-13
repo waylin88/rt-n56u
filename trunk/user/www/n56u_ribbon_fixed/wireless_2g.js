@@ -16,28 +16,13 @@ function automode_hint() {
 
 function nmode_limitation() {
     if (document.form.rt_gmode.value == "3") {
-        if (document.form.rt_auth_mode.selectedIndex == 0 && (document.form.rt_wep_x.selectedIndex == "1" || document.form.rt_wep_x.selectedIndex == "2")) {
-            alert("<#WLANConfig11n_nmode_limition_hint#>");
-            document.form.rt_auth_mode.selectedIndex = 0;
-            document.form.rt_wep_x.selectedIndex = 0;
-        }
-        else if (document.form.rt_auth_mode.selectedIndex == 1) {
-            alert("<#WLANConfig11n_nmode_limition_hint#>");
+        if (document.form.rt_auth_mode.selectedIndex == 1) {
             document.form.rt_auth_mode.selectedIndex = 3;
             document.form.rt_wpa_mode.value = 2;
         }
         else if (document.form.rt_auth_mode.selectedIndex == 2) {
-            alert("<#WLANConfig11n_nmode_limition_hint#>");
             document.form.rt_auth_mode.selectedIndex = 3;
             document.form.rt_wpa_mode.value = 2;
-        }
-        else if (document.form.rt_auth_mode.selectedIndex == 5) {
-            alert("<#WLANConfig11n_nmode_limition_hint#>");
-            document.form.rt_auth_mode.selectedIndex = 6;
-        }
-        else if (document.form.rt_auth_mode.selectedIndex == 7 && (document.form.rt_crypto.selectedIndex == 0 || document.form.rt_crypto.selectedIndex == 2)) {
-            alert("<#WLANConfig11n_nmode_limition_hint#>");
-            document.form.rt_crypto.selectedIndex = 1;
         }
         rt_auth_mode_change(0);
     }
@@ -530,6 +515,8 @@ function insertChannelOption() {
 }
 
 function insertExtChannelOption() {
+    if (typeof document.form.rt_HT_EXTCHA == "undefined" || !document.form.rt_HT_EXTCHA)
+        return;
     var wmode = document.form.rt_gmode.value;
     var CurrentCh = document.form.rt_channel.value;
     var option_length = document.form.rt_channel.options.length;
