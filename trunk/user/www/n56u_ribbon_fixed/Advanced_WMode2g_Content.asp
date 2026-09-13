@@ -349,7 +349,7 @@ function hideClients_Block(){
 
                                     <table class="table">
                                         <tr>
-                                            <td style="border-top: 0 none;">
+                                            <td style="border-top: 0 none; text-align: center;">
                                                 <input class="btn btn-primary" style="width: 219px" type="button" value="<#CTL_apply#>" onclick="applyRule()" />
                                             </td>
                                         </tr>

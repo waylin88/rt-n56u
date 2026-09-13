@@ -276,7 +276,7 @@ function done_validating(action){
 
                                     <table class="table">
                                         <tr>
-                                            <td style="border-top: 0 none;">
+                                            <td style="border-top: 0 none; text-align: center;">
                                                 <input type="button" id="applyButton" class="btn btn-primary" style="width: 219px" value="<#CTL_apply#>" onclick="applyRule();">
                                             </td>
                                         </tr>
