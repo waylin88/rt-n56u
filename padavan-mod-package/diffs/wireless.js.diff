@@ -1,0 +1,201 @@
+diff --git a/trunk/user/www/n56u_ribbon_fixed/wireless.js b/trunk/user/www/n56u_ribbon_fixed/wireless.js
+index 61b48f019b..dd901c1a5a 100644
+--- a/trunk/user/www/n56u_ribbon_fixed/wireless.js
++++ b/trunk/user/www/n56u_ribbon_fixed/wireless.js
+@@ -2,40 +2,27 @@ var wep1, wep2, wep3, wep4;
+ 
+ function automode_hint() {
+     var gmode = document.form.wl_gmode.value;
++    var hint = $("wl_gmode_hint");
++    if (!hint) return;
+     if ((gmode == "2" || gmode == "3" || gmode == "4" || gmode == "5") &&
+        (document.form.wl_wep_x.value == 1 || document.form.wl_wep_x.value == 2 || document.form.wl_auth_mode.value == "radius" ||
+             (document.form.wl_crypto.value.indexOf("tkip") == 0 && !document.form.wl_crypto.disabled)))
+-        $("wl_gmode_hint").style.display = "block";
++        hint.style.display = "block";
+     else
+-        $("wl_gmode_hint").style.display = "none";
++        hint.style.display = "none";
+ }
+ 
+ function nmode_limitation() {
+     var gmode = document.form.wl_gmode.value;
+     if (gmode == "1" || gmode == "3") {
+-        if (document.form.wl_auth_mode.selectedIndex == 0 && (document.form.wl_wep_x.selectedIndex == "1" || document.form.wl_wep_x.selectedIndex == "2")) {
+-            alert("<#WLANConfig11n_nmode_limition_hint#>");
+-            document.form.wl_auth_mode.selectedIndex = 0;
+-            document.form.wl_wep_x.selectedIndex = 0;
+-        }
+-        else if (document.form.wl_auth_mode.selectedIndex == 1) {
+-            alert("<#WLANConfig11n_nmode_limition_hint#>");
++        if (document.form.wl_auth_mode.selectedIndex == 1) {
+             document.form.wl_auth_mode.selectedIndex = 3;
+             document.form.wl_wpa_mode.value = 2;
+         }
+         else if (document.form.wl_auth_mode.selectedIndex == 2) {
+-            alert("<#WLANConfig11n_nmode_limition_hint#>");
+             document.form.wl_auth_mode.selectedIndex = 3;
+             document.form.wl_wpa_mode.value = 2;
+         }
+-        else if (document.form.wl_auth_mode.selectedIndex == 5) {
+-            alert("<#WLANConfig11n_nmode_limition_hint#>");
+-            document.form.wl_auth_mode.selectedIndex = 6;
+-        }
+-        else if (document.form.wl_auth_mode.selectedIndex == 7 && (document.form.wl_crypto.selectedIndex == 0 || document.form.wl_crypto.selectedIndex == 2)) {
+-            alert("<#WLANConfig11n_nmode_limition_hint#>");
+-            document.form.wl_crypto.selectedIndex = 1;
+-        }
+         wl_auth_mode_change(0);
+     }
+ }
+@@ -359,14 +346,14 @@ function wl_wep_change() {
+         inputCtrl(document.form.wl_key4, 0);
+         inputCtrl(document.form.wl_key, 0);
+ 
+-        $("row_wpa3").style.display = "";
+-        $("row_wep1").style.display = "none";
+-        $("row_wep2").style.display = "none";
+-        $("row_wep3").style.display = "none";
+-        $("row_wep4").style.display = "none";
+-        $("row_wep5").style.display = "none";
+-        $("row_wep6").style.display = "none";
+-        $("row_wep7").style.display = "none";
++        set_display("row_wpa3", "");
++        set_display("row_wep1", "none");
++        set_display("row_wep2", "none");
++        set_display("row_wep3", "none");
++        set_display("row_wep4", "none");
++        set_display("row_wep5", "none");
++        set_display("row_wep6", "none");
++        set_display("row_wep7", "none");
+     }
+     else if (mode == "radius") {
+         inputCtrl(document.form.wl_crypto, 0);
+@@ -380,14 +367,14 @@ function wl_wep_change() {
+         inputCtrl(document.form.wl_key4, 0);
+         inputCtrl(document.form.wl_key, 0);
+ 
+-        $("row_wpa3").style.display = "none";
+-        $("row_wep1").style.display = "none";
+-        $("row_wep2").style.display = "none";
+-        $("row_wep3").style.display = "none";
+-        $("row_wep4").style.display = "none";
+-        $("row_wep5").style.display = "none";
+-        $("row_wep6").style.display = "none";
+-        $("row_wep7").style.display = "none";
++        set_display("row_wpa3", "none");
++        set_display("row_wep1", "none");
++        set_display("row_wep2", "none");
++        set_display("row_wep3", "none");
++        set_display("row_wep4", "none");
++        set_display("row_wep5", "none");
++        set_display("row_wep6", "none");
++        set_display("row_wep7", "none");
+     }
+     else {
+         inputCtrl(document.form.wl_crypto, 0);
+@@ -395,8 +382,8 @@ function wl_wep_change() {
+         inputCtrl(document.form.wl_wpa_gtk_rekey, 0);
+         inputCtrl(document.form.wl_wep_x, 1);
+ 
+-        $("row_wpa3").style.display = "none";
+-        $("row_wep1").style.display = "";
++        set_display("row_wpa3", "none");
++        set_display("row_wep1", "");
+ 
+         if (wep != "0") {
+             inputCtrl(document.form.wl_phrase_x, 1);
+@@ -406,12 +393,12 @@ function wl_wep_change() {
+             inputCtrl(document.form.wl_key4, 1);
+             inputCtrl(document.form.wl_key, 1);
+ 
+-            $("row_wep2").style.display = "";
+-            $("row_wep3").style.display = "";
+-            $("row_wep4").style.display = "";
+-            $("row_wep5").style.display = "";
+-            $("row_wep6").style.display = "";
+-            $("row_wep7").style.display = "";
++            set_display("row_wep2", "");
++            set_display("row_wep3", "");
++            set_display("row_wep4", "");
++            set_display("row_wep5", "");
++            set_display("row_wep6", "");
++            set_display("row_wep7", "");
+         }
+         else {
+             inputCtrl(document.form.wl_phrase_x, 0);
+@@ -421,16 +408,17 @@ function wl_wep_change() {
+             inputCtrl(document.form.wl_key4, 0);
+             inputCtrl(document.form.wl_key, 0);
+ 
+-            $("row_wep2").style.display = "none";
+-            $("row_wep3").style.display = "none";
+-            $("row_wep4").style.display = "none";
+-            $("row_wep5").style.display = "none";
+-            $("row_wep6").style.display = "none";
+-            $("row_wep7").style.display = "none";
++            set_display("row_wep2", "none");
++            set_display("row_wep3", "none");
++            set_display("row_wep4", "none");
++            set_display("row_wep5", "none");
++            set_display("row_wep6", "none");
++            set_display("row_wep7", "none");
+         }
+     }
+ 
+-    change_key_des();
++    if (typeof change_key_des == 'function')
++        change_key_des();
+ }
+ 
+ function change_wep_type(mode, isload) {
+@@ -438,6 +426,13 @@ function change_wep_type(mode, isload) {
+     var wep_type_array;
+     var value_array;
+ 
++    /* WEP select removed; wl_wep_x is a hidden input */
++    if (document.form.wl_wep_x.options == null) {
++        if (mode == "psk" || mode == "wpa" || mode == "wpa2" || mode == "radius")
++            document.form.wl_wep_x.value = "0";
++        return;
++    }
++
+     free_options(document.form.wl_wep_x);
+ 
+     if (mode == "shared") {
+@@ -458,12 +453,14 @@ function change_wep_type(mode, isload) {
+ }
+ 
+ function enableExtChRows(o) {
++    var el_bw = $("row_HT_BW");
++    var el_extcha = $("row_HT_EXTCHA");
+     if (o.value == "0"){
+-        $("row_HT_BW").style.display = "none";
+-        $("row_HT_EXTCHA").style.display = "none";
++        if (el_bw) el_bw.style.display = "none";
++        if (el_extcha) el_extcha.style.display = "none";
+     }else{
+-        $("row_HT_BW").style.display = "";
+-        $("row_HT_EXTCHA").style.display = "";
++        if (el_bw) el_bw.style.display = "";
++        if (el_extcha) el_extcha.style.display = "";
+     }
+     if (o.value == "3" || o.value == "4" || o.value == "5")
+         insert_vht_bw(1);
+@@ -722,6 +719,8 @@ function wl_auth_mode_change(isload) {
+ 
+     change_wep_type(mode, isload);
+ 
++    /* WEP key select removed; wl_key is a hidden input */
++    if (document.form.wl_key.options != null) {
+     /* Save current network key index */
+     for (var i = 0; i < document.form.wl_key.length; i++) {
+         if (document.form.wl_key[i].selected) {
+@@ -747,6 +746,7 @@ function wl_auth_mode_change(isload) {
+         if (algos[i] == cur)
+             document.form.wl_key[i].selected = true;
+     }
++    }
+ 
+     wl_wep_change();
+ }

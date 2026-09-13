@@ -1,0 +1,56 @@
+diff --git a/trunk/user/www/n56u_ribbon_fixed/Advanced_WGuest2g_Content.asp b/trunk/user/www/n56u_ribbon_fixed/Advanced_WGuest2g_Content.asp
+index 9936fbe9dd..fc395ff8a9 100644
+--- a/trunk/user/www/n56u_ribbon_fixed/Advanced_WGuest2g_Content.asp
++++ b/trunk/user/www/n56u_ribbon_fixed/Advanced_WGuest2g_Content.asp
+@@ -44,11 +44,6 @@ function initial(){
+ 	document.form.rt_guest_ssid.value = decodeURIComponent(document.form.rt_guest_ssid_org.value);
+ 	document.form.rt_guest_wpa_psk.value = decodeURIComponent(document.form.rt_guest_wpa_psk_org.value);
+ 
+-	if (!support_5g_radio()) {
+-		document.form.goto5.style.display = "none";
+-		$("col_goto5").width = "33%";
+-	}
+-
+ 	if (get_ap_mode())
+ 		$("col_isolate").innerHTML = "<#WIFIGuestIsolate#>";
+ 
+@@ -107,10 +102,16 @@ function change_guest_enabled(mflag) {
+ 	showhide_div('row_guest_13', v);
+ 	if (v)
+ 		change_guest_auth_mode(0);
++	else {
++		showhide_div('row_guest_11', 0);
++		showhide_div('row_guest_12', 0);
++	}
+ }
+ 
+-
+ function change_guest_auth_mode(mflag) {
++	var v = document.form.rt_guest_enable[0].checked;
++	if (!v) return;
++
+ 	var mode = document.form.rt_guest_auth_mode.value;
+ 	var opts = document.form.rt_guest_auth_mode.options;
+ 
+@@ -190,9 +191,6 @@ function change_guest_auth_mode(mflag) {
+     <input type="hidden" name="rt_guest_ssid_org" value="<% nvram_char_to_ascii("", "rt_guest_ssid"); %>">
+     <input type="hidden" name="rt_guest_wpa_mode" value="<% nvram_get_x("","rt_guest_wpa_mode"); %>">
+     <input type="hidden" name="rt_guest_wpa_psk_org" value="<% nvram_char_to_ascii("", "rt_guest_wpa_psk"); %>">
+-    <input type="hidden" name="rt_guest_date_x" value="<% nvram_get_x("","rt_guest_date_x"); %>">
+-    <input type="hidden" name="rt_guest_time_x" value="<% nvram_get_x("","rt_guest_time_x"); %>">
+-    <input type="hidden" name="rt_guest_time2_x" value="<% nvram_get_x("","rt_guest_time2_x"); %>">
+ 
+     <div class="container-fluid">
+         <div class="row-fluid">
+@@ -333,10 +331,7 @@ function change_guest_auth_mode(mflag) {
+ 
+                                     <table class="table">
+                                         <tr>
+-                                            <td id="col_goto5" width="50%" style="margin-top: 10px; border-top: 0 none;">
+-                                                <input type="button" class="btn btn-info" name="goto5" value="<#GO_5G#>" onclick="location.href='Advanced_WGuest_Content.asp';">
+-                                            </td>
+-                                            <td style="border-top: 0 none;">
++                                            <td style="border-top: 0 none; text-align: center;">
+                                                 <input type="button" id="applyButton" class="btn btn-primary" style="width: 219px" value="<#CTL_apply#>" onclick="applyRule();">
+                                             </td>
+                                         </tr>

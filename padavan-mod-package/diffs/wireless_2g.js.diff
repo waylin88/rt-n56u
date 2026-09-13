@@ -1,0 +1,219 @@
+diff --git a/trunk/user/www/n56u_ribbon_fixed/wireless_2g.js b/trunk/user/www/n56u_ribbon_fixed/wireless_2g.js
+index 6c2e2abe5d..4e6895cce3 100644
+--- a/trunk/user/www/n56u_ribbon_fixed/wireless_2g.js
++++ b/trunk/user/www/n56u_ribbon_fixed/wireless_2g.js
+@@ -2,41 +2,28 @@ var wep1, wep2, wep3, wep4;
+ 
+ function automode_hint() {
+     var gmode = document.form.rt_gmode.value;
++    var hint = $("rt_gmode_hint");
++    if (!hint) return;
+     if ((gmode == "2" || gmode == "5" || gmode == "6") &&
+         (document.form.rt_wep_x.value == 1 || document.form.rt_wep_x.value == 2 || document.form.rt_auth_mode.value == "radius" ||
+             (document.form.rt_crypto.value.indexOf("tkip") == 0 && !document.form.rt_crypto.disabled))) {
+-        $("rt_gmode_hint").style.display = "block";
++        hint.style.display = "block";
+     }
+     else {
+-        $("rt_gmode_hint").style.display = "none";
++        hint.style.display = "none";
+     }
+ }
+ 
+ function nmode_limitation() {
+     if (document.form.rt_gmode.value == "3") {
+-        if (document.form.rt_auth_mode.selectedIndex == 0 && (document.form.rt_wep_x.selectedIndex == "1" || document.form.rt_wep_x.selectedIndex == "2")) {
+-            alert("<#WLANConfig11n_nmode_limition_hint#>");
+-            document.form.rt_auth_mode.selectedIndex = 0;
+-            document.form.rt_wep_x.selectedIndex = 0;
+-        }
+-        else if (document.form.rt_auth_mode.selectedIndex == 1) {
+-            alert("<#WLANConfig11n_nmode_limition_hint#>");
++        if (document.form.rt_auth_mode.selectedIndex == 1) {
+             document.form.rt_auth_mode.selectedIndex = 3;
+             document.form.rt_wpa_mode.value = 2;
+         }
+         else if (document.form.rt_auth_mode.selectedIndex == 2) {
+-            alert("<#WLANConfig11n_nmode_limition_hint#>");
+             document.form.rt_auth_mode.selectedIndex = 3;
+             document.form.rt_wpa_mode.value = 2;
+         }
+-        else if (document.form.rt_auth_mode.selectedIndex == 5) {
+-            alert("<#WLANConfig11n_nmode_limition_hint#>");
+-            document.form.rt_auth_mode.selectedIndex = 6;
+-        }
+-        else if (document.form.rt_auth_mode.selectedIndex == 7 && (document.form.rt_crypto.selectedIndex == 0 || document.form.rt_crypto.selectedIndex == 2)) {
+-            alert("<#WLANConfig11n_nmode_limition_hint#>");
+-            document.form.rt_crypto.selectedIndex = 1;
+-        }
+         rt_auth_mode_change(0);
+     }
+ }
+@@ -377,14 +364,14 @@ function rt_wep_change() {
+         inputCtrl(document.form.rt_key4, 0);
+         inputCtrl(document.form.rt_key, 0);
+ 
+-        $("row_wpa3").style.display = "";
+-        $("row_wep1").style.display = "none";
+-        $("row_wep2").style.display = "none";
+-        $("row_wep3").style.display = "none";
+-        $("row_wep4").style.display = "none";
+-        $("row_wep5").style.display = "none";
+-        $("row_wep6").style.display = "none";
+-        $("row_wep7").style.display = "none";
++        set_display("row_wpa3", "");
++        set_display("row_wep1", "none");
++        set_display("row_wep2", "none");
++        set_display("row_wep3", "none");
++        set_display("row_wep4", "none");
++        set_display("row_wep5", "none");
++        set_display("row_wep6", "none");
++        set_display("row_wep7", "none");
+     }
+     else if (mode == "radius") {
+         inputCtrl(document.form.rt_crypto, 0);
+@@ -398,14 +385,14 @@ function rt_wep_change() {
+         inputCtrl(document.form.rt_key4, 0);
+         inputCtrl(document.form.rt_key, 0);
+ 
+-        $("row_wpa3").style.display = "none";
+-        $("row_wep1").style.display = "none";
+-        $("row_wep2").style.display = "none";
+-        $("row_wep3").style.display = "none";
+-        $("row_wep4").style.display = "none";
+-        $("row_wep5").style.display = "none";
+-        $("row_wep6").style.display = "none";
+-        $("row_wep7").style.display = "none";
++        set_display("row_wpa3", "none");
++        set_display("row_wep1", "none");
++        set_display("row_wep2", "none");
++        set_display("row_wep3", "none");
++        set_display("row_wep4", "none");
++        set_display("row_wep5", "none");
++        set_display("row_wep6", "none");
++        set_display("row_wep7", "none");
+     }
+     else {
+         inputCtrl(document.form.rt_crypto, 0);
+@@ -413,8 +400,8 @@ function rt_wep_change() {
+         inputCtrl(document.form.rt_wpa_gtk_rekey, 0);
+         inputCtrl(document.form.rt_wep_x, 1);
+ 
+-        $("row_wpa3").style.display = "none";
+-        $("row_wep1").style.display = "";
++        set_display("row_wpa3", "none");
++        set_display("row_wep1", "");
+ 
+         if (wep != "0") {
+             inputCtrl(document.form.rt_phrase_x, 1);
+@@ -424,12 +411,12 @@ function rt_wep_change() {
+             inputCtrl(document.form.rt_key4, 1);
+             inputCtrl(document.form.rt_key, 1);
+ 
+-            $("row_wep2").style.display = "";
+-            $("row_wep3").style.display = "";
+-            $("row_wep4").style.display = "";
+-            $("row_wep5").style.display = "";
+-            $("row_wep6").style.display = "";
+-            $("row_wep7").style.display = "";
++            set_display("row_wep2", "");
++            set_display("row_wep3", "");
++            set_display("row_wep4", "");
++            set_display("row_wep5", "");
++            set_display("row_wep6", "");
++            set_display("row_wep7", "");
+         }
+         else {
+             inputCtrl(document.form.rt_phrase_x, 0);
+@@ -439,16 +426,17 @@ function rt_wep_change() {
+             inputCtrl(document.form.rt_key4, 0);
+             inputCtrl(document.form.rt_key, 0);
+ 
+-            $("row_wep2").style.display = "none";
+-            $("row_wep3").style.display = "none";
+-            $("row_wep4").style.display = "none";
+-            $("row_wep5").style.display = "none";
+-            $("row_wep6").style.display = "none";
+-            $("row_wep7").style.display = "none";
++            set_display("row_wep2", "none");
++            set_display("row_wep3", "none");
++            set_display("row_wep4", "none");
++            set_display("row_wep5", "none");
++            set_display("row_wep6", "none");
++            set_display("row_wep7", "none");
+         }
+     }
+ 
+-    change_key_des();	// 2008.01 James.
++    if (typeof change_key_des == 'function')
++        change_key_des();	// 2008.01 James.
+ }
+ 
+ function change_wep_type(mode, isload) {
+@@ -456,6 +444,13 @@ function change_wep_type(mode, isload) {
+     var wep_type_array;
+     var value_array;
+ 
++    /* WEP select removed; rt_wep_x is a hidden input */
++    if (document.form.rt_wep_x.options == null) {
++        if (mode == "psk" || mode == "wpa" || mode == "wpa2" || mode == "radius")
++            document.form.rt_wep_x.value = "0";
++        return;
++    }
++
+     free_options(document.form.rt_wep_x);
+ 
+     if (mode == "shared") {
+@@ -476,17 +471,18 @@ function change_wep_type(mode, isload) {
+ }
+ 
+ function enableExtChRows(o) {
+-    if (o.value == "1" || o.value == "2")
+-        $("row_protect").style.display = "";
+-    else
+-        $("row_protect").style.display = "none";
++    var el_protect = $("row_protect");
++    if (el_protect)
++        el_protect.style.display = (o.value == "1" || o.value == "2") ? "" : "none";
+ 
++    var el_bw = $("row_HT_BW");
++    var el_extcha = $("row_HT_EXTCHA");
+     if (o.value == "0" || o.value == "1" || o.value == "4"){
+-        $("row_HT_BW").style.display = "none";
+-        $("row_HT_EXTCHA").style.display = "none";
++        if (el_bw) el_bw.style.display = "none";
++        if (el_extcha) el_extcha.style.display = "none";
+     }else{
+-        $("row_HT_BW").style.display = "";
+-        $("row_HT_EXTCHA").style.display = "";
++        if (el_bw) el_bw.style.display = "";
++        if (el_extcha) el_extcha.style.display = "";
+     }
+ }
+ 
+@@ -519,6 +515,8 @@ function insertChannelOption() {
+ }
+ 
+ function insertExtChannelOption() {
++    if (typeof document.form.rt_HT_EXTCHA == "undefined" || !document.form.rt_HT_EXTCHA)
++        return;
+     var wmode = document.form.rt_gmode.value;
+     var CurrentCh = document.form.rt_channel.value;
+     var option_length = document.form.rt_channel.options.length;
+@@ -682,6 +680,8 @@ function rt_auth_mode_change(isload) {
+ 
+     change_wep_type(mode, isload);
+ 
++    /* WEP key select removed; rt_key is a hidden input */
++    if (document.form.rt_key.options != null) {
+     /* Save current network key index */
+     for (var i = 0; i < document.form.rt_key.length; i++) {
+         if (document.form.rt_key[i].selected) {
+@@ -707,6 +707,7 @@ function rt_auth_mode_change(isload) {
+         if (algos[i] == cur)
+             document.form.rt_key[i].selected = true;
+     }
++    }
+ 
+     rt_wep_change();
+ }

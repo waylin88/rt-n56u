@@ -1,0 +1,43 @@
+diff --git a/trunk/user/www/n56u_ribbon_fixed/Advanced_WGuest_Content.asp b/trunk/user/www/n56u_ribbon_fixed/Advanced_WGuest_Content.asp
+index 72f6ba0830..fad1487ff5 100644
+--- a/trunk/user/www/n56u_ribbon_fixed/Advanced_WGuest_Content.asp
++++ b/trunk/user/www/n56u_ribbon_fixed/Advanced_WGuest_Content.asp
+@@ -107,9 +107,16 @@ function change_guest_enabled(mflag) {
+ 	showhide_div('row_guest_13', v);
+ 	if (v)
+ 		change_guest_auth_mode(0);
++	else {
++		showhide_div('row_guest_11', 0);
++		showhide_div('row_guest_12', 0);
++	}
+ }
+ 
+ function change_guest_auth_mode(mflag) {
++	var v = document.form.wl_guest_enable[0].checked;
++	if (!v) return;
++
+ 	var mode = document.form.wl_guest_auth_mode.value;
+ 	var opts = document.form.wl_guest_auth_mode.options;
+ 
+@@ -188,9 +195,6 @@ function change_guest_auth_mode(mflag) {
+     <input type="hidden" name="wl_guest_ssid_org" value="<% nvram_char_to_ascii("", "wl_guest_ssid"); %>">
+     <input type="hidden" name="wl_guest_wpa_mode" value="<% nvram_get_x("","wl_guest_wpa_mode"); %>">
+     <input type="hidden" name="wl_guest_wpa_psk_org" value="<% nvram_char_to_ascii("", "wl_guest_wpa_psk"); %>">
+-    <input type="hidden" name="wl_guest_date_x" value="<% nvram_get_x("","wl_guest_date_x"); %>">
+-    <input type="hidden" name="wl_guest_time_x" value="<% nvram_get_x("","wl_guest_time_x"); %>">
+-    <input type="hidden" name="wl_guest_time2_x" value="<% nvram_get_x("","wl_guest_time2_x"); %>">
+ 
+     <div class="container-fluid">
+         <div class="row-fluid">
+@@ -331,10 +335,7 @@ function change_guest_auth_mode(mflag) {
+ 
+                                     <table class="table">
+                                         <tr>
+-                                            <td width="50%" style="margin-top: 10px; border-top: 0 none;">
+-                                                <input type="button" class="btn btn-info" value="<#GO_2G#>" onclick="location.href='Advanced_WGuest2g_Content.asp';">
+-                                            </td>
+-                                            <td style="border-top: 0 none;">
++                                            <td style="border-top: 0 none; text-align: center;">
+                                                 <input type="button" id="applyButton" class="btn btn-primary" style="width: 219px" value="<#CTL_apply#>" onclick="applyRule();">
+                                             </td>
+                                         </tr>

@@ -1,0 +1,28 @@
+diff --git a/trunk/user/www/n56u_ribbon_fixed/Advanced_ACL2g_Content.asp b/trunk/user/www/n56u_ribbon_fixed/Advanced_ACL2g_Content.asp
+index 1148738c4f..c38329f9e6 100644
+--- a/trunk/user/www/n56u_ribbon_fixed/Advanced_ACL2g_Content.asp
++++ b/trunk/user/www/n56u_ribbon_fixed/Advanced_ACL2g_Content.asp
+@@ -43,11 +43,6 @@ function initial(){
+ 
+ 	show_footer();
+ 
+-	if (!support_5g_radio()) {
+-		document.form.goto5.style.display = "none";
+-		$("col_goto5").width = "33%";
+-	}
+-
+ 	change_mac_enabled();
+ 
+ 	showACLList();
+@@ -329,10 +324,7 @@ function done_validating(action){
+ 
+                                     <table class="table">
+                                         <tr>
+-                                            <td id="col_goto5" width="50%" style="margin-top: 10px; border-top: 0 none;">
+-                                                <input class="btn btn-info" type="button" name="goto5" value="<#GO_5G#>" onclick="location.href='Advanced_ACL_Content.asp';">
+-                                            </td>
+-                                            <td style="border-top: 0 none;">
++                                            <td style="border-top: 0 none; text-align: center;">
+                                                 <input class="btn btn-primary" style="width: 219px" type="button" value="<#CTL_apply#>" onclick="applyRule()" />
+                                             </td>
+                                         </tr>

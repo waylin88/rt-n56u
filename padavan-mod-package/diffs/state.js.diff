@@ -1,0 +1,53 @@
+diff --git a/trunk/user/www/n56u_ribbon_fixed/state.js b/trunk/user/www/n56u_ribbon_fixed/state.js
+index c83fa3cd93..fafd23c62d 100644
+--- a/trunk/user/www/n56u_ribbon_fixed/state.js
++++ b/trunk/user/www/n56u_ribbon_fixed/state.js
+@@ -379,8 +379,8 @@ function show_banner(L3){
+ 
+ var tabtitle = new Array(15);
+ var tablink = new Array(15);
+-tabtitle[0] = new Array("", "<#menu5_1_1#>", "<#menu5_1_2#>", "<#menu5_1_3#>", "", "", "<#menu5_1_6#>");
+-tabtitle[1] = new Array("", "<#menu5_1_1#>", "<#menu5_1_2#>", "<#menu5_1_3#>", "", "", "<#menu5_1_6#>");
++tabtitle[0] = new Array("", "<#menu5_1_1#>", "<#menu5_1_2#>", "<#menu5_1_3#>", "<#menu5_1_4#>", "", "<#menu5_1_6#>");
++tabtitle[1] = new Array("", "<#menu5_1_1#>", "<#menu5_1_2#>", "<#menu5_1_3#>", "<#menu5_1_4#>", "", "<#menu5_1_6#>");
+ tabtitle[2] = new Array("", "<#menu5_2_1#>", "<#menu5_2_2#>", "<#menu5_2_3#>", "", "<#menu5_2_5#>", "<#menu5_2_6#>");
+ tabtitle[3] = new Array("", "<#menu5_3_1#>", "<#menu5_3_3#>", "<#menu5_3_4#>", "<#menu5_3_5#>", "");
+ tabtitle[4] = new Array("", "<#menu5_5_1#>", "<#menu5_5_5#>", "<#menu5_5_2#>", "<#menu5_5_3#>", "<#menu5_5_4#>");
+@@ -404,8 +404,8 @@ if (found_app_mentohust()){
+ 
+ //Level 3 Tab title
+ 
+-tablink[0] = new Array("", "Advanced_Wireless2g_Content.asp", "Advanced_WGuest2g_Content.asp", "Advanced_WMode2g_Content.asp", "", "", "Advanced_WAdvanced2g_Content.asp");
+-tablink[1] = new Array("", "Advanced_Wireless_Content.asp", "Advanced_WGuest_Content.asp", "Advanced_WMode_Content.asp", "", "", "Advanced_WAdvanced_Content.asp");
++tablink[0] = new Array("", "Advanced_Wireless2g_Content.asp", "Advanced_WGuest2g_Content.asp", "Advanced_WMode2g_Content.asp", "Advanced_ACL2g_Content.asp", "", "Advanced_WAdvanced2g_Content.asp");
++tablink[1] = new Array("", "Advanced_Wireless_Content.asp", "Advanced_WGuest_Content.asp", "Advanced_WMode_Content.asp", "Advanced_ACL_Content.asp", "", "Advanced_WAdvanced_Content.asp");
+ tablink[2] = new Array("", "Advanced_LAN_Content.asp", "Advanced_DHCP_Content.asp", "Advanced_GWStaticRoute_Content.asp", "", "Advanced_Switch_Content.asp", "Advanced_WOL_Content.asp");
+ tablink[3] = new Array("", "Advanced_WAN_Content.asp", "Advanced_IPv6_Content.asp", "Advanced_VirtualServer_Content.asp", "Advanced_Exposed_Content.asp", "");
+ tablink[4] = new Array("", "Advanced_BasicFirewall_Content.asp", "Advanced_Netfilter_Content.asp", "Advanced_URLFilter_Content.asp", "Advanced_MACFilter_Content.asp", "Advanced_Firewall_Content.asp");
+@@ -1104,7 +1104,7 @@ function add_option(selectObj, str, value, selected){
+ }
+ 
+ function free_options(selectObj){
+-	if(selectObj == null)
++	if(selectObj == null || selectObj.options == null)
+ 		return;
+ 
+ 	for(var i = selectObj.options.length-1; i >= 0; --i){
+@@ -1125,9 +1125,17 @@ function blocking(obj_id, show){
+ }
+ 
+ function inputCtrl(obj, flag){
++	if(obj == null)
++		return;
+ 	obj.disabled = (flag == 0);
+ }
+ 
++function set_display(id, val){
++	var el = $(id);
++	if(el)
++		el.style.display = val;
++}
++
+ // add eagle23
+ jQuery(document).ready(function(){
+     var $j = jQuery.noConflict();

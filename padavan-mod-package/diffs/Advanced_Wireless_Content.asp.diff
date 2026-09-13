@@ -1,0 +1,16 @@
+diff --git a/trunk/user/www/n56u_ribbon_fixed/Advanced_Wireless_Content.asp b/trunk/user/www/n56u_ribbon_fixed/Advanced_Wireless_Content.asp
+index 25a013da4b..c14662067e 100644
+--- a/trunk/user/www/n56u_ribbon_fixed/Advanced_Wireless_Content.asp
++++ b/trunk/user/www/n56u_ribbon_fixed/Advanced_Wireless_Content.asp
+@@ -276,10 +276,7 @@ function done_validating(action){
+ 
+                                     <table class="table">
+                                         <tr>
+-                                            <td width="50%" style="margin-top: 10px; border-top: 0 none;">
+-                                                <input type="button" class="btn btn-info" value="<#GO_2G#>" onclick="location.href='Advanced_Wireless2g_Content.asp';">
+-                                            </td>
+-                                            <td style="border-top: 0 none;">
++                                            <td style="border-top: 0 none; text-align: center;">
+                                                 <input type="button" id="applyButton" class="btn btn-primary" style="width: 219px" value="<#CTL_apply#>" onclick="applyRule();">
+                                             </td>
+                                         </tr>

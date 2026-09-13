@@ -1,0 +1,16 @@
+diff --git a/trunk/user/www/n56u_ribbon_fixed/Advanced_WMode_Content.asp b/trunk/user/www/n56u_ribbon_fixed/Advanced_WMode_Content.asp
+index 6595371b52..05eb4d3492 100644
+--- a/trunk/user/www/n56u_ribbon_fixed/Advanced_WMode_Content.asp
++++ b/trunk/user/www/n56u_ribbon_fixed/Advanced_WMode_Content.asp
+@@ -344,10 +344,7 @@ function hideClients_Block(){
+ 
+                                     <table class="table">
+                                         <tr>
+-                                            <td width="50%" style="margin-top: 10px; border-top: 0 none;">
+-                                                <input class="btn btn-info" type="button"  value="<#GO_2G#>" onclick="location.href='Advanced_WMode2g_Content.asp';">
+-                                            </td>
+-                                            <td style="border-top: 0 none;">
++                                            <td style="border-top: 0 none; text-align: center;">
+                                                 <input class="btn btn-primary" style="width: 219px" type="button" value="<#CTL_apply#>" onclick="applyRule()" />
+                                             </td>
+                                         </tr>
