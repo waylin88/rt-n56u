@@ -428,8 +428,8 @@ function simplyMAC(fullMAC){
                                             <th width="50%"><#Layer3Forwarding_x_ConnectionType_itemname#></th>
                                             <td align="left">
                                                 <select class="input" name="wan_proto" onchange="change_wan_type(this.value);fixed_change_wan_type(this.value);">
-                                                    <option value="static" <% nvram_match_x("", "wan_proto", "static", "selected"); %>><#BOP_ctype_ipoe#>: <#BOP_ctype_title5#></option>
-                                                    <option value="dhcp" <% nvram_match_x("", "wan_proto", "dhcp", "selected"); %>><#BOP_ctype_ipoe#>: <#BOP_ctype_title1#></option>
+                                                    <option value="static" <% nvram_match_x("", "wan_proto", "static", "selected"); %>><#BOP_ctype_title5#></option>
+                                                    <option value="dhcp" <% nvram_match_x("", "wan_proto", "dhcp", "selected"); %>><#BOP_ctype_title1#></option>
                                                     <option value="pppoe" <% nvram_match_x("", "wan_proto", "pppoe", "selected"); %>><#BOP_ctype_pppoe#></option>
                                                 </select>
                                             </td>

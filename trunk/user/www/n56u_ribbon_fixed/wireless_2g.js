@@ -2,13 +2,15 @@ var wep1, wep2, wep3, wep4;
 
 function automode_hint() {
     var gmode = document.form.rt_gmode.value;
+    var hint = $("rt_gmode_hint");
+    if (!hint) return;
     if ((gmode == "2" || gmode == "5" || gmode == "6") &&
         (document.form.rt_wep_x.value == 1 || document.form.rt_wep_x.value == 2 || document.form.rt_auth_mode.value == "radius" ||
             (document.form.rt_crypto.value.indexOf("tkip") == 0 && !document.form.rt_crypto.disabled))) {
-        $("rt_gmode_hint").style.display = "block";
+        hint.style.display = "block";
     }
     else {
-        $("rt_gmode_hint").style.display = "none";
+        hint.style.display = "none";
     }
 }
 
@@ -484,17 +486,18 @@ function change_wep_type(mode, isload) {
 }
 
 function enableExtChRows(o) {
-    if (o.value == "1" || o.value == "2")
-        $("row_protect").style.display = "";
-    else
-        $("row_protect").style.display = "none";
+    var el_protect = $("row_protect");
+    if (el_protect)
+        el_protect.style.display = (o.value == "1" || o.value == "2") ? "" : "none";
 
+    var el_bw = $("row_HT_BW");
+    var el_extcha = $("row_HT_EXTCHA");
     if (o.value == "0" || o.value == "1" || o.value == "4"){
-        $("row_HT_BW").style.display = "none";
-        $("row_HT_EXTCHA").style.display = "none";
+        if (el_bw) el_bw.style.display = "none";
+        if (el_extcha) el_extcha.style.display = "none";
     }else{
-        $("row_HT_BW").style.display = "";
-        $("row_HT_EXTCHA").style.display = "";
+        if (el_bw) el_bw.style.display = "";
+        if (el_extcha) el_extcha.style.display = "";
     }
 }
 

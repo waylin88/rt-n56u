@@ -162,7 +162,7 @@ function change_ip6_service(){
 	var ip6_con = document.form.ip6_service.value;
 	var wan_proto = document.form.wan_proto.value;
 	var hw_nat_mode = document.form.hw_nat_mode.value;
-	var wif = '<#BOP_ctype_ipoe#>: <#BOP_ctype_title5#>';
+	var wif = '<#BOP_ctype_title5#>';
 	var ppp = (wan_proto == "pppoe" || wan_proto == "pptp" || wan_proto == "l2tp") ? true : false;
 	var warn = false;
 	var pppif = false;
@@ -274,9 +274,9 @@ function change_ip6_service(){
 	}
 
 	if (wan_proto == "dhcp")
-		wif = '<#BOP_ctype_ipoe#>: <#BOP_ctype_title1#>';
+		wif = '<#BOP_ctype_title1#>';
 	else if (wan_proto == "pppoe")
-		wif = 'PPPoE';
+		wif = '<#BOP_ctype_pppoe#>';
 	else if (wan_proto == "pptp")
 		wif = 'PPTP';
 	else if (wan_proto == "l2tp")

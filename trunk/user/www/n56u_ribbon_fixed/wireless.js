@@ -2,12 +2,14 @@ var wep1, wep2, wep3, wep4;
 
 function automode_hint() {
     var gmode = document.form.wl_gmode.value;
+    var hint = $("wl_gmode_hint");
+    if (!hint) return;
     if ((gmode == "2" || gmode == "3" || gmode == "4" || gmode == "5") &&
        (document.form.wl_wep_x.value == 1 || document.form.wl_wep_x.value == 2 || document.form.wl_auth_mode.value == "radius" ||
             (document.form.wl_crypto.value.indexOf("tkip") == 0 && !document.form.wl_crypto.disabled)))
-        $("wl_gmode_hint").style.display = "block";
+        hint.style.display = "block";
     else
-        $("wl_gmode_hint").style.display = "none";
+        hint.style.display = "none";
 }
 
 function nmode_limitation() {
@@ -466,12 +468,14 @@ function change_wep_type(mode, isload) {
 }
 
 function enableExtChRows(o) {
+    var el_bw = $("row_HT_BW");
+    var el_extcha = $("row_HT_EXTCHA");
     if (o.value == "0"){
-        $("row_HT_BW").style.display = "none";
-        $("row_HT_EXTCHA").style.display = "none";
+        if (el_bw) el_bw.style.display = "none";
+        if (el_extcha) el_extcha.style.display = "none";
     }else{
-        $("row_HT_BW").style.display = "";
-        $("row_HT_EXTCHA").style.display = "";
+        if (el_bw) el_bw.style.display = "";
+        if (el_extcha) el_extcha.style.display = "";
     }
     if (o.value == "3" || o.value == "4" || o.value == "5")
         insert_vht_bw(1);

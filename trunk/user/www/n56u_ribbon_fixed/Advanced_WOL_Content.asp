@@ -63,7 +63,7 @@ function get_resolved_clients()
     return clients;
 }
 
-// get mac vendors by api from site http://www.macvendorlookup.com/
+// get mac vendors from localStorage (external API discontinued)
 function getVendors()
 {
     var $macs = $j('#wol_table .mac');
@@ -76,31 +76,7 @@ function getVendors()
         // try to find vendor from localStorage
         var company = findVendorInLocalStorage(hw_addr);
 
-        if(company == null)
-        {
-            // this ajax request with hack from xdomainajax.js
-            $j.ajax({
-                url: 'http://www.macvendorlookup.com/api/v2/'+hw_addr+'/json',
-                type: 'GET',
-                success: function(response){
-                    try{
-                        var vendorObj = JSON.parse($j(response.responseText).text())[0];
-                        $j(value).parents('tr').find('td.vendor').html(vendorObj.company);
-
-                        // add new vendor for saving to localStorage
-                        allMacs[hw_addr] = vendorObj.company;
-
-                        // save vendor to localStorage
-                        setToLocalStorage('hw_addr', JSON.stringify(allMacs));
-                    }
-                    catch(err){
-                        // not found hw vendor ((
-                    }
-
-                }
-            });
-        }
-        else
+        if(company != null)
         {
             $j(value).parents('tr').find('td.vendor').html(company);
         }
