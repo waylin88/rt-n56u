@@ -1104,7 +1104,7 @@ function add_option(selectObj, str, value, selected){
 }
 
 function free_options(selectObj){
-	if(selectObj == null)
+	if(selectObj == null || selectObj.options == null)
 		return;
 
 	for(var i = selectObj.options.length-1; i >= 0; --i){
@@ -1125,7 +1125,15 @@ function blocking(obj_id, show){
 }
 
 function inputCtrl(obj, flag){
+	if(obj == null)
+		return;
 	obj.disabled = (flag == 0);
+}
+
+function set_display(id, val){
+	var el = $(id);
+	if(el)
+		el.style.display = val;
 }
 
 // add eagle23

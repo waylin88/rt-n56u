@@ -131,9 +131,9 @@ function fill_status(scode,wtype){
 
 	var wtext = wtype;
 	if(wtype == 'Automatic IP')
-		wtext = '<#BOP_ctype_ipoe#>: <#BOP_ctype_title1#>';
+		wtext = '<#BOP_ctype_title1#>';
 	else if(wtype == 'Static IP')
-		wtext = '<#BOP_ctype_ipoe#>: <#BOP_ctype_title5#>';
+		wtext = '<#BOP_ctype_title5#>';
 	$("WANType").innerHTML = wtext;
 }
 

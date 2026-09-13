@@ -72,11 +72,11 @@ function initial(){
 
 	if(document.form.rt_auth_mode.value == "psk"){
 		if(document.form.rt_wpa_mode.value == "0")
-			document.form.rt_auth_mode[4].selected = true;
-		else if(document.form.rt_wpa_mode.value == "1")
-			document.form.rt_auth_mode[2].selected = true;
-		else
 			document.form.rt_auth_mode[3].selected = true;
+		else if(document.form.rt_wpa_mode.value == "1")
+			document.form.rt_auth_mode[1].selected = true;
+		else
+			document.form.rt_auth_mode[2].selected = true;
 	}
 
 	rt_auth_mode_change(1);
@@ -144,19 +144,6 @@ function rt_auth_mode_change(isload){
 	var opts = document.form.rt_auth_mode.options;
 	var new_array;
 	var cur_crypto;
-	var cur_key_index, cur_key_obj;
-
-	if(mode == "open" || mode == "shared"){
-		$("all_related_wep").style.display = "";
-		$("all_wep_key").style.display = "";
-		$("asus_wep_key").style.display = "";
-		change_wep_type(mode);
-	}
-	else{
-		$("all_related_wep").style.display = "none";
-		$("all_wep_key").style.display = "none";
-		$("asus_wep_key").style.display = "none";
-	}
 
 	if(mode == "wpa" || mode == "wpa2" || mode == "psk")
 		$("rt_crypto").style.display = "";
@@ -190,54 +177,6 @@ function rt_auth_mode_change(isload){
 				document.form.rt_crypto[i].selected = true;
 		}
 	}
-	else if(mode == "wpa"){
-		if(opts[opts.selectedIndex].text == "WPA-Enterprise (Radius)")
-			new_array = new Array("TKIP");
-		else
-			new_array = new Array("AES", "TKIP+AES");
-		
-		free_options(document.form.rt_crypto);
-		for(var i in new_array){
-			document.form.rt_crypto[i] = new Option(new_array[i], new_array[i].toLowerCase());
-			document.form.rt_crypto[i].value = new_array[i].toLowerCase();
-			if(new_array[i].toLowerCase() == cur_crypto)
-				document.form.rt_crypto[i].selected = true;
-		}
-	}
-	else if(mode == "wpa2"){
-		new_array = new Array("AES");
-		
-		free_options(document.form.rt_crypto);
-		for(var i in new_array){
-			document.form.rt_crypto[i] = new Option(new_array[i], new_array[i].toLowerCase());
-			document.form.rt_crypto[i].value = new_array[i].toLowerCase();
-			if(new_array[i].toLowerCase() == cur_crypto)
-				document.form.rt_crypto[i].selected = true;
-		}
-	}
-
-	for(var i = 0; i < document.form.rt_key.length; ++i)
-		if(document.form.rt_key[i].selected){
-			cur_key_index = document.form.rt_key[i].value;
-			break;
-		}
-
-	if(mode == "psk" || mode == "wpa" || mode == "wpa2")
-		new_array = new Array("2", "3");
-	else{
-		new_array = new Array("1", "2", "3", "4");
-		
-		if(!isload)
-			cur_key_index = "1";
-	}
-
-	free_options(document.form.rt_key);
-	for(var i in new_array){
-		document.form.rt_key[i] = new Option(new_array[i], new_array[i]);
-		document.form.rt_key[i].value = new_array[i];
-		if(new_array[i] == cur_key_index)
-			document.form.rt_key[i].selected = true;
-	}
 
 	rt_wep_change();
 }
@@ -245,6 +184,14 @@ function rt_auth_mode_change(isload){
 function change_wep_type(mode){
 
 	var cur_wep = document.form.rt_wep_x.value;
+
+	/* WEP select removed; rt_wep_x is a hidden input */
+	if(document.form.rt_wep_x.options == null){
+		if(mode == "psk" || mode == "wpa" || mode == "wpa2")
+			document.form.rt_wep_x.value = "0";
+		return;
+	}
+
 	var wep_type_array;
 	var value_array;
 
@@ -276,16 +223,21 @@ function change_wep_type(mode){
 function change_wlweptype(wep_type_obj){
 	var mode = document.form.rt_auth_mode.value;
 
+	if(wep_type_obj.options == null){
+		rt_wep_change();
+		return;
+	}
+
 	if(wep_type_obj.value == "0"){
-		$("all_wep_key").style.display = "none";
-		$("asus_wep_key").style.display = "none";
+		if($("all_wep_key")) $("all_wep_key").style.display = "none";
+		if($("asus_wep_key")) $("asus_wep_key").style.display = "none";
 	}
 	else{
 		if(document.form.rt_gmode.value == "3" && document.form.rt_wep_x.value != 0){
 			nmode_limitation2();
 		}
-		$("all_wep_key").style.display = "";
-		$("asus_wep_key").style.display = "";
+		if($("all_wep_key")) $("all_wep_key").style.display = "";
+		if($("asus_wep_key")) $("asus_wep_key").style.display = "";
 	}
 
 	rt_wep_change();
@@ -300,25 +252,13 @@ function rt_wep_change(){
 			$("rt_crypto").style.display = "";
 			$("rt_wpa_psk").style.display = "";
 		}
-		
-		$("all_wep_key").style.display = "none";
-		$("asus_wep_key").style.display = "none";
 	}
 	else{
 		$("rt_crypto").style.display = "none";
 		$("rt_wpa_psk").style.display = "none";
-		
-		if(wep == "0" || mode == "radius"){
-			$("all_wep_key").style.display = "none";
-			$("asus_wep_key").style.display = "none";
-		}
-		else{
-			$("all_wep_key").style.display = "";
-			$("asus_wep_key").style.display = "";
-			show_key();
-		}
 	}
-	change_key_des();
+	if (typeof change_key_des == 'function')
+		change_key_des();
 }
 
 function change_key_des(){
@@ -339,7 +279,7 @@ function change_key_des(){
 
 function change_auth_mode(auth_mode_obj){
 	rt_auth_mode_change(0);
-	if(auth_mode_obj.value == "psk" || auth_mode_obj.value == "wpa"){
+	if(auth_mode_obj.value == "psk"){
 		var opts = document.form.rt_auth_mode.options;
 		
 		if(opts[opts.selectedIndex].text == "WPA-Personal")
@@ -348,54 +288,19 @@ function change_auth_mode(auth_mode_obj){
 			document.form.rt_wpa_mode.value="2";
 		else if(opts[opts.selectedIndex].text == "WPA-Auto-Personal")
 			document.form.rt_wpa_mode.value="0";
-		else if(opts[opts.selectedIndex].text == "WPA-Enterprise (Radius)")
-			document.form.rt_wpa_mode.value="3";
-		else if(opts[opts.selectedIndex].text == "WPA-Auto-Enterprise (Radius)")
-			document.form.rt_wpa_mode.value = "4";
 		
-		if(auth_mode_obj.value == "psk"){
-			document.form.rt_wpa_psk.focus();
-			document.form.rt_wpa_psk.select();
-		}
-	}
-	else if(auth_mode_obj.value == "shared"){
-		show_key();
+		document.form.rt_wpa_psk.focus();
+		document.form.rt_wpa_psk.select();
 	}
 	else{
-		document.form.rt_wep_x.selectedIndex = 0;
-		show_key();
+		document.form.rt_wep_x.value = "0";
 		rt_wep_change();
 	}
 	nmode_limitation2();
 }
 
 function show_key(){
-	var wep_type = document.form.rt_wep_x.value;
-	var keyindex = document.form.rt_key.value;
-	var cur_key_obj = eval("document.form.rt_key"+keyindex);
-	var cur_key_length = cur_key_obj.value.length;
-
-	if(wep_type == 1){
-		if(cur_key_length == 5 || cur_key_length == 10)
-			document.form.rt_asuskey1.value = cur_key_obj.value;
-		else if(parent.document.rt_form.rt_asuskey1.value != "")
-			document.form.rt_asuskey1.value = parent.document.rt_form.rt_asuskey1.value;
-		else
-			document.form.rt_asuskey1.value = "0000000000";
-	}
-	else if(wep_type == 2){
-		if(cur_key_length == 13 || cur_key_length == 26)
-			document.form.rt_asuskey1.value = cur_key_obj.value;
-		else if(parent.document.rt_form.rt_asuskey1.value != "")
-			document.form.rt_asuskey1.value = parent.document.rt_form.rt_asuskey1.value;
-		else
-			document.form.rt_asuskey1.value = "00000000000000000000000000";
-	}
-	else
-		document.form.rt_asuskey1.value = "";
-
-	document.form.rt_asuskey1.focus();
-	document.form.rt_asuskey1.select();
+	/* WEP key editing removed; no-op */
 }
 
 function show_LAN_info(){
@@ -480,23 +385,11 @@ function submitForm(){
 		if(!validate_psk(document.form.rt_wpa_psk))
 			return false;
 	}
-	else{
-		if(!validate_wlkey(document.form.rt_asuskey1))
-			return false;
-	}
 
 	stopFlag = 1;
 	document.form.current_page.value = "/";
 	document.form.next_page.value = "";
 	document.form.action_mode.value = " Apply ";
-
-	var wep11 = eval('document.form.rt_key'+document.form.rt_key.value);
-	wep11.value = document.form.rt_asuskey1.value;
-
-	if(auth_mode == "wpa" || auth_mode == "wpa2" || auth_mode == "radius"){
-		document.form.target = "";
-		document.form.next_page.value = "/Advanced_WSecurity2g_Content.asp";
-	}
 
 	parent.showLoading();
 	document.form.submit();
@@ -506,29 +399,13 @@ function submitForm(){
 
 function nmode_limitation2(){
 	if(document.form.rt_gmode.value == "3"){
-		if(document.form.rt_auth_mode.selectedIndex == 0 && (document.form.rt_wep_x.selectedIndex == "1" || document.form.rt_wep_x.selectedIndex == "2")){
+		if(document.form.rt_auth_mode.selectedIndex == 1){
 			alert("<#WLANConfig11n_nmode_limition_hint#>");
-			document.form.rt_auth_mode.selectedIndex = 0;
-			document.form.rt_wep_x.selectedIndex = 0;
-		}
-		else if(document.form.rt_auth_mode.selectedIndex == 1){
-			alert("<#WLANConfig11n_nmode_limition_hint#>");
-			document.form.rt_auth_mode.selectedIndex = 3;
+			document.form.rt_auth_mode.selectedIndex = 2;
 			document.form.rt_wpa_mode.value = 2;
-		}
-		else if(document.form.rt_auth_mode.selectedIndex == 2){
-			alert("<#WLANConfig11n_nmode_limition_hint#>");
-			document.form.rt_auth_mode.selectedIndex = 3;
-			document.form.rt_wpa_mode.value = 2;
-		}
-		else if(document.form.rt_auth_mode.selectedIndex == 5){
-			alert("<#WLANConfig11n_nmode_limition_hint#>");
-			document.form.rt_auth_mode.selectedIndex = 6;
 		}
 		rt_auth_mode_change(1);
 	}
-	document.form.rt_wpa_psk.focus();
-	document.form.rt_wpa_psk.select();
 }
 
 window.onunload  = function(){
@@ -542,10 +419,6 @@ window.onunload  = function(){
 	if(auth_mode == "psk")
 		validate_psk(document.form.rt_wpa_psk);
 
-	var keyindex = document.form.rt_key.value;
-	var cur_key_obj = eval("parent.document.rt_form.rt_key"+keyindex);
-
-	cur_key_obj.value = document.form.rt_asuskey1.value;
 	parent.document.rt_form.rt_ssid.value = document.form.rt_ssid.value; 
 	parent.document.rt_form.rt_wpa_mode.value = document.form.rt_wpa_mode.value;
 	parent.document.rt_form.rt_ssid2.value = document.form.rt_ssid2.value;
@@ -559,7 +432,6 @@ window.onunload  = function(){
 	parent.document.rt_form.rt_wep_x.value = document.form.rt_wep_x.value;
 	parent.document.rt_form.rt_crypto.value = document.form.rt_crypto.value;
 	parent.document.rt_form.rt_wpa_psk.value = document.form.rt_wpa_psk.value;
-	parent.document.rt_form.rt_asuskey1.value = document.form.rt_asuskey1.value;
 }
 </script>
 
@@ -641,46 +513,15 @@ window.onunload  = function(){
     <td>
     <select name="rt_auth_mode" class="input" onchange="change_auth_mode(this);">
 		<option value="open" <% nvram_match_x("","rt_auth_mode", "open","selected"); %>>Open System</option>
-		<option value="shared" <% nvram_match_x("","rt_auth_mode", "shared","selected"); %>>Shared Key</option>
 		<option value="psk" <% nvram_double_match_x("", "rt_auth_mode", "psk", "", "rt_wpa_mode", "1", "selected"); %>>WPA-Personal</option>
 		<option value="psk" <% nvram_double_match_x("", "rt_auth_mode", "psk", "", "rt_wpa_mode", "2", "selected"); %>>WPA2-Personal</option>
 		<option value="psk" <% nvram_double_match_x("", "rt_auth_mode", "psk", "", "rt_wpa_mode", "0", "selected"); %>>WPA-Auto-Personal</option>
-		<option value="wpa" <% nvram_double_match_x("", "rt_auth_mode", "wpa", "", "rt_wpa_mode", "3", "selected"); %>>WPA-Enterprise (Radius)</option>
-		<option value="wpa2" <% nvram_match_x("", "rt_auth_mode", "wpa2", "selected"); %>>WPA2-Enterprise (Radius)</option>
-		<option value="wpa" <% nvram_double_match_x("", "rt_auth_mode", "wpa", "", "rt_wpa_mode", "4", "selected"); %>>WPA-Auto-Enterprise (Radius)</option>
-		<option value="radius" <% nvram_match_x("","rt_auth_mode", "radius","selected"); %>>Radius with 802.1x</option>
 	  </select>
     </td>
   </tr>
 
-  <tr id='all_related_wep' style='display:none;'>
-	<th width="110"><#WLANConfig11b_WEPType_itemname#></th>
-	<td>
-	  <select name="rt_wep_x" id="rt_wep_x" class="input" onchange="change_wlweptype(this);">
-		<option value="0" <% nvram_match_x("", "rt_wep_x", "0", "selected"); %>>None</option>
-		<option value="1" <% nvram_match_x("", "rt_wep_x", "1", "selected"); %>>WEP-64bits</option>
-		<option value="2" <% nvram_match_x("", "rt_wep_x", "2", "selected"); %>>WEP-128bits</option>
-	  </select>
-	</td>
-  </tr>
-
-  <tr id='all_wep_key' style='display:none;'>
-    <th width="110"><#WLANConfig11b_WEPDefaultKey_itemname#></th>
-    <td>
-      <select name="rt_key" class="input" onchange="show_key();">
-        <option value="1" <% nvram_match_x("", "rt_key", "1", "selected"); %>>Key1</option>
-        <option value="2" <% nvram_match_x("", "rt_key", "2", "selected"); %>>Key2</option>
-        <option value="3" <% nvram_match_x("", "rt_key", "3", "selected"); %>>Key3</option>
-        <option value="4" <% nvram_match_x("", "rt_key", "4", "selected"); %>>Key4</option>
-      </select>
-    </td>
-  </tr>
-  <tr id='asus_wep_key'>
-    <th width="110"><#WLANConfig11b_WEPKey_itemname#></th>
-    <td>
-      <input type="text" id="sta_asuskey1" name="rt_asuskey1" onfocus="show_wepkey_help();" onKeyUp="return change_wlkey(this, 'WLANConfig11b');" value="" size="22" class="input"/>
-    </td>
-  </tr>
+  <input type="hidden" name="rt_wep_x" value="0">
+  <input type="hidden" name="rt_key" value="1">
 
   <tr id='rt_crypto' style='display:none;'>
 	<th width="110"><#WLANConfig11b_WPAType_itemname#></th>
