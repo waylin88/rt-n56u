@@ -61,8 +61,8 @@ function detect_update_info(){
 }
 
 function show_default_icon(){
-	var icon_name = "iconClient";
-	$("statusframe").src = "/device-map/clients.asp";
+	var icon_name = "iconInternet";
+	$("statusframe").src = "/device-map/internet.asp";
 	clickEvent($(icon_name));
 }
 
@@ -782,7 +782,7 @@ $j(document).ready(function(){
                             <h2 id="helpname" class="box_head round_top"></h2>
 
                             <div class="round_bottom">
-                                <iframe id="statusframe" name="statusframe" src="/device-map/clients.asp" frameborder="0" width="100%" height="571"></iframe>
+                                <iframe id="statusframe" name="statusframe" src="/device-map/internet.asp" frameborder="0" width="100%" height="571"></iframe>
                             </div>
                         </div>
                     </div>

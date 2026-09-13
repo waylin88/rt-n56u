@@ -1194,6 +1194,7 @@ BOP_ctype_item3=ADSL or other connection that requires username, password and IP
 BOP_ctype_item4=L2TP requires username, password and IP Address provided by your ISP.
 BOP_ctype_title5=Static IP
 BOP_ctype_pppoe=PPPoE
+BOP_ctype_ipoe=IPoE
 BOP_ctype_item5=Static IP allows your PC to use a fixed IP Address provided by your ISP. This connection type is often used by ADSL service providers.
 WLANConfig11b_SSID_itemdesc=Assign an identification string of up to 32 characters for your wireless connection.
 WLANConfig11b_SSID_itemname=SSID:

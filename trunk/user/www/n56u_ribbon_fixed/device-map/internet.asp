@@ -38,9 +38,6 @@ performance.now = (function() {
 function initial(){
 	flash_button();
 
-	if(!support_usb())
-		$j("#domore")[0].remove(6);
-
 	if(sw_mode == '4'){
 		$j("#domore")[0].remove(4);
 		$j("#domore")[0].remove(3);
@@ -134,9 +131,9 @@ function fill_status(scode,wtype){
 
 	var wtext = wtype;
 	if(wtype == 'Automatic IP')
-		wtext = 'IPoE: <#BOP_ctype_title1#>';
+		wtext = '<#BOP_ctype_ipoe#>: <#BOP_ctype_title1#>';
 	else if(wtype == 'Static IP')
-		wtext = 'IPoE: <#BOP_ctype_title5#>';
+		wtext = '<#BOP_ctype_ipoe#>: <#BOP_ctype_title5#>';
 	$("WANType").innerHTML = wtext;
 }
 
@@ -368,7 +365,9 @@ function submitInternet(v){
           <option value="../Advanced_IPv6_Content.asp"><#menu5_3_3#></option>
           <option value="../Advanced_VirtualServer_Content.asp"><#menu5_3_4#></option>
           <option value="../Advanced_Exposed_Content.asp"><#menu5_3_5#></option>
-          <option value="../Advanced_Modem_others.asp"><#menu5_4_4#></option>
+          <option value="../Advanced_DDNS_Content.asp"><#menu5_3_6#></option>
+          <option value="../vpnsrv.asp"><#menu2#></option>
+          <option value="../vpncli.asp"><#menu6#></option>
         </select>
     </td>
   </tr>

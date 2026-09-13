@@ -617,7 +617,7 @@ window.onunload  = function(){
     </td>
   </tr>
   <tr>
-    <th><#Wireless_name#> (SSID)</th>
+    <th><#Wireless_name#></th>
     <td>
       <input id="sta_ssid" type="text" name="rt_ssid" value="<% nvram_get_x("", "rt_ssid"); %>" maxlength="32" size="22" />
     </td>

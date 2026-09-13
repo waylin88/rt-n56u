@@ -24,11 +24,7 @@ function initial(){
 	show_menu(5,7,6);
 	show_footer();
 
-	if (!login_safe()){
-		$j('#btn_exec').attr('disabled', 'disabled');
-		$j('#SystemCmd').attr('disabled', 'disabled');
-	}else
-		document.form.SystemCmd.focus();
+	document.form.SystemCmd.focus();
 }
 
 function getResponse(){
@@ -40,8 +36,6 @@ function getResponse(){
 }
 
 function startPost(){
-	if (!login_safe())
-		return false;
 	$j('#btn_exec').attr('disabled', 'disabled');
 	$j.post('/apply.cgi',
 	{
