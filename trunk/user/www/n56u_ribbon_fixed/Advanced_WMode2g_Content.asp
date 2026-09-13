@@ -28,11 +28,6 @@ function initial(){
 	show_menu(5,1,3);
 	show_footer();
 
-	if (!support_5g_radio()) {
-		document.form.goto5.style.display = "none";
-		$("col_goto5").width = "33%";
-	}
-
 	load_body();
 
 	if (support_2g_inic_mii())
@@ -354,9 +349,6 @@ function hideClients_Block(){
 
                                     <table class="table">
                                         <tr>
-                                            <td id="col_goto5" width="50%" style="margin-top: 10px; border-top: 0 none;">
-                                                <input class="btn btn-info" type="button" name="goto5" value="<#GO_5G#>" onclick="location.href='Advanced_WMode_Content.asp';">
-                                            </td>
                                             <td style="border-top: 0 none;">
                                                 <input class="btn btn-primary" style="width: 219px" type="button" value="<#CTL_apply#>" onclick="applyRule()" />
                                             </td>

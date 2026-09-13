@@ -382,9 +382,6 @@ function done_validating(action){
 
                                     <table class="table">
                                         <tr>
-                                            <td width="50%" style="margin-top: 10px; border-top: 0 none;">
-                                                <input class="btn btn-info" type="button"  value="<#GO_2G#>" onclick="location.href='Advanced_WAdvanced2g_Content.asp';">
-                                            </td>
                                             <td style="border-top: 0 none;">
                                                 <input class="btn btn-primary" style="width: 219px" type="button" value="<#CTL_apply#>" onclick="applyRule()" />
                                             </td>

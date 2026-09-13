@@ -54,11 +54,6 @@ function initial(){
 
 	document.form.rt_channel.value = document.form.rt_channel_orig.value;
 
-	if (!support_5g_radio()) {
-		document.form.goto5.style.display = "none";
-		$("col_goto5").width = "33%";
-	}
-
 	load_body();
 }
 
@@ -268,9 +263,6 @@ function done_validating(action){
 
                                     <table class="table">
                                         <tr>
-                                            <td id="col_goto5" width="50%" style="margin-top: 10px; border-top: 0 none;">
-                                                <input type="button" class="btn btn-info" name="goto5" value="<#GO_5G#>" onclick="location.href='Advanced_Wireless_Content.asp';">
-                                            </td>
                                             <td style="border-top: 0 none;">
                                                 <input type="button" id="applyButton" class="btn btn-primary" style="width: 219px" value="<#CTL_apply#>" onclick="applyRule();">
                                             </td>
