@@ -114,9 +114,12 @@ function change_guest_enabled(mflag) {
 }
 
 function change_guest_auth_mode(mflag) {
+	var v = document.form.wl_guest_enable[0].checked;
+	if (!v) return;
+
 	var mode = document.form.wl_guest_auth_mode.value;
 	var opts = document.form.wl_guest_auth_mode.options;
-	
+
 	if (mode == "psk")
 	{
 		inputCtrl(document.form.wl_guest_crypto, 1);

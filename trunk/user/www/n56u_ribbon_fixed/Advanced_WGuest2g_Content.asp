@@ -109,6 +109,9 @@ function change_guest_enabled(mflag) {
 }
 
 function change_guest_auth_mode(mflag) {
+	var v = document.form.rt_guest_enable[0].checked;
+	if (!v) return;
+
 	var mode = document.form.rt_guest_auth_mode.value;
 	var opts = document.form.rt_guest_auth_mode.options;
 
