@@ -835,7 +835,7 @@ handle_request(FILE *conn_fp, const conn_item_t *item)
 	char line[4096];
 	char *method, *path, *protocol, *authorization, *boundary;
 	char *cur, *end, *cp, *file, *query;
-	int len, login_state, method_id, do_logout, clen = 0;
+	int len, login_state, method_id, do_logout, login_form_handled = 0, clen = 0;
 	time_t if_modified_since = (time_t)-1;
 	struct mime_handler *handler;
 	struct stat st, *p_st = NULL;
@@ -950,7 +950,12 @@ handle_request(FILE *conn_fp, const conn_item_t *item)
 
 	login_state = http_login_check(&conn_ip);
 	
-	if (login_state == 0) {
+	if (login_state == 2 && !authorization) {
+		if (strstr(file, ".htm") != NULL || strstr(file, ".asp") != NULL) {
+			file = "Login.asp";
+			query = NULL;
+		}
+	} else if (login_state == 0) {
 		if (strstr(file, ".htm") != NULL || strstr(file, ".asp") != NULL) {
 			file = "Nologin.asp";
 			query = NULL;
@@ -974,6 +979,25 @@ handle_request(FILE *conn_fp, const conn_item_t *item)
 		return;
 	}
 
+	if (strcmp(file, "Login.asp") == 0 && method_id == HTTP_METHOD_POST) {
+		const char *username;
+		const char *password;
+
+		do_html_apply_post(file, conn_fp, clen, boundary);
+		login_form_handled = 1;
+		username = get_cgi("username");
+		password = get_cgi("password");
+		if (username && password &&
+			strcmp(username, nvram_safe_get("http_username")) == 0 &&
+			strcmp(password, nvram_safe_get("http_passwd")) == 0) {
+			http_login(&conn_ip);
+			send_headers(302, "Found", "Location: /index.asp", NULL, NULL, conn_fp);
+			return;
+		}
+
+		init_cgi("error=1");
+	}
+
 #if defined (SUPPORT_HTTPS)
 	http_is_ssl = item->ssl;
 #endif
@@ -981,7 +1005,7 @@ handle_request(FILE *conn_fp, const conn_item_t *item)
 	do_logout = (strcmp(file, "Logout.asp") == 0) ? 1 : 0;
 
 	if (handler->need_auth && login_state > 1 && !do_logout) {
-		if (!auth_check(authorization)) {
+		if (login_state != 3 && !auth_check(authorization)) {
 			http_logout(&conn_ip);
 			if (method_id == HTTP_METHOD_POST)
 				eat_post_data(conn_fp, clen);
@@ -994,9 +1018,9 @@ handle_request(FILE *conn_fp, const conn_item_t *item)
 	}
 
 	if (method_id == HTTP_METHOD_POST) {
-		if (handler->input)
+		if (!login_form_handled && handler->input)
 			handler->input(file, conn_fp, clen, boundary);
-		else
+		else if (!login_form_handled)
 			eat_post_data(conn_fp, clen);
 		try_pull_data(conn_fp, item->fd);
 	} else {

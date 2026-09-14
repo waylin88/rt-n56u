@@ -3596,7 +3596,7 @@ do_uncgi_query(const char *query)
 		init_cgi(post_buf);
 }
 
-static void
+void
 do_html_apply_post(const char *url, FILE *stream, int clen, char *boundary)
 {
 	init_cgi(NULL);
@@ -3793,6 +3793,7 @@ static char mentohust_log_txt[] =
 #endif
 
 struct mime_handler mime_handlers[] = {
+	{ "Login.asp", "text/html", no_cache_IE, do_html_apply_post, do_ej, 0 },
 	/* cached javascript files w/o translations */
 	{ "jquery.js", "text/javascript", NULL, NULL, do_file, 0 }, // 2012.06 Eagle23
 	{ "**bootstrap.min.js", "text/javascript", NULL, NULL, do_file, 0 }, // 2012.06 Eagle23
