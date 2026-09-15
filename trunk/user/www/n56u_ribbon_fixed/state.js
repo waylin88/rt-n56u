@@ -226,13 +226,6 @@ var enabledGuest2Gclass = '<% nvram_match_x("","rt_guest_enable", "1", "btn-info
 var enabledGuest5Gclass = '<% nvram_match_x("","wl_guest_enable", "1", "btn-info"); %>';
 var enabledBtnCommit = '<% nvram_match_x("","nvram_manual", "0", "display:none;"); %>';
 
-function tenda_select_menu(item) {
-	var items = document.getElementsByClassName('tenda-menu-item');
-	for (var i = 0; i < items.length; i++)
-		items[i].className = items[i].className.replace(' tenda-menu-active', '');
-	item.className += ' tenda-menu-active';
-}
-
 // L3 = The third Level of Menu
 function show_banner(L3){
 	var bc = '';
@@ -572,33 +565,6 @@ function show_menu(L1, L2, L3){
 			tabtitle[5].splice(3,1);
 			tablink[5].splice(3,1);
 		}
-	}
-
-	if ($('tendaMenu')) {
-	var tenda_menu = [
-		['Status', 'index.asp', 'icon-home'],
-		['Internet Settings', 'Advanced_WAN_Content.asp', 'icon-globe'],
-		['Wireless Settings', 'Advanced_Wireless_Content.asp', 'icon-signal'],
-		['User Management', 'as.asp', 'icon-user'],
-		['Bandwidth Control', 'Main_TrafficMonitor_realtime.asp', 'icon-dashboard'],
-		['Parental Controls', 'Advanced_URLFilter_Content.asp', 'icon-lock'],
-		['Sleeping Mode', '', 'icon-time'],
-		['Advanced', 'Advanced_Tweaks_Content.asp', 'icon-wrench'],
-		['IPv6', 'Advanced_IPv6_Content.asp', 'icon-globe'],
-		['Administration', 'Advanced_System_Content.asp', 'icon-cog']
-	];
-	var tenda_html = '';
-	for (i = 0; i < tenda_menu.length; i++) {
-		if (tenda_menu[i][1])
-			tenda_html += '<a class="tenda-menu-item' + (tenda_menu[i][1] == 'index.asp' ? ' tenda-menu-active' : '') + '" href="' + tenda_menu[i][1] + '" onclick="tenda_select_menu(this)"><i class="icon ' + tenda_menu[i][2] + '"></i><span>' + tenda_menu[i][0] + '</span></a>\n';
-		else
-			tenda_html += '<a class="tenda-menu-item tenda-menu-disabled" href="javascript:void(0)"><i class="icon ' + tenda_menu[i][2] + '"></i><span>' + tenda_menu[i][0] + '</span></a>\n';
-	}
-	$("tendaMenu").innerHTML = tenda_html;
-	$("mainMenu").innerHTML = "";
-	$("subMenu").innerHTML = "";
-	$("tabMenu").innerHTML = "";
-	return;
 	}
 
 	for(i = 1; i <= menuL1_title.length-1; i++){

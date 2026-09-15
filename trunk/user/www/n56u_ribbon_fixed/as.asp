@@ -84,7 +84,7 @@ function show_sitemap(){
 
 </head>
 
-<body class="tenda-page" onload="initial();" onunload="return unload_body();">
+<body onload="initial();" onunload="return unload_body();">
 
 <div class="wrapper">
 
