@@ -957,7 +957,8 @@ handle_request(FILE *conn_fp, const conn_item_t *item)
 			query = NULL;
 		}
 	} else if (login_state == 0) {
-		if (strstr(file, ".htm") != NULL || strstr(file, ".asp") != NULL) {
+		if (strcmp(file, "Login.asp") != 0 &&
+			(strstr(file, ".htm") != NULL || strstr(file, ".asp") != NULL)) {
 			file = "Nologin.asp";
 			query = NULL;
 		}

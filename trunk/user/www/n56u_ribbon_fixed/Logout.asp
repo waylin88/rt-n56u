@@ -22,8 +22,15 @@ function initial(){
 		xmlhttp=null;
 	}
 	if (xmlhttp != null){
+		xmlhttp.onreadystatechange=function(){
+			if (xmlhttp.readyState == 4)
+				location.replace("/Login.asp");
+		};
 		xmlhttp.open("HEAD","logout",true,"logout","");
 		xmlhttp.send(null);
+		setTimeout(function(){ location.replace("/Login.asp"); }, 1000);
+	} else {
+		location.replace("/Login.asp");
 	}
 }
 </script>
