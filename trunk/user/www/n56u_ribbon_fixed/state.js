@@ -16,6 +16,13 @@ var uagent = navigator.userAgent.toLowerCase();
 var is_ie11p = (/trident\/7\./).test(uagent);
 var is_mobile = (/iphone|ipod|ipad|iemobile|android|blackberry|fennec/).test(uagent);
 
+if (is_mobile && document.head && !document.querySelector('meta[name="viewport"]')) {
+	var viewport = document.createElement("meta");
+	viewport.name = "viewport";
+	viewport.content = "width=device-width, initial-scale=1, viewport-fit=cover";
+	document.head.appendChild(viewport);
+}
+
 var new_wan_internet = '<% nvram_get_x("", "link_internet"); %>';
 var id_check_status = 0;
 var id_system_info = 0;
@@ -1139,6 +1146,9 @@ function set_display(id, val){
 // add eagle23
 jQuery(document).ready(function(){
     var $j = jQuery.noConflict();
+
+	if (is_mobile)
+		$j('body').addClass('mobile-ui');
 
     $j("#logo").click(function(){
         location.href = '/';

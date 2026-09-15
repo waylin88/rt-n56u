@@ -3,6 +3,7 @@
 <head>
 <title><#Web_Title#></title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="-1">
 
@@ -10,6 +11,18 @@
 <link rel="icon" href="images/favicon.png">
 <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="/bootstrap/css/main.css">
+<style type="text/css">
+body {
+	margin: 0;
+	padding: 16px;
+	box-sizing: border-box;
+	overflow-x: hidden;
+}
+.well {
+	box-sizing: border-box;
+	width: 100%;
+}
+</style>
 <script>
 function initial(){
 	var xmlhttp;

@@ -3,6 +3,7 @@
 <head>
 <title><#Web_Title#></title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="-1">
 
@@ -12,7 +13,11 @@
 <style type="text/css">
 body {
   background: url("/bootstrap/img/dark-bg.jpg") repeat scroll center top transparent;
-  min-width: 1060px;
+  min-width: 0;
+  margin: 0;
+  padding: 16px;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 .alert {
@@ -26,8 +31,10 @@ body {
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
-  width: 460px;
-  height: 100px;
+  width: 100%;
+  max-width: 460px;
+  height: auto;
+  box-sizing: border-box;
   font-family:Arial, Verdana, Helvetica, sans-serif;
   text-align:left;
 }

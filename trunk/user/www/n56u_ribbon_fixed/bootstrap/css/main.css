@@ -614,3 +614,147 @@ textarea[readonly] {
     border-radius: 3px 0 0 3px;
 }
 
+@media screen and (max-width: 800px) {
+    html, body {
+        min-width: 0;
+        overflow-x: hidden;
+    }
+
+    .wrapper {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+    }
+
+    .wrapper > .container-fluid,
+    .wrapper > form > .container-fluid {
+        padding-right: 5px;
+        padding-left: 5px;
+    }
+
+    .row-fluid > .span2,
+    .row-fluid > .span3,
+    .row-fluid > .span9,
+    .row-fluid > .span10,
+    .row-fluid > .span12 {
+        float: none;
+        width: auto;
+        margin-left: 0;
+    }
+
+    .side_nav {
+        margin-bottom: 5px;
+    }
+
+    #mainMenu {
+        margin: 0 0 5px;
+    }
+
+    #mainMenu > li {
+        width: 50%;
+    }
+
+    #mainMenu > li > a {
+        overflow: hidden;
+        text-align: center;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    #subMenu {
+        display: block;
+        clear: both;
+        overflow: hidden;
+    }
+
+    #subMenu > a {
+        display: block;
+        float: left;
+        width: 33.333%;
+        height: 30px;
+        overflow: hidden;
+        padding: 0;
+        line-height: 30px;
+        text-align: center;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    #TopBanner .span6 {
+        float: none;
+        width: auto;
+        margin: 5px 0;
+    }
+
+    #TopBanner .container-fluid {
+        padding: 0;
+    }
+
+    .row-fluid > .span2 > .well {
+        height: auto !important;
+        min-height: 0;
+        padding: 0 5px !important;
+    }
+
+    .table-big,
+    .table-big tbody {
+        display: block;
+        width: 100%;
+    }
+
+    .table-big tbody {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .table-big tr {
+        display: block;
+        width: 20%;
+    }
+
+    .table-big td {
+        display: block;
+        width: auto !important;
+        padding: 8px 2px !important;
+        text-align: center;
+    }
+
+    .table-big .big-icons {
+        width: 35px;
+        height: 35px;
+        margin: 0 auto;
+        background-size: 35px;
+    }
+
+    .table-big .big-icons-globe { background-position: 0 0; }
+    .table-big .big-icons-laptop { background-position: 0 -83px; }
+    .table-big .big-icons-router { background-position: 0 -165px; }
+    .table-big .big-icons-usb { background-position: 0 -250px; }
+    .table-big .big-icons-usbhdd { background-position: 0 -333px; }
+    .table-big .big-icons-printer { background-position: 0 -415px; }
+    .table-big .arrow-right { display: none; }
+
+    .syslog_panel {
+        display: none !important;
+    }
+
+    .box,
+    .well {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .box .round_bottom {
+        overflow-x: auto;
+    }
+
+    .box .table {
+        max-width: 100%;
+    }
+
+    #footer {
+        padding: 8px 5px;
+        text-align: center;
+    }
+}
+
