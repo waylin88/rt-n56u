@@ -621,7 +621,7 @@ textarea[readonly] {
     }
 
     body.mobile-ui:not(.mobile-iframe) {
-        padding: 50px 0 0;
+        padding: 40px 0 0;
         box-sizing: border-box;
     }
 
@@ -671,9 +671,50 @@ textarea[readonly] {
         margin-left: 0;
     }
 
+    .wrapper > .container-fluid:not(:first-child) > .row-fluid {
+        position: relative;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    .wrapper > .container-fluid:not(:first-child) > .row-fluid > .span3 {
+        width: 0 !important;
+        height: 0;
+        overflow: visible;
+        padding: 0;
+        margin: 0;
+    }
+
+    .wrapper > .container-fluid:not(:first-child) > .row-fluid > .span9 {
+        position: relative;
+        left: 0;
+        right: 0;
+        width: 100% !important;
+        margin: 0;
+        padding: 0;
+    }
+
+    .wrapper .span12,
+    .wrapper .span12 > .box,
+    .wrapper .span12 > .box > .round_bottom {
+        width: 100% !important;
+        max-width: 100%;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        box-sizing: border-box;
+    }
+
+    .wrapper .row-fluid {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
     .side_nav {
         position: fixed;
-        top: 50px;
+        top: 40px;
         bottom: 0;
         left: 0;
         z-index: 1001;
@@ -698,7 +739,7 @@ textarea[readonly] {
         right: 0;
         left: 0;
         z-index: 1003;
-        height: 50px;
+        height: 40px;
         background-color: #006dcc;
         background-image: linear-gradient(to bottom, #0088cc, #0044cc);
         background-repeat: repeat-x;
@@ -710,12 +751,12 @@ textarea[readonly] {
 
     #mobilePageTitle {
         display: block;
-        margin: 0 92px 0 58px;
+        margin: 0 78px 0 54px;
         overflow: hidden;
         color: #fff;
         font-size: 14px;
         font-weight: bold;
-        line-height: 50px;
+        line-height: 40px;
         text-overflow: ellipsis;
         text-shadow: 0 -1px 0 rgba(0, 0, 0, .25);
         white-space: nowrap;
@@ -723,17 +764,17 @@ textarea[readonly] {
 
     #mobileLogo {
         position: absolute;
-        top: 8px;
+        top: 5px;
         right: 10px;
         width: auto;
-        height: 34px;
+        height: 30px;
         max-width: 82px;
     }
 
     #mobileMenuToggle {
         position: absolute;
-        top: 7px;
-        left: 7px;
+        top: 2px;
+        left: 5px;
         width: 42px;
         height: 36px;
         padding: 0;
@@ -755,7 +796,7 @@ textarea[readonly] {
     #mobileMenuOverlay {
         display: none;
         position: fixed;
-        top: 50px;
+        top: 40px;
         right: 0;
         bottom: 0;
         left: 0;
