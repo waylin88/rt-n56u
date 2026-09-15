@@ -688,10 +688,11 @@ textarea[readonly] {
 
     .wrapper > .container-fluid:not(:first-child) > .row-fluid > .span9 {
         position: relative;
+        float: left;
         left: 0;
         right: 0;
-        width: 100% !important;
-        margin: 0;
+        width: 74.468085099% !important;
+        margin-left: 2.127659574% !important;
         padding: 0;
     }
 
