@@ -619,7 +619,7 @@ $j(document).ready(function(){
 </style>
 </head>
 
-<body onunload="return unload_body();">
+<body class="tenda-ui" onunload="return unload_body();">
 
 <div class="wrapper">
     <noscript>
@@ -630,9 +630,10 @@ $j(document).ready(function(){
 
     <div class="container-fluid" style="padding-right: 0px">
         <div class="row-fluid">
-            <div class="span3"><center><div id="logo"></div></center></div>
+			<div class="span3"><center><div id="logo"></div><div class="tenda-brand-name">Tenda WiFi</div></center></div>
             <div class="span9" >
-                <div id="TopBanner"></div>
+				<div class="tenda-header-actions"><span>Router Management</span><a href="Logout.asp">Logout</a></div>
+				<div id="TopBanner" style="display:none"></div>
             </div>
         </div>
     </div>
@@ -687,12 +688,13 @@ $j(document).ready(function(){
     <input type="hidden" name="wl_wpa_psk" value="">
     </form>
 
-    <div class="container-fluid">
+	<div class="container-fluid tenda-content">
         <div class="row-fluid">
             <div class="span3">
                 <!--Sidebar content-->
                 <!--=====Beginning of Main Menu=====-->
                 <div class="well sidebar-nav side_nav" style="padding: 0px;">
+					<div id="tendaMenu" class="tenda-menu"></div>
                     <ul id="mainMenu" class="clearfix"></ul>
                     <ul class="clearfix">
                         <li>
@@ -707,7 +709,7 @@ $j(document).ready(function(){
 
                 <div class="row-fluid">
                     <div class="span2">
-                        <div class="well" style="height: 570px; padding-left: 18px;">
+						<div class="well tenda-status-rail" style="height: 570px; padding-left: 18px;">
                             <div id="tabMenu"></div>
 
                             <table class="table table-big" style="margin-top: 12px;">

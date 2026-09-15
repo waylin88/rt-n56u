@@ -567,6 +567,31 @@ function show_menu(L1, L2, L3){
 		}
 	}
 
+	var tenda_menu = [
+		['Status', 'index.asp', 'icon-home'],
+		['Internet Settings', 'Advanced_WAN_Content.asp', 'icon-globe'],
+		['Wireless Settings', 'Advanced_Wireless_Content.asp', 'icon-signal'],
+		['User Management', 'as.asp', 'icon-user'],
+		['Bandwidth Control', 'Main_TrafficMonitor_realtime.asp', 'icon-dashboard'],
+		['Parental Controls', 'Advanced_URLFilter_Content.asp', 'icon-lock'],
+		['Sleeping Mode', '', 'icon-time'],
+		['Advanced', 'Advanced_Tweaks_Content.asp', 'icon-wrench'],
+		['IPv6', 'Advanced_IPv6_Content.asp', 'icon-globe'],
+		['Administration', 'Advanced_System_Content.asp', 'icon-cog']
+	];
+	var tenda_html = '';
+	for (i = 0; i < tenda_menu.length; i++) {
+		if (tenda_menu[i][1])
+			tenda_html += '<a class="tenda-menu-item" href="' + tenda_menu[i][1] + '"' + (tenda_menu[i][1] == 'index.asp' ? '' : ' target="statusframe"') + '><i class="icon ' + tenda_menu[i][2] + '"></i><span>' + tenda_menu[i][0] + '</span></a>\n';
+		else
+			tenda_html += '<a class="tenda-menu-item tenda-menu-disabled" href="javascript:void(0)"><i class="icon ' + tenda_menu[i][2] + '"></i><span>' + tenda_menu[i][0] + '</span></a>\n';
+	}
+	$("tendaMenu").innerHTML = tenda_html;
+	$("mainMenu").innerHTML = "";
+	$("subMenu").innerHTML = "";
+	$("tabMenu").innerHTML = "";
+	return;
+
 	for(i = 1; i <= menuL1_title.length-1; i++){
 		if(menuL1_title[i] == "")
 			continue;

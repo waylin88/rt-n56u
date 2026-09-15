@@ -2,6 +2,109 @@ body{
     background-color: #282828;
     overflow-y: scroll;
 }
+body.tenda-ui {
+    background: #f3f5f7;
+    color: #333;
+    overflow-y: auto;
+}
+body.tenda-ui .wrapper {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+body.tenda-ui .wrapper > .container-fluid:first-child {
+    min-height: 82px;
+    padding: 0 22px;
+    background: #fff;
+    border-bottom: 1px solid #e4e8ec;
+}
+body.tenda-ui #logo {
+    width: auto;
+    height: auto;
+    margin: 20px 0 0;
+    background: none;
+    color: #e53935;
+    font-size: 25px;
+    font-weight: bold;
+    line-height: 1;
+}
+body.tenda-ui #logo:after { content: "Tenda"; }
+.tenda-brand-name {
+    margin: 5px 0 15px;
+    color: #8a939b;
+    font-size: 11px;
+    letter-spacing: .4px;
+}
+.tenda-header-actions {
+    padding: 27px 0 0;
+    color: #8a939b;
+    font-size: 13px;
+    text-align: right;
+}
+.tenda-header-actions a {
+    margin-left: 22px;
+    color: #e53935;
+    text-decoration: none;
+}
+body.tenda-ui .tenda-content {
+    padding: 28px 22px 40px;
+}
+body.tenda-ui .tenda-content > .row-fluid > .span3 { width: 235px; }
+body.tenda-ui .tenda-content > .row-fluid > .span9 { width: calc(100% - 255px); margin-left: 20px; }
+body.tenda-ui .tenda-content .span2 { display: none; }
+body.tenda-ui .tenda-content .span10 { width: 100%; margin-left: 0; }
+body.tenda-ui .side_nav {
+    overflow: hidden;
+    padding: 0 !important;
+    background: #fff;
+    border: 1px solid #e2e6ea;
+    border-radius: 3px;
+    box-shadow: 0 1px 2px rgba(0,0,0,.04);
+}
+body.tenda-ui .side_nav > ul { display: none; }
+.tenda-menu { padding: 8px 0; }
+.tenda-menu-item {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 18px;
+    color: #58636d;
+    border-left: 3px solid transparent;
+    font-size: 14px;
+    text-decoration: none;
+}
+.tenda-menu-item:hover, .tenda-menu-item:focus {
+    color: #e53935;
+    background: #fff4f3;
+    border-left-color: #e53935;
+    text-decoration: none;
+}
+.tenda-menu-item .icon { width: 20px; margin-right: 10px; color: #9ca5ad; }
+.tenda-menu-item:hover .icon { color: #e53935; }
+.tenda-menu-disabled, .tenda-menu-disabled:hover { color: #b9c0c6; background: #fff; border-left-color: transparent; cursor: default; }
+.tenda-menu-disabled .icon { color: #cbd0d4; }
+body.tenda-ui .box {
+    min-height: 570px;
+    background: #fff;
+    border: 1px solid #e2e6ea;
+    border-radius: 3px;
+    box-shadow: 0 1px 2px rgba(0,0,0,.04);
+}
+body.tenda-ui .box_head { display: none; }
+body.tenda-ui .box iframe { min-height: 570px; background: #fff; }
+body.tenda-ui #footer { color: #9ca5ad; }
+@media (max-width: 720px) {
+    body.tenda-ui .wrapper > .container-fluid:first-child { padding: 0 14px; }
+    body.tenda-ui .tenda-content { padding: 14px; }
+    body.tenda-ui .tenda-content > .row-fluid > .span3,
+    body.tenda-ui .tenda-content > .row-fluid > .span9 { width: 100%; margin-left: 0; }
+    body.tenda-ui .side_nav { margin-bottom: 14px; }
+    .tenda-menu { display: grid; grid-template-columns: 1fr 1fr; }
+    .tenda-menu-item { min-height: 42px; padding: 0 12px; font-size: 13px; }
+    .tenda-header-actions { padding-top: 10px; padding-bottom: 12px; text-align: center; }
+    body.tenda-ui #logo { margin-top: 14px; }
+    .tenda-brand-name { margin-bottom: 8px; }
+}
 body.body_iframe{
     background: #F5F5F5;
     margin: 0 5px 0 5px;
