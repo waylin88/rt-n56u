@@ -81,6 +81,13 @@ body.tenda-ui .side_nav > ul { display: none; }
 }
 .tenda-menu-item .icon { width: 20px; margin-right: 10px; color: #9ca5ad; }
 .tenda-menu-item:hover .icon { color: #e53935; }
+.tenda-menu-active,
+.tenda-menu-active:hover {
+    color: #e53935;
+    background: #fff4f3;
+    border-left-color: #e53935;
+}
+.tenda-menu-active .icon { color: #e53935; }
 .tenda-menu-disabled, .tenda-menu-disabled:hover { color: #b9c0c6; background: #fff; border-left-color: transparent; cursor: default; }
 .tenda-menu-disabled .icon { color: #cbd0d4; }
 body.tenda-ui .box {
@@ -104,6 +111,169 @@ body.tenda-ui #footer { color: #9ca5ad; }
     .tenda-header-actions { padding-top: 10px; padding-bottom: 12px; text-align: center; }
     body.tenda-ui #logo { margin-top: 14px; }
     .tenda-brand-name { margin-bottom: 8px; }
+}
+
+/* Shared Tenda content theme for pages opened inside the main frame. */
+body.body_iframe,
+body:not(.tenda-ui) {
+    background: #f3f5f7;
+    color: #39434d;
+    font-family: Arial, Verdana, Helvetica, sans-serif;
+}
+body.body_iframe {
+    margin: 0;
+    padding: 18px;
+    overflow: auto;
+}
+body:not(.tenda-ui) .wrapper {
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
+}
+body:not(.tenda-ui) .wrapper > .container-fluid:first-child {
+    display: none;
+}
+body:not(.tenda-ui) .wrapper > .container-fluid:not(:first-child) {
+    padding: 0;
+}
+body:not(.tenda-ui) #TopBanner,
+body:not(.tenda-ui) #logo {
+    display: none;
+}
+body:not(.tenda-ui) .wrapper .side_nav {
+    display: none;
+}
+body:not(.tenda-ui) .wrapper .span9 {
+    width: 100%;
+    margin-left: 0;
+}
+body:not(.tenda-ui) .wrapper .span10,
+body:not(.tenda-ui) .wrapper .span12 {
+    width: 100%;
+    margin-left: 0;
+}
+body.body_iframe .row-fluid,
+body:not(.tenda-ui) .row-fluid {
+    margin-left: 0;
+}
+body.body_iframe .well,
+body:not(.tenda-ui) .well,
+body.body_iframe .box,
+body:not(.tenda-ui) .box {
+    background: #fff;
+    border: 1px solid #e0e5e9;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(36, 49, 60, .08);
+}
+body.body_iframe .box,
+body:not(.tenda-ui) .box {
+    overflow: hidden;
+}
+body.body_iframe .box_head,
+body:not(.tenda-ui) .box_head {
+    min-height: 42px;
+    margin: 0;
+    padding: 0 18px;
+    color: #fff;
+    background: #e53935;
+    border-radius: 0;
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 42px;
+    text-shadow: none;
+}
+body.body_iframe .round_bottom,
+body:not(.tenda-ui) .round_bottom {
+    border-radius: 0;
+}
+body.body_iframe .table,
+body:not(.tenda-ui) .table {
+    margin-bottom: 0;
+    background: #fff;
+}
+body.body_iframe .table th,
+body:not(.tenda-ui) .table th {
+    color: #4d5963;
+    background: #f8f9fa;
+    font-weight: normal;
+}
+body.body_iframe .table td,
+body.body_iframe .table th,
+body:not(.tenda-ui) .table td,
+body:not(.tenda-ui) .table th {
+    border-color: #e6eaed;
+    vertical-align: middle;
+}
+body.body_iframe input.input,
+body.body_iframe select.input,
+body.body_iframe textarea,
+body:not(.tenda-ui) input.input,
+body:not(.tenda-ui) select.input,
+body:not(.tenda-ui) textarea {
+    min-height: 34px;
+    padding: 6px 9px;
+    color: #39434d;
+    background: #fff;
+    border: 1px solid #cdd5db;
+    border-radius: 3px;
+    box-shadow: none;
+}
+body.body_iframe input:focus,
+body.body_iframe select:focus,
+body.body_iframe textarea:focus,
+body:not(.tenda-ui) input:focus,
+body:not(.tenda-ui) select:focus,
+body:not(.tenda-ui) textarea:focus {
+    border-color: #e53935;
+    box-shadow: 0 0 0 2px rgba(229, 57, 53, .12);
+    outline: none;
+}
+body.body_iframe .btn-primary,
+body:not(.tenda-ui) .btn-primary,
+body.body_iframe .btn-info,
+body:not(.tenda-ui) .btn-info {
+    color: #fff;
+    background: #e53935;
+    border-color: #d32f2f;
+    text-shadow: none;
+}
+body.body_iframe .btn-primary:hover,
+body:not(.tenda-ui) .btn-primary:hover,
+body.body_iframe .btn-info:hover,
+body:not(.tenda-ui) .btn-info:hover {
+    background: #c62828;
+}
+body.body_iframe .nav-tabs,
+body:not(.tenda-ui) .nav-tabs {
+    border-bottom-color: #e0e5e9;
+}
+body.body_iframe .nav-tabs > .active > a,
+body:not(.tenda-ui) .nav-tabs > .active > a {
+    color: #e53935;
+    border-color: #e0e5e9 #e0e5e9 #fff;
+    border-top: 2px solid #e53935;
+}
+body.body_iframe .grad_colour_dark_blue,
+body:not(.tenda-ui) .grad_colour_dark_blue {
+    background: #fff;
+}
+body.body_iframe .help_tooltip,
+body:not(.tenda-ui) .help_tooltip {
+    color: #4d5963;
+}
+@media (max-width: 720px) {
+    body.body_iframe { padding: 10px; }
+    body:not(.tenda-ui) .wrapper { min-width: 0; }
+    body:not(.tenda-ui) .wrapper .span3,
+    body:not(.tenda-ui) .wrapper .span9,
+    body:not(.tenda-ui) .wrapper .span10,
+    body:not(.tenda-ui) .wrapper .span12 { width: 100%; }
+    body.body_iframe .box_head,
+    body:not(.tenda-ui) .box_head { font-size: 14px; }
+    body.body_iframe .table th,
+    body.body_iframe .table td,
+    body:not(.tenda-ui) .table th,
+    body:not(.tenda-ui) .table td { padding: 8px 6px; }
 }
 body.body_iframe{
     background: #F5F5F5;
@@ -715,5 +885,78 @@ textarea[readonly] {
 
 .input-append input {
     border-radius: 3px 0 0 3px;
+}
+
+/* Keep the Tenda theme last so legacy Bootstrap rules cannot override it. */
+body.body_iframe {
+    background: #f3f5f7;
+    margin: 0;
+    padding: 18px;
+    min-width: 0;
+    overflow: auto;
+}
+body:not(.tenda-ui) .wrapper {
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
+}
+body:not(.tenda-ui) .wrapper > .container-fluid:first-child,
+body:not(.tenda-ui) #TopBanner,
+body:not(.tenda-ui) #logo {
+    display: none;
+}
+body:not(.tenda-ui) .wrapper > .container-fluid:not(:first-child) {
+    padding: 0;
+}
+body:not(.tenda-ui) .wrapper .side_nav { display: none; }
+body:not(.tenda-ui) .wrapper .span9,
+body:not(.tenda-ui) .wrapper .span10,
+body:not(.tenda-ui) .wrapper .span12 {
+    width: 100%;
+    margin-left: 0;
+}
+body.body_iframe .box,
+body:not(.tenda-ui) .box,
+body.body_iframe .well,
+body:not(.tenda-ui) .well {
+    background: #fff;
+    border: 1px solid #e0e5e9;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(36, 49, 60, .08);
+}
+body.body_iframe .box_head,
+body:not(.tenda-ui) .box_head {
+    color: #fff;
+    background: #e53935;
+    border-radius: 0;
+    text-shadow: none;
+}
+body.body_iframe .grad_colour_dark_blue,
+body:not(.tenda-ui) .grad_colour_dark_blue {
+    background: #fff;
+}
+body.body_iframe .btn-primary,
+body:not(.tenda-ui) .btn-primary,
+body.body_iframe .btn-info,
+body:not(.tenda-ui) .btn-info {
+    color: #fff;
+    background: #e53935;
+    border-color: #d32f2f;
+    background-image: none;
+    text-shadow: none;
+}
+body.body_iframe input.input,
+body.body_iframe select.input,
+body:not(.tenda-ui) input.input,
+body:not(.tenda-ui) select.input {
+    min-height: 34px;
+    color: #39434d;
+    background: #fff;
+    border: 1px solid #cdd5db;
+    box-shadow: none;
+}
+@media (max-width: 720px) {
+    body.body_iframe { padding: 10px; }
+    body:not(.tenda-ui) .wrapper { min-width: 0; }
 }
 

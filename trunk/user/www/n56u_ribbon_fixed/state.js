@@ -226,6 +226,13 @@ var enabledGuest2Gclass = '<% nvram_match_x("","rt_guest_enable", "1", "btn-info
 var enabledGuest5Gclass = '<% nvram_match_x("","wl_guest_enable", "1", "btn-info"); %>';
 var enabledBtnCommit = '<% nvram_match_x("","nvram_manual", "0", "display:none;"); %>';
 
+function tenda_select_menu(item) {
+	var items = document.getElementsByClassName('tenda-menu-item');
+	for (var i = 0; i < items.length; i++)
+		items[i].className = items[i].className.replace(' tenda-menu-active', '');
+	item.className += ' tenda-menu-active';
+}
+
 // L3 = The third Level of Menu
 function show_banner(L3){
 	var bc = '';
@@ -567,6 +574,7 @@ function show_menu(L1, L2, L3){
 		}
 	}
 
+	if ($('tendaMenu')) {
 	var tenda_menu = [
 		['Status', 'index.asp', 'icon-home'],
 		['Internet Settings', 'Advanced_WAN_Content.asp', 'icon-globe'],
@@ -582,7 +590,7 @@ function show_menu(L1, L2, L3){
 	var tenda_html = '';
 	for (i = 0; i < tenda_menu.length; i++) {
 		if (tenda_menu[i][1])
-			tenda_html += '<a class="tenda-menu-item" href="' + tenda_menu[i][1] + '"' + (tenda_menu[i][1] == 'index.asp' ? '' : ' target="statusframe"') + '><i class="icon ' + tenda_menu[i][2] + '"></i><span>' + tenda_menu[i][0] + '</span></a>\n';
+			tenda_html += '<a class="tenda-menu-item' + (tenda_menu[i][1] == 'index.asp' ? ' tenda-menu-active' : '') + '" href="' + tenda_menu[i][1] + '" onclick="tenda_select_menu(this)"' + (tenda_menu[i][1] == 'index.asp' ? '' : ' target="statusframe"') + '><i class="icon ' + tenda_menu[i][2] + '"></i><span>' + tenda_menu[i][0] + '</span></a>\n';
 		else
 			tenda_html += '<a class="tenda-menu-item tenda-menu-disabled" href="javascript:void(0)"><i class="icon ' + tenda_menu[i][2] + '"></i><span>' + tenda_menu[i][0] + '</span></a>\n';
 	}
@@ -591,6 +599,7 @@ function show_menu(L1, L2, L3){
 	$("subMenu").innerHTML = "";
 	$("tabMenu").innerHTML = "";
 	return;
+	}
 
 	for(i = 1; i <= menuL1_title.length-1; i++){
 		if(menuL1_title[i] == "")
