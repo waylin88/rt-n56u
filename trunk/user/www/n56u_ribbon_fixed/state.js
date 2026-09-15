@@ -624,6 +624,17 @@ function show_menu(L1, L2, L3){
 	}
 	else
 		$("tabMenu").innerHTML = "";
+
+	if (is_mobile && window.self === window.top) {
+		var advancedMenu = $("option7");
+		if (advancedMenu)
+			advancedMenu.parentNode.removeChild(advancedMenu);
+		var mobileSubmenu = menu2_code
+			.replace(/<a /g, '<li><a ')
+			.replace(/<\/a>\n/g, '</a></li>\n');
+		$("mainMenu").innerHTML += mobileSubmenu;
+		$("subMenu").innerHTML = "";
+	}
 }
 
 function show_footer(){
@@ -1174,14 +1185,6 @@ jQuery(document).ready(function(){
 		menuToggle.innerHTML = "<span></span><span></span><span></span>";
 		menuOverlay.id = "mobileMenuOverlay";
 		mobileTopbar.appendChild(menuToggle);
-		var pageTitle = document.querySelector(".box_head");
-		if (pageTitle) {
-			var mobileTitle = document.createElement("span");
-			mobileTitle.id = "mobilePageTitle";
-			mobileTitle.innerHTML = pageTitle.innerHTML;
-			mobileTopbar.appendChild(mobileTitle);
-			pageTitle.style.display = "none";
-		}
 		document.body.appendChild(mobileTopbar);
 		document.body.appendChild(menuOverlay);
 

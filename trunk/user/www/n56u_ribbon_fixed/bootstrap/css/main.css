@@ -621,8 +621,12 @@ textarea[readonly] {
     }
 
     body.mobile-ui:not(.mobile-iframe) {
-        padding-top: 50px;
+        padding: 50px 0 0;
         box-sizing: border-box;
+    }
+
+    body.mobile-ui:not(.mobile-iframe) .wrapper > div.container-fluid:first-of-type {
+        display: none;
     }
 
     .wrapper {
@@ -673,7 +677,7 @@ textarea[readonly] {
         bottom: 0;
         left: 0;
         z-index: 1001;
-        width: min(280px, 82vw);
+        width: min(220px, 72vw);
         margin: 0;
         padding: 0 0 12px !important;
         overflow-x: hidden;
@@ -695,22 +699,11 @@ textarea[readonly] {
         left: 0;
         z-index: 1003;
         height: 50px;
-        background: rgba(245, 245, 245, .96);
-        border: 1px solid #d8d8d8;
-        border-radius: 4px;
-        box-shadow: 0 1px 4px rgba(0, 0, 0, .25);
-    }
-
-    #mobilePageTitle {
-        display: block;
-        margin: 0 10px 0 58px;
-        overflow: hidden;
-        color: #333;
-        font-size: 14px;
-        font-weight: bold;
-        line-height: 50px;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        background: #006dcc;
+        border: 0;
+        border-bottom: 1px solid #0044cc;
+        border-radius: 0;
+        box-shadow: 0 1px 3px rgba(0, 0, .3);
     }
 
     #mobileMenuToggle {
@@ -720,7 +713,7 @@ textarea[readonly] {
         width: 42px;
         height: 36px;
         padding: 0;
-        color: #333;
+        color: #fff;
         background: transparent;
         border: 0;
         border-radius: 4px;
@@ -731,7 +724,7 @@ textarea[readonly] {
         width: 22px;
         height: 2px;
         margin: 5px auto;
-        background: #333;
+        background: #fff;
         border-radius: 1px;
     }
 
