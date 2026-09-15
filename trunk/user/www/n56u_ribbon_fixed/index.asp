@@ -712,19 +712,19 @@ $j(document).ready(function(){
 						<a class="tenda-refresh" href="index.asp">Refresh</a>
 					</div>
 					<div class="tenda-status-cards">
-						<a id="row_internet" class="tenda-status-card" href="/device-map/internet.asp" target="statusframe">
+						<a id="row_internet" class="tenda-status-card" href="/device-map/internet.asp">
 							<span class="tenda-status-icon">&#9679;</span><span><b>Internet</b><small id="internetStatus">Checking status</small></span><strong>&rsaquo;</strong>
 						</a>
-						<a id="row_radio" class="tenda-status-card" href="device-map/router2g.asp" target="statusframe">
+						<a id="row_radio" class="tenda-status-card" href="device-map/router2g.asp">
 							<span class="tenda-status-icon">&#9673;</span><span><b>Wireless</b><small id="wl_securitylevel_span">Wireless enabled</small></span><strong>&rsaquo;</strong>
 						</a>
-						<a id="clientStatusLink" class="tenda-status-card" href="device-map/clients.asp" target="statusframe">
+						<a id="clientStatusLink" class="tenda-status-card" href="device-map/clients.asp">
 							<span class="tenda-status-icon">&#9670;</span><span><b>Connected Devices</b><small><em id="clientNumber">0</em> devices online</small></span><strong>&rsaquo;</strong>
 						</a>
 					</div>
 					<div class="tenda-dashboard-grid">
 						<section class="tenda-dashboard-panel">
-							<header><h2>Wireless Network</h2><a href="Advanced_Wireless_Content.asp" target="statusframe">Settings</a></header>
+							<header><h2>Wireless Network</h2><a href="Advanced_Wireless_Content.asp">Settings</a></header>
 							<div class="tenda-wireless-summary">
 								<div class="tenda-wifi-mark">WiFi</div>
 								<div><b>Wireless network is ready</b><p>Manage your wireless name and security settings.</p></div>
@@ -732,8 +732,8 @@ $j(document).ready(function(){
 						</section>
 						<section class="tenda-dashboard-panel tenda-quick-panel">
 							<header><h2>Quick Settings</h2></header>
-							<a href="Advanced_WAN_Content.asp" target="statusframe">Internet Settings <span>&rsaquo;</span></a>
-							<a href="as.asp" target="statusframe">Administration <span>&rsaquo;</span></a>
+							<a href="Advanced_WAN_Content.asp">Internet Settings <span>&rsaquo;</span></a>
+							<a href="as.asp">Administration <span>&rsaquo;</span></a>
 						</section>
 					</div>
 					<div class="tenda-detail-panel">

@@ -127,7 +127,9 @@ function fill_status(scode,wtype){
 		stext = "<#InetState8#>";
 	else if (scode == 9)
 		stext = "<#InetState9#>";
-	$("wan_status").innerHTML = '<span class="label label-' + (scode != 0 ? 'warning' : 'success') + '">' + stext + '</span>';
+	var status_html = '<span class="label label-' + (scode != 0 ? 'warning' : 'success') + '">' + stext + '</span>';
+	$("wan_status").innerHTML = status_html;
+	$("wan_status_detail").innerHTML = status_html;
 
 	var wtext = wtype;
 	if(wtype == 'Automatic IP')
@@ -270,15 +272,16 @@ function submitInternet(v){
 </script>
 </head>
 
-<body class="body_iframe" onload="initial();">
-<table width="100%" align="center" cellpadding="4" cellspacing="0" class="table" id="tbl_info">
-  <tr>
-    <th width="50%" style="border-top: 0 none;"><#InetControl#></th>
-    <td style="border-top: 0 none;" colspan="3">
-      <input type="button" id="btn_connect_1" class="btn btn-info" value="<#Connect#>" onclick="submitInternet('Connect');">
-      <input type="button" id="btn_connect_0" class="btn btn-danger" value="<#Disconnect#>" onclick="submitInternet('Disconnect');">
-    </td>
-  </tr>
+<body class="body_iframe tenda-page" onload="initial();">
+<main class="tenda-page-shell">
+<header class="tenda-page-header"><div><h1>Internet Settings</h1><p>WAN connection and network status</p></div><span id="wan_status"></span></header>
+<section class="tenda-page-card tenda-action-card">
+	<div><h2><#InetControl#></h2><p>Manage the current Internet connection.</p></div>
+	<div><input type="button" id="btn_connect_1" class="btn btn-primary" value="<#Connect#>" onclick="submitInternet('Connect');"><input type="button" id="btn_connect_0" class="btn" value="<#Disconnect#>" onclick="submitInternet('Disconnect');"></div>
+</section>
+<section class="tenda-page-card">
+<div class="tenda-section-title"><h2>Connection Details</h2><span id="WANType"></span></div>
+<table class="tenda-data-table" id="tbl_info">
   <tr id="row_modem_prio" style="display:none">
     <th><#ModemPrio#></th>
     <td colspan="3">
@@ -299,8 +302,8 @@ function submitInternet(v){
     <td width="40px" style="text-align: right; padding: 6px 8px"><button type="button" class="btn btn-mini" style="height: 21px; outline:0;" title="<#Connect#>" onclick="submitInternet('WispReassoc');"><i class="icon icon-refresh"></i></button></td>
   </tr>
   <tr>
-    <th><#ConnectionStatus#></th>
-    <td id="wan_status" colspan="3"></td>
+	<th><#ConnectionStatus#></th>
+	<td colspan="3"><span id="wan_status_detail"></span></td>
   </tr>
   <tr>
     <th><#Connectiontype#>:</th>
@@ -369,11 +372,12 @@ function submitInternet(v){
     </td>
   </tr>
 </table>
+</section>
 
 <form method="post" name="internetForm" action="">
 <input type="hidden" name="wan_action" value="">
 <input type="hidden" name="modem_prio" value="">
 </form>
-
+</main>
 </body>
 </html>

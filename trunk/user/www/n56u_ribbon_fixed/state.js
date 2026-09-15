@@ -590,7 +590,7 @@ function show_menu(L1, L2, L3){
 	var tenda_html = '';
 	for (i = 0; i < tenda_menu.length; i++) {
 		if (tenda_menu[i][1])
-			tenda_html += '<a class="tenda-menu-item' + (tenda_menu[i][1] == 'index.asp' ? ' tenda-menu-active' : '') + '" href="' + tenda_menu[i][1] + '" onclick="tenda_select_menu(this)"' + (tenda_menu[i][1] == 'index.asp' ? '' : ' target="statusframe"') + '><i class="icon ' + tenda_menu[i][2] + '"></i><span>' + tenda_menu[i][0] + '</span></a>\n';
+			tenda_html += '<a class="tenda-menu-item' + (tenda_menu[i][1] == 'index.asp' ? ' tenda-menu-active' : '') + '" href="' + tenda_menu[i][1] + '" onclick="tenda_select_menu(this)"><i class="icon ' + tenda_menu[i][2] + '"></i><span>' + tenda_menu[i][0] + '</span></a>\n';
 		else
 			tenda_html += '<a class="tenda-menu-item tenda-menu-disabled" href="javascript:void(0)"><i class="icon ' + tenda_menu[i][2] + '"></i><span>' + tenda_menu[i][0] + '</span></a>\n';
 	}

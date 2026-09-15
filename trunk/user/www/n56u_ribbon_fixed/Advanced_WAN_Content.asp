@@ -364,7 +364,7 @@ function simplyMAC(fullMAC){
 </script>
 </head>
 
-<body onload="initial();" onunLoad="return unload_body();">
+<body class="tenda-page" onload="initial();" onunLoad="return unload_body();">
 <script>
 	if(get_ap_mode()){
 		alert("<#page_not_support_mode_hint#>");

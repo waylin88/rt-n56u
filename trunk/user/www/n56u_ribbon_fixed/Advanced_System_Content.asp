@@ -134,7 +134,7 @@ function openLink(s) {
 </style>
 </head>
 
-<body onload="initial();" onunLoad="return unload_body();">
+<body class="tenda-page" onload="initial();" onunLoad="return unload_body();">
 
 <div class="wrapper">
     <div class="container-fluid" style="padding-right: 0px">
