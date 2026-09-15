@@ -951,7 +951,8 @@ handle_request(FILE *conn_fp, const conn_item_t *item)
 	login_state = http_login_check(&conn_ip);
 	
 	if (login_state == 2 && !authorization) {
-		if (strstr(file, ".htm") != NULL || strstr(file, ".asp") != NULL) {
+		if (strcmp(file, "Login.asp") != 0 &&
+			(strstr(file, ".htm") != NULL || strstr(file, ".asp") != NULL)) {
 			file = "Login.asp";
 			query = NULL;
 		}
@@ -995,7 +996,8 @@ handle_request(FILE *conn_fp, const conn_item_t *item)
 			return;
 		}
 
-		init_cgi("error=1");
+		send_headers(302, "Found", "Location: /Login.asp?error=1", NULL, NULL, conn_fp);
+		return;
 	}
 
 #if defined (SUPPORT_HTTPS)

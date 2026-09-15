@@ -915,6 +915,13 @@ body:not(.tenda-ui) .wrapper .span12 {
     width: 100%;
     margin-left: 0;
 }
+body:not(.tenda-ui) .wrapper > .container-fluid:not(:first-child) > .row-fluid > .span9 {
+    padding: 0;
+}
+body:not(.tenda-ui) .wrapper > .container-fluid:not(:first-child) > .row-fluid > .span9 > .row-fluid > .span12 {
+    width: 100%;
+    margin-left: 0;
+}
 body.body_iframe .box,
 body:not(.tenda-ui) .box,
 body.body_iframe .well,
@@ -923,6 +930,16 @@ body:not(.tenda-ui) .well {
     border: 1px solid #e0e5e9;
     border-radius: 4px;
     box-shadow: 0 1px 3px rgba(36, 49, 60, .08);
+}
+body:not(.tenda-ui) .box,
+body:not(.tenda-ui) .well,
+body.body_iframe .box,
+body.body_iframe .well,
+body:not(.tenda-ui) .grad_colour_dark_blue,
+body.body_iframe .grad_colour_dark_blue {
+    background-color: #fff !important;
+    background-image: none !important;
+    filter: none !important;
 }
 body.body_iframe .box_head,
 body:not(.tenda-ui) .box_head {
@@ -955,8 +972,165 @@ body:not(.tenda-ui) select.input {
     border: 1px solid #cdd5db;
     box-shadow: none;
 }
+body.body_iframe input[type="text"],
+body.body_iframe input[type="password"],
+body.body_iframe input[type="number"],
+body.body_iframe select,
+body.body_iframe textarea,
+body:not(.tenda-ui) input[type="text"],
+body:not(.tenda-ui) input[type="password"],
+body:not(.tenda-ui) input[type="number"],
+body:not(.tenda-ui) select,
+body:not(.tenda-ui) textarea {
+    min-height: 34px;
+    padding: 6px 9px;
+    color: #39434d;
+    background: #fff;
+    border: 1px solid #cdd5db;
+    border-radius: 3px;
+    box-shadow: none;
+}
+body.body_iframe button,
+body.body_iframe input[type="button"],
+body.body_iframe input[type="submit"],
+body:not(.tenda-ui) button,
+body:not(.tenda-ui) input[type="button"],
+body:not(.tenda-ui) input[type="submit"] {
+    border-radius: 3px;
+}
+body.body_iframe .form-actions,
+body:not(.tenda-ui) .form-actions {
+    background: #fafbfc;
+    border-top-color: #e0e5e9;
+}
 @media (max-width: 720px) {
     body.body_iframe { padding: 10px; }
     body:not(.tenda-ui) .wrapper { min-width: 0; }
+}
+
+.tenda-dashboard { padding: 2px 0 24px; }
+.tenda-dashboard-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+}
+.tenda-dashboard-title h1 {
+    margin: 0;
+    color: #37434e;
+    font-size: 24px;
+    font-weight: normal;
+}
+.tenda-dashboard-title p {
+    margin: 4px 0 0;
+    color: #9aa4ac;
+    font-size: 12px;
+}
+.tenda-refresh,
+.tenda-dashboard-panel header a {
+    color: #e53935;
+    font-size: 12px;
+    text-decoration: none;
+}
+.tenda-refresh:hover,
+.tenda-dashboard-panel header a:hover { text-decoration: underline; }
+.tenda-status-cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 18px;
+}
+.tenda-status-card {
+    display: flex;
+    align-items: center;
+    min-height: 92px;
+    padding: 16px;
+    color: #45515b;
+    background: #fff;
+    border: 1px solid #e0e5e9;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(36, 49, 60, .08);
+    text-decoration: none;
+}
+.tenda-status-card:hover {
+    border-color: #ef9a9a;
+    box-shadow: 0 2px 8px rgba(229, 57, 53, .12);
+    text-decoration: none;
+}
+.tenda-status-icon {
+    display: grid;
+    width: 42px;
+    height: 42px;
+    place-items: center;
+    margin-right: 12px;
+    color: #fff;
+    background: #e53935;
+    border-radius: 50%;
+    font-size: 20px;
+}
+.tenda-status-card span:nth-child(2) { min-width: 0; }
+.tenda-status-card b,
+.tenda-status-card small { display: block; }
+.tenda-status-card b { color: #39434d; font-size: 14px; font-weight: normal; }
+.tenda-status-card small { margin-top: 6px; color: #99a3ab; font-size: 12px; white-space: nowrap; }
+.tenda-status-card small em { color: #e53935; font-style: normal; font-weight: bold; }
+.tenda-status-card strong { margin-left: auto; color: #c4cbd0; font-size: 26px; font-weight: normal; }
+.tenda-dashboard-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(220px, 1fr);
+    gap: 14px;
+    margin-bottom: 18px;
+}
+.tenda-dashboard-panel,
+.tenda-detail-panel {
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid #e0e5e9;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(36, 49, 60, .08);
+}
+.tenda-dashboard-panel header,
+.tenda-detail-panel > h2 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 46px;
+    margin: 0;
+    padding: 0 16px;
+    color: #4b5760;
+    background: #fafbfc;
+    border-bottom: 1px solid #e5e9ec;
+    font-size: 15px;
+    font-weight: normal;
+}
+.tenda-dashboard-panel header h2 { margin: 0; font-size: 15px; font-weight: normal; }
+.tenda-wireless-summary { display: flex; align-items: center; min-height: 104px; padding: 18px; }
+.tenda-wifi-mark {
+    display: grid;
+    width: 58px;
+    height: 58px;
+    place-items: center;
+    margin-right: 16px;
+    color: #e53935;
+    border: 2px solid #e53935;
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: bold;
+}
+.tenda-wireless-summary b { color: #39434d; font-size: 14px; font-weight: normal; }
+.tenda-wireless-summary p { margin: 7px 0 0; color: #98a2aa; font-size: 12px; line-height: 1.5; }
+.tenda-quick-panel > a { display: block; padding: 14px 16px; color: #58636d; border-bottom: 1px solid #edf0f2; font-size: 13px; text-decoration: none; }
+.tenda-quick-panel > a:last-child { border-bottom: 0; }
+.tenda-quick-panel > a:hover { color: #e53935; background: #fff7f6; }
+.tenda-quick-panel > a span { float: right; color: #c5ccd1; font-size: 20px; line-height: 12px; }
+.tenda-detail-panel > h2 { justify-content: flex-start; }
+.tenda-detail-panel iframe { display: block; min-height: 420px; background: #fff; }
+.tenda-legacy-hooks { display: none; }
+@media (max-width: 720px) {
+    .tenda-status-cards,
+    .tenda-dashboard-grid { grid-template-columns: 1fr; }
+    .tenda-dashboard-title { margin-bottom: 12px; }
+    .tenda-status-card { min-height: 78px; }
+    .tenda-detail-panel iframe { min-height: 360px; }
 }
 

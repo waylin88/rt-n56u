@@ -101,6 +101,7 @@ typedef FILE * webs_t;
 /* Regular file handler */
 extern void do_file(const char *url, FILE *stream);
 extern void do_ej(const char *url, FILE *stream);
+extern void do_html_apply_post(const char *url, FILE *stream, int clen, char *boundary);
 
 extern int ejArgs(int argc, char **argv, char *fmt, ...);
 

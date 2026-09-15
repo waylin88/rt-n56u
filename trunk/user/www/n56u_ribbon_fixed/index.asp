@@ -706,89 +706,49 @@ $j(document).ready(function(){
 
             <div class="span9">
                 <!--Body content-->
-
-                <div class="row-fluid">
-                    <div class="span2">
-						<div class="well tenda-status-rail" style="height: 570px; padding-left: 18px;">
-                            <div id="tabMenu"></div>
-
-                            <table class="table table-big" style="margin-top: 12px;">
-                                <tbody>
-                                    <tr id="row_internet">
-                                        <td width="30%">
-                                            <a id="linkInternet" href="/device-map/internet.asp" target="statusframe" style="outline:0;">
-                                                <div id="iconInternet" class="big-icons big-icons-globe" onclick="clickEvent(this);"></div>
-                                            </a>
-                                            <div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
-                                            <div style="position: absolute; margin-top: -47px; margin-left: 50px;"><div id="internetStatus" style="padding-left: 3px;"></div></div>
-                                            <div class="arrow-right" id="arrow-internet"><img src="/bootstrap/img/arrow-right.png"></div>
-                                        </td>
-                                    </tr>
-                                    <tr id="row_radio">
-                                        <td width="30%">
-                                            <a href="device-map/router2g.asp" target="statusframe" style="outline:0;"><div id="iconRouter" class="big-icons big-icons-router" onclick="clickEvent(this);"></div></a>
-                                            <div style="position: absolute; margin-top: -47px; margin-left: 50px;"><div id="wl_securitylevel_span" style="padding-right: 3px;"></div></div>
-                                            <div class="arrow-right" id="arrow-router"><img src="/bootstrap/img/arrow-right.png"></div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <a id="clientStatusLink" href="device-map/clients.asp" target="statusframe" style="outline:0;"><div id="iconClient" class="big-icons big-icons-laptop" onclick="clickEvent(this);"></div></a>
-                                            <div style="position: absolute; margin-top: -47px; margin-left: 50px;"><b><div id="clientNumber">&nbsp;</div></b></div>
-                                            <div class="arrow-right" id="arrow-clients"><img src="/bootstrap/img/arrow-right.png"></div>
-                                        </td>
-                                    </tr>
-                                    <tr id="row_usb_port1">
-                                        <td width="30%">
-                                            <div id="deviceIcon_0" class="big-icons big-icons-usb"></div>
-                                            <div style="position: absolute; margin-top: -47px; margin-left: 50px;"><div id="deviceDec_0"></div></div>
-                                            <div class="arrow-right" id="arrow-usb1"><img src="/bootstrap/img/arrow-right.png"></div>
-                                        </td>
-                                    </tr>
-                                    <tr id="row_usb_port2" style="display:none">
-                                        <td width="30%">
-                                            <div id="deviceIcon_1" class="big-icons big-icons-usb"></div>
-                                            <div style="position: absolute; margin-top: -47px; margin-left: 50px;"><div id="deviceDec_1"></div></div>
-                                            <div class="arrow-right" id="arrow-usb2"><img src="/bootstrap/img/arrow-right.png"></div>
-                                        </td>
-                                    </tr>
-                                    <tr id="row_ata_pool" style="display:none">
-                                        <td width="30%">
-                                            <div id="sataIcon" class="big-icons big-icons-ata"></div>
-                                            <div style="position: absolute; margin-top: -47px; margin-left: 50px;"><div id="sataDec"></div></div>
-                                            <div class="arrow-right" id="arrow-ata"><img src="/bootstrap/img/arrow-right.png"></div>
-                                        </td>
-                                    </tr>
-                                    <tr id="row_mmc_slot" style="display:none">
-                                        <td width="30%">
-                                            <div id="cardIcon" class="big-icons big-icons-mmc"></div>
-                                            <div style="position: absolute; margin-top: -47px; margin-left: 50px;"><div id="cardDec"></div></div>
-                                            <div class="arrow-right" id="arrow-mmc"><img src="/bootstrap/img/arrow-right.png"></div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
-                            <div class="row-fluid">
-                                <div class="span12">
-                                    <div id="statusContainer" width="0" height="0" align="left" valign="top" ></div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="span10">
-                        <div class="box well grad_colour_dark_blue">
-                            <div id="statusIcon" style="display: none"></div>
-                            <h2 id="helpname" class="box_head round_top"></h2>
-
-                            <div class="round_bottom">
-                                <iframe id="statusframe" name="statusframe" src="/device-map/internet.asp" frameborder="0" width="100%" height="571"></iframe>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+				<div class="tenda-dashboard">
+					<div class="tenda-dashboard-title">
+						<div><h1>Status</h1><p>Network overview</p></div>
+						<a class="tenda-refresh" href="index.asp">Refresh</a>
+					</div>
+					<div class="tenda-status-cards">
+						<a id="row_internet" class="tenda-status-card" href="/device-map/internet.asp" target="statusframe">
+							<span class="tenda-status-icon">&#9679;</span><span><b>Internet</b><small id="internetStatus">Checking status</small></span><strong>&rsaquo;</strong>
+						</a>
+						<a id="row_radio" class="tenda-status-card" href="device-map/router2g.asp" target="statusframe">
+							<span class="tenda-status-icon">&#9673;</span><span><b>Wireless</b><small id="wl_securitylevel_span">Wireless enabled</small></span><strong>&rsaquo;</strong>
+						</a>
+						<a id="clientStatusLink" class="tenda-status-card" href="device-map/clients.asp" target="statusframe">
+							<span class="tenda-status-icon">&#9670;</span><span><b>Connected Devices</b><small><em id="clientNumber">0</em> devices online</small></span><strong>&rsaquo;</strong>
+						</a>
+					</div>
+					<div class="tenda-dashboard-grid">
+						<section class="tenda-dashboard-panel">
+							<header><h2>Wireless Network</h2><a href="Advanced_Wireless_Content.asp" target="statusframe">Settings</a></header>
+							<div class="tenda-wireless-summary">
+								<div class="tenda-wifi-mark">WiFi</div>
+								<div><b>Wireless network is ready</b><p>Manage your wireless name and security settings.</p></div>
+							</div>
+						</section>
+						<section class="tenda-dashboard-panel tenda-quick-panel">
+							<header><h2>Quick Settings</h2></header>
+							<a href="Advanced_WAN_Content.asp" target="statusframe">Internet Settings <span>&rsaquo;</span></a>
+							<a href="as.asp" target="statusframe">Administration <span>&rsaquo;</span></a>
+						</section>
+					</div>
+					<div class="tenda-detail-panel">
+						<div id="statusIcon" style="display:none"></div><h2 id="helpname">Details</h2>
+						<iframe id="statusframe" name="statusframe" src="/device-map/internet.asp" frameborder="0" width="100%" height="420"></iframe>
+					</div>
+				</div>
+				<div class="tenda-legacy-hooks" aria-hidden="true">
+					<div id="tabMenu"></div><div id="statusContainer"></div><div id="overDiv"></div>
+					<div id="row_usb_port1"><div id="deviceIcon_0"></div><div id="deviceDec_0"></div></div>
+					<div id="row_usb_port2"><div id="deviceIcon_1"></div><div id="deviceDec_1"></div></div>
+					<div id="row_ata_pool"><div id="sataIcon"></div><div id="sataDec"></div></div>
+					<div id="row_mmc_slot"><div id="cardIcon"></div><div id="cardDec"></div></div>
+					<div id="iconInternet"></div><div id="iconRouter"></div><div id="iconClient"></div>
+				</div>
             </div>
         </div>
     </div>
