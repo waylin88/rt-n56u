@@ -1164,13 +1164,17 @@ jQuery(document).ready(function(){
 		$j('body').addClass('mobile-iframe');
 
 	if (is_mobile && window.self === window.top) {
+		var mobileTopbar = document.createElement("div");
 		var menuToggle = document.createElement("button");
 		var menuOverlay = document.createElement("div");
+		mobileTopbar.id = "mobileTopbar";
 		menuToggle.type = "button";
 		menuToggle.id = "mobileMenuToggle";
-		menuToggle.innerHTML = "菜单";
+		menuToggle.setAttribute("aria-label", "菜单");
+		menuToggle.innerHTML = "<span></span><span></span><span></span>";
 		menuOverlay.id = "mobileMenuOverlay";
-		document.body.appendChild(menuToggle);
+		mobileTopbar.appendChild(menuToggle);
+		document.body.appendChild(mobileTopbar);
 		document.body.appendChild(menuOverlay);
 
 		function closeMobileMenu() {
