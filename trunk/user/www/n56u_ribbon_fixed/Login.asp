@@ -25,19 +25,12 @@ body {
 }
 .login-panel {
     width: 100%;
-    max-width: 420px;
-    margin: 34px auto 0;
-    padding: 0 30px 28px;
+    max-width: 360px;
+    margin: 8vh auto 0;
+    padding: 24px 26px 24px;
+    box-sizing: border-box;
     background: #f5f5f5;
-    border: 1px solid #666;
-    border-radius: 3px;
-    box-shadow: 0 4px 18px rgba(0, 0, 0, .35);
-}
-.login-logo {
-    width: 150px;
-    height: 71px;
-    margin: 18px auto 8px;
-    background: url("/bootstrap/img/asus_logo.png") no-repeat center center;
+    border: 0;
 }
 .login-title {
     margin: 0 0 6px;
@@ -118,14 +111,11 @@ body {
 }
 @media (max-width: 480px) {
     .login-page {
-        padding: 12px;
+        padding: 12px 10px;
     }
     .login-panel {
         margin-top: 5vh;
-        padding: 0 20px 22px;
-    }
-    .login-logo {
-        margin-top: 10px;
+        padding: 20px 18px 22px;
     }
 }
 </style>
@@ -160,14 +150,13 @@ function togglePassword() {
 <body onload="initial()">
 <div class="login-page">
     <div class="login-panel">
-        <div class="login-logo" aria-hidden="true"></div>
         <h1 class="login-title"><#Web_Title#></h1>
         <p class="login-subtitle">登录路由器管理页面</p>
         <div id="loginError" class="login-error" role="alert">用户名或密码错误，请重试。</div>
         <form class="login-form" method="post" action="Login.asp" autocomplete="on">
             <div class="control-group">
                 <label for="username"><#menu5_13_username#></label>
-                <input id="username" name="username" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" required>
+                <input id="username" name="username" type="text" value="admin" autocomplete="username" autocapitalize="none" spellcheck="false" required>
             </div>
             <div class="control-group">
                 <label for="password"><#menu5_13_password#></label>
