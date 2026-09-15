@@ -632,6 +632,18 @@ textarea[readonly] {
         padding-left: 5px;
     }
 
+    .wrapper > .container-fluid:first-child .span3 {
+        display: none;
+    }
+
+    .wrapper > .container-fluid:first-child .span9 {
+        width: 100%;
+    }
+
+    #logo {
+        display: none;
+    }
+
     .row-fluid > .span2,
     .row-fluid > .span3,
     .row-fluid > .span9,
@@ -688,6 +700,27 @@ textarea[readonly] {
 
     #TopBanner .container-fluid {
         padding: 0;
+    }
+
+    #TopBanner .row-fluid {
+        width: 100%;
+        margin: 0;
+    }
+
+    #TopBanner .well {
+        height: auto !important;
+        min-height: 0;
+        overflow: hidden;
+    }
+
+    #TopBanner .table {
+        table-layout: fixed;
+        word-wrap: break-word;
+    }
+
+    #TopBanner .table td {
+        min-width: 0 !important;
+        overflow-wrap: anywhere;
     }
 
     .row-fluid > .span2 > .well {
