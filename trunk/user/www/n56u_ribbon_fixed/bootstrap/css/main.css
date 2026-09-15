@@ -645,12 +645,22 @@ textarea[readonly] {
     }
 
     .row-fluid > .span2,
-    .row-fluid > .span3,
-    .row-fluid > .span9,
     .row-fluid > .span10,
     .row-fluid > .span12 {
         float: none;
         width: auto;
+        margin-left: 0;
+    }
+
+    .wrapper > .container-fluid:not(:first-child) > .row-fluid > .span3 {
+        float: left;
+        width: 30% !important;
+        margin-left: 0;
+    }
+
+    .wrapper > .container-fluid:not(:first-child) > .row-fluid > .span9 {
+        float: right;
+        width: 68% !important;
         margin-left: 0;
     }
 
@@ -721,6 +731,29 @@ textarea[readonly] {
     #TopBanner .table td {
         min-width: 0 !important;
         overflow-wrap: anywhere;
+    }
+
+    .wrapper > .container-fluid:not(:first-child) > .row-fluid > .span9 > .row-fluid > .span2 {
+        float: left;
+        width: 22% !important;
+        margin-left: 0;
+    }
+
+    .wrapper > .container-fluid:not(:first-child) > .row-fluid > .span9 > .row-fluid > .span10 {
+        float: right;
+        width: 76% !important;
+        margin-left: 0;
+    }
+
+    .wrapper > .container-fluid:not(:first-child) > .row-fluid > .span9 > .row-fluid > .span2 > .well {
+        height: auto !important;
+        min-height: 0;
+        padding: 0 3px !important;
+    }
+
+    .wrapper > .container-fluid:not(:first-child) > .row-fluid > .span9 > .row-fluid > .span10 iframe {
+        width: 100%;
+        max-width: 100%;
     }
 
     .row-fluid > .span2 > .well {

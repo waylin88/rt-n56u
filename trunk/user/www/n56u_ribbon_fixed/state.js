@@ -236,6 +236,16 @@ var enabledBtnCommit = '<% nvram_match_x("","nvram_manual", "0", "display:none;"
 
 // L3 = The third Level of Menu
 function show_banner(L3){
+	if (is_mobile) {
+		var topBanner = $("TopBanner");
+		var logo = $("logo");
+		if (topBanner)
+			topBanner.innerHTML = "";
+		if (logo && logo.parentNode)
+			logo.parentNode.removeChild(logo);
+		return;
+	}
+
 	var bc = '';
 	var style_2g = 'width:55px;';
 	var style_5g = 'width:55px;';
