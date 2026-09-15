@@ -10,8 +10,10 @@ body.body_iframe{
 }
 
 .wrapper {
-    width: 960px;
+    width: 100%;
+    max-width: 960px;
     margin: 0 auto;
+    box-sizing: border-box;
 }
 
 #logo {
@@ -727,6 +729,49 @@ textarea[readonly] {
         box-shadow: 2px 0 8px rgba(0, 0, 0, .3);
         transform: translateX(-105%);
         transition: transform .2s ease;
+    }
+
+    /* Reset Bootstrap .well styles on the slide-out sidebar */
+    .side_nav.well {
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        min-height: 0;
+    }
+
+    /* Keep sidebar nav items full-width inside the slide-out menu */
+    .side_nav ul li,
+    .side_nav ul li a {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    /* Make inline-width inputs/buttons responsive to avoid horizontal overflow */
+    .wrapper input,
+    .wrapper select,
+    .wrapper button.btn,
+    .wrapper .input-append,
+    .wrapper .input-append input {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* On very narrow screens, full-width apply button (which is 219px fixed) */
+    @media screen and (max-width: 480px) {
+        .wrapper input[type="button"].btn,
+        .wrapper input[type="submit"].btn,
+        .wrapper button.btn {
+            width: 100% !important;
+        }
+        .wrapper .input-append input[type="password"] {
+            width: 100% !important;
+            min-width: 0;
+        }
+    }
+
+    /* Defensive: prevent any direct child of .wrapper from overflowing horizontally */
+    .wrapper > * {
+        max-width: 100%;
     }
 
     .mobile-menu-open .side_nav {

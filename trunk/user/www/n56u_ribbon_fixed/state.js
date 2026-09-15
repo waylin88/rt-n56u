@@ -14,7 +14,7 @@ var cookie_pref = 'n56u_cookie_';
 
 var uagent = navigator.userAgent.toLowerCase();
 var is_ie11p = (/trident\/7\./).test(uagent);
-var is_mobile = (/iphone|ipod|ipad|iemobile|android|blackberry|fennec/).test(uagent) ||
+var is_mobile = (/iphone|ipod|ipad|iemobile|android|blackberry|fennec|opera m(ob|ini)|windows phone|mobile|silk|kindle|playbook|bb10|webos|hp-tablet|symbian|ucweb|qqbrowser|mqqbrowser|micromessenger|miuibrowser|huawei|honor|vivobrowser|oppo|oneplus|meizu|samsung|zte|lge|nexus|sm-|gt-|mi-|redmi|kftr|kfot|kfjwi|kfapwi|kfthwi|kfathi|kfarwi|kfawiki|kftt|kffowi|kfauwi|kfsowi|cm-|lenovo|alcatel|huawei-vision)/i).test(uagent) ||
 	window.innerWidth <= 800 || screen.width <= 800;
 
 if (is_mobile && document.head && !document.querySelector('meta[name="viewport"]')) {
