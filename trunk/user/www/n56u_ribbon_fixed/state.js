@@ -1161,6 +1161,27 @@ jQuery(document).ready(function(){
 	if (is_mobile)
 		$j('body').addClass('mobile-ui');
 
+	if (is_mobile) {
+		var menuToggle = document.createElement("button");
+		var menuOverlay = document.createElement("div");
+		menuToggle.type = "button";
+		menuToggle.id = "mobileMenuToggle";
+		menuToggle.innerHTML = "菜单";
+		menuOverlay.id = "mobileMenuOverlay";
+		document.body.appendChild(menuToggle);
+		document.body.appendChild(menuOverlay);
+
+		function closeMobileMenu() {
+			$j('body').removeClass('mobile-menu-open');
+		}
+
+		menuToggle.onclick = function() {
+			$j('body').toggleClass('mobile-menu-open');
+		};
+		menuOverlay.onclick = closeMobileMenu;
+		$j(document).on('click', '.side_nav a', closeMobileMenu);
+	}
+
     $j("#logo").click(function(){
         location.href = '/';
     });

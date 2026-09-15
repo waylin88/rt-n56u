@@ -56,6 +56,7 @@ body {
 
 function initial(){
   document.getElementById("logined_ip_str").innerHTML = login_ip_str();
+  setTimeout(function(){ location.replace("/Login.asp"); }, 800);
 }
 </script>
 </head>
