@@ -12,7 +12,10 @@
 <link rel="stylesheet" type="text/css" href="/bootstrap/css/main.css">
 <style type="text/css">
 html, body {
-    min-height: 100%;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
 }
 body {
     background: #282828 url("/bootstrap/img/dark-bg.jpg") repeat scroll center top;
@@ -20,17 +23,26 @@ body {
     font-family: Arial, Verdana, Helvetica, sans-serif;
 }
 .login-page {
-    min-height: 100vh;
-    padding: 24px 16px;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    padding: 24px 20px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .login-panel {
-    width: 100%;
-    max-width: 360px;
-    margin: 8vh auto 0;
+    width: min(360px, calc(100vw - 40px));
+    min-width: 0;
+    max-height: calc(100dvh - 48px);
+    overflow-y: auto;
+    margin: 0;
     padding: 24px 26px 24px;
     box-sizing: border-box;
     background: #f5f5f5;
-    border: 0;
+    border: 1px solid #d8d8d8;
+    border-radius: 10px;
 }
 .login-title {
     margin: 0 0 6px;
@@ -111,10 +123,11 @@ body {
 }
 @media (max-width: 480px) {
     .login-page {
-        padding: 12px 10px;
+        padding: 24px 20px;
     }
     .login-panel {
-        margin-top: 5vh;
+        width: 100%;
+        max-height: calc(100dvh - 48px);
         padding: 20px 18px 22px;
     }
 }
