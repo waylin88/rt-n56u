@@ -706,6 +706,46 @@ textarea[readonly] {
         background: rgba(0, 0, 0, .35);
     }
 
+    body.body_iframe #mobileMenuToggle,
+    body.body_iframe #mobileMenuOverlay,
+    body.mobile-iframe #mobileMenuToggle,
+    body.mobile-iframe #mobileMenuOverlay {
+        display: none !important;
+    }
+
+    body.body_iframe,
+    body.mobile-iframe {
+        width: 100%;
+        min-width: 0;
+        margin: 0;
+        padding: 10px;
+        overflow-x: hidden;
+    }
+
+    body.mobile-iframe .wrapper {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    body.mobile-iframe .wrapper > div.container-fluid:first-of-type,
+    body.mobile-iframe .wrapper > div.container-fluid:first-of-type + #Loading,
+    body.mobile-iframe .wrapper > div.container-fluid:first-of-type + #Loading + iframe,
+    body.mobile-iframe .side_nav,
+    body.mobile-iframe #footer {
+        display: none;
+    }
+
+    body.mobile-iframe .wrapper > .container-fluid:not(:first-child) {
+        padding: 0;
+    }
+
+    body.mobile-iframe .wrapper .span9,
+    body.mobile-iframe .wrapper .span10,
+    body.mobile-iframe .wrapper .span12 {
+        width: 100% !important;
+        margin-left: 0;
+    }
+
     .mobile-menu-open #mobileMenuOverlay {
         display: block;
     }

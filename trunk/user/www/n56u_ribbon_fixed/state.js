@@ -1160,8 +1160,10 @@ jQuery(document).ready(function(){
 
 	if (is_mobile)
 		$j('body').addClass('mobile-ui');
+	if (is_mobile && window.self !== window.top)
+		$j('body').addClass('mobile-iframe');
 
-	if (is_mobile) {
+	if (is_mobile && window.self === window.top) {
 		var menuToggle = document.createElement("button");
 		var menuOverlay = document.createElement("div");
 		menuToggle.type = "button";
