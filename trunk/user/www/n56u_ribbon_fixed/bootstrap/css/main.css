@@ -699,11 +699,35 @@ textarea[readonly] {
         left: 0;
         z-index: 1003;
         height: 50px;
-        background: #006dcc;
+        background-color: #006dcc;
+        background-image: linear-gradient(to bottom, #0088cc, #0044cc);
+        background-repeat: repeat-x;
         border: 0;
-        border-bottom: 1px solid #0044cc;
+        border-bottom: 1px solid #002a80;
         border-radius: 0;
         box-shadow: 0 1px 3px rgba(0, 0, .3);
+    }
+
+    #mobilePageTitle {
+        display: block;
+        margin: 0 92px 0 58px;
+        overflow: hidden;
+        color: #fff;
+        font-size: 14px;
+        font-weight: bold;
+        line-height: 50px;
+        text-overflow: ellipsis;
+        text-shadow: 0 -1px 0 rgba(0, 0, 0, .25);
+        white-space: nowrap;
+    }
+
+    #mobileLogo {
+        position: absolute;
+        top: 8px;
+        right: 10px;
+        width: auto;
+        height: 34px;
+        max-width: 82px;
     }
 
     #mobileMenuToggle {

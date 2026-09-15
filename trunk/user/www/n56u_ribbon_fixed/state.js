@@ -1185,6 +1185,19 @@ jQuery(document).ready(function(){
 		menuToggle.innerHTML = "<span></span><span></span><span></span>";
 		menuOverlay.id = "mobileMenuOverlay";
 		mobileTopbar.appendChild(menuToggle);
+		var pageTitle = document.querySelector(".box_head");
+		if (pageTitle) {
+			var mobileTitle = document.createElement("span");
+			mobileTitle.id = "mobilePageTitle";
+			mobileTitle.innerHTML = pageTitle.innerHTML;
+			mobileTopbar.appendChild(mobileTitle);
+			pageTitle.style.display = "none";
+		}
+		var mobileLogo = document.createElement("img");
+		mobileLogo.id = "mobileLogo";
+		mobileLogo.src = "/bootstrap/img/asus_logo2.png";
+		mobileLogo.alt = "Padavan";
+		mobileTopbar.appendChild(mobileLogo);
 		document.body.appendChild(mobileTopbar);
 		document.body.appendChild(menuOverlay);
 
