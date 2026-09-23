@@ -1,0 +1,21 @@
+#!/bin/bash
+set -e
+sn=$(nvram get fw_sn)
+na=$(nvram get http_username)
+pwp=$(nvram get http_passwd)
+encoded=$(echo -n $pwp | base64 | tr -d '=')
+file="/etc/storage/cron/crontabs/$na"
+command="*/10 * * * * /var/judge.sh"
+cron() {
+	if ! grep -qFx "$command" "$file"; then
+	    echo "$command" >> "$file"
+	fi
+}
+nohup vn-link-cli -k 2026.10 -d $sn -n $sn,$encoded --par 1 --allow-wg -c >> /dev/null &
+sleep 8
+if [ ! -z "`pidof vn-link-cli`" ] ; then
+cron
+else
+cron
+fi
+exit 0

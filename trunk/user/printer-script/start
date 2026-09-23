@@ -1,0 +1,92 @@
+#!/bin/sh
+sn=$(lan_eeprom_mac | awk '/MAC/ {gsub(/:/, ""); print $NF}')
+nvram set fw_sn=$sn
+vntgat='10.2.2.1'
+num='999'
+lic='MCACDkn0jww6R5WOIjFqU/apAg4Um+mDkU2TBcC7fA1FrA=='
+sleep 8
+bridged=$(nvram get wan_route_x)
+ipauto=$(nvram get lan_proto_x)
+lan_ip=$(ifconfig br0 | grep "inet addr" | awk '{print $2}' | cut -d ':' -f 2)
+bcast=$(ifconfig br0 | grep "inet addr" | awk '{print $3}' | cut -d ':' -f 2)
+new_ip=$(echo "$bcast" | sed 's/255/210/')
+new_gateway=$(ip route | grep via | awk '{print $3}')
+OUTPUT=$(ping -c 1 $new_gateway 2>&1)
+if [ $? -eq 0 ]; then
+  OUTPUT1=$(ping -c 1 $new_ip 2>&1)
+  if [ $? -eq 0 ]; then
+    logger -t "kernel" "The IP already exists, give up modifying it!"
+  else
+    if [ "$ipauto" = "1" ] && [ "$bridged" = "IP_Bridged" ] && [ "$lan_ip" != "$new_ip" ]; then
+      logger -t "kernel" "Start changing the IP address!"
+      nvram set lan_proto_x=0
+      nvram set lan_ipaddr=$new_ip
+      nvram set lan_gateway=$new_gateway
+      nvram set lan_dns1=$new_gateway
+      nvram save
+      nvram commit
+      reboot
+    fi
+  fi
+fi
+
+#异地组网守护脚本
+mac=`lan_eeprom_mac|grep MAC|awk '{print $(NF)}'|sed 's/://g'|tr A-Z a-z`
+
+cat  > /var/judge.sh <<-'EOF'
+#!/bin/sh
+ip_address=$(vn-link-cli --info | awk '/Virtual ip: / {print $NF}')
+if [ -z "$ip_address" ]; then
+logger -t "kernel" "Detection failed, try restarting!"
+killall -9 vn-link-cli > /dev/null 2>&1
+sleep 10
+startvnt
+fi
+EOF
+
+chmod 777 /var/judge.sh
+
+#虚拟USB配置
+
+cat  > /var/usb.ini <<-EOF
+ServerName=Network Print Server
+AutoAttachToKernel=1
+License=$mac,$num,$lic
+ResetOnDisconnect=1
+EOF
+
+chmod 777 /var/usb.ini
+virtualhere -c /var/usb.ini -b -r /tmp/1.log
+
+sleep 5
+if [ ! -z "`pidof virtualhere`" ] ; then
+logger -t "virtualhere" "success"
+else
+logger -t "virtualhere" "fail"
+fi
+
+cat  > /tmp/printers.sh <<-'EOF'
+#!/bin/sh
+
+CONF_DIR="/tmp/prt"
+
+for conf in "$CONF_DIR"/*.conf; do
+    [ -e "$conf" ] || continue
+    
+    MODEL=$(grep "^MODEL=" "$conf" | cut -d'=' -f2- | tr -d '"')
+    PORT=$(grep "^PORT=" "$conf" | cut -d'=' -f2- | tr -d '"')
+    
+    PID_FILE="/var/run/dns-sd_port${PORT}.pid"
+    
+    if [ -f "$PID_FILE" ] && kill -0 $(cat "$PID_FILE") 2>/dev/null; then
+        logger -t "kernel" "OK!"
+    else
+        /usr/sbin/dns-sd -R "$MODEL @ Printer_Port @ 910$PORT" _pdl-datastream._tcp local 910$PORT "product=$MODEL" "ty=$MODEL" &
+        echo $! > "$PID_FILE"
+    fi
+done
+EOF
+
+chmod 777 /tmp/printers.sh
+
+exit 0
